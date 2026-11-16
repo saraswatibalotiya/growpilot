@@ -1,0 +1,199 @@
+[
+  {
+    "id": "table.generation_cache",
+    "label": "Create table \"generation_cache\"",
+    "summary": "Creates table \"generation_cache\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "generation_cache"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"generation_cache\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"generation_cache\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"generation_cache\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"generation_cache\"",
+        "sql": "CREATE TABLE \"public\".\"generation_cache\" (\n  \"business_id\" text NOT NULL,\n  \"cache_key\" text NOT NULL,\n  \"created_at\" timestamptz(3) DEFAULT (now()) NOT NULL,\n  \"id\" text NOT NULL,\n  \"response_json\" json NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"generation_cache\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"generation_cache\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"generation_cache\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "unique.generation_cache.generation_cache_business_id_cache_key_key",
+    "label": "Add unique constraint on \"generation_cache\" (business_id, cache_key)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "generation_cache_business_id_cache_key_key",
+        "table": "generation_cache"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"generation_cache_business_id_cache_key_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "generation_cache_business_id_cache_key_key",
+          "public",
+          "\"public\".\"generation_cache\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"generation_cache_business_id_cache_key_key\" on \"generation_cache\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"generation_cache_business_id_cache_key_key\"",
+        "sql": "ALTER TABLE \"public\".\"generation_cache\" ADD CONSTRAINT \"generation_cache_business_id_cache_key_key\" UNIQUE (\"business_id\", \"cache_key\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify unique constraint \"generation_cache_business_id_cache_key_key\" exists on (business_id, cache_key)",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb)) AS \"result\"",
+        "params": [
+          "generation_cache_business_id_cache_key_key",
+          "public",
+          "\"public\".\"generation_cache\"",
+          "u",
+          "[\"business_id\",\"cache_key\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.generation_cache.generation_cache_business_id_idx_23036de8",
+    "label": "Create index \"generation_cache_business_id_idx_23036de8\" on \"generation_cache\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "generation_cache_business_id_idx_23036de8",
+        "table": "generation_cache"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"generation_cache_business_id_idx_23036de8\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"generation_cache_business_id_idx_23036de8\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"generation_cache_business_id_idx_23036de8\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"generation_cache_business_id_idx_23036de8\"",
+        "sql": "CREATE INDEX \"generation_cache_business_id_idx_23036de8\" ON \"public\".\"generation_cache\" (\"business_id\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"generation_cache_business_id_idx_23036de8\" exists on \"generation_cache\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"generation_cache_business_id_idx_23036de8\"",
+          "i",
+          "I",
+          "\"public\".\"generation_cache\"",
+          "btree",
+          "[\"business_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.generation_cache.generation_cache_business_id_fkey",
+    "label": "Add foreign key \"generation_cache_business_id_fkey\" on \"generation_cache\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "generation_cache_business_id_fkey",
+        "table": "generation_cache"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"generation_cache_business_id_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "generation_cache_business_id_fkey",
+          "public",
+          "\"public\".\"generation_cache\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"generation_cache_business_id_fkey\" on \"generation_cache\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"generation_cache_business_id_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"generation_cache\"\nADD CONSTRAINT \"generation_cache_business_id_fkey\"\nFOREIGN KEY (\"business_id\")\nREFERENCES \"public\".\"businesses\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"generation_cache_business_id_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "generation_cache_business_id_fkey",
+          "public",
+          "\"public\".\"generation_cache\"",
+          "f",
+          "[\"business_id\"]",
+          "\"public\".\"businesses\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  }
+]

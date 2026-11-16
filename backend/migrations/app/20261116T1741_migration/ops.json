@@ -1,0 +1,97 @@
+[
+  {
+    "id": "dropTable.business_preferences",
+    "label": "Drop table \"business_preferences\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "business_preferences"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"business_preferences\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"business_preferences\""
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"business_preferences\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop table \"business_preferences\"",
+        "sql": "DROP TABLE \"public\".\"business_preferences\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"business_preferences\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"business_preferences\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"business_preferences\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "dropColumn.businesses.brand_tone",
+    "label": "Drop column \"brand_tone\" from \"businesses\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "brand_tone",
+        "table": "businesses"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"brand_tone\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "businesses",
+          "brand_tone"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"brand_tone\" on \"businesses\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop column \"brand_tone\"",
+        "sql": "ALTER TABLE \"public\".\"businesses\" DROP COLUMN \"brand_tone\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"brand_tone\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "businesses",
+          "brand_tone"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"brand_tone\" on \"businesses\""
+        }
+      }
+    ]
+  }
+]

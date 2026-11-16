@@ -1,0 +1,15 @@
+{
+  "captionLength": {
+    "title": "Caption length",
+    "short": "Short",
+    "medium": "Medium",
+    "long": "Long"
+  },
+  "hashtags": {
+    "title": "Hashtags",
+    "few": "Few",
+    "medium": "Medium",
+    "many": "Many"
+  },
+  "needTone": "Choose a tone."
+}

@@ -1,0 +1,704 @@
+[
+  {
+    "id": "table.media_analyses",
+    "label": "Create table \"media_analyses\"",
+    "summary": "Creates table \"media_analyses\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "media_analyses"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"media_analyses\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"media_analyses\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"media_analyses\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"media_analyses\"",
+        "sql": "CREATE TABLE \"public\".\"media_analyses\" (\n  \"created_at\" timestamptz(3) DEFAULT (now()) NOT NULL,\n  \"id\" text NOT NULL,\n  \"kind\" text NOT NULL,\n  \"media_asset_id\" text NOT NULL,\n  \"result_json\" json NOT NULL,\n  \"usage_json\" json,\n  \"version\" text NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"media_analyses\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"media_analyses\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"media_analyses\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "column.public.media_assets.approved_at",
+    "label": "Add column \"approved_at\" to \"media_assets\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "approved_at",
+        "table": "media_assets"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"approved_at\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "media_assets",
+          "approved_at"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"approved_at\" on \"media_assets\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"approved_at\"",
+        "sql": "ALTER TABLE \"public\".\"media_assets\" ADD COLUMN \"approved_at\" timestamptz(3)"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"approved_at\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "media_assets",
+          "approved_at"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"approved_at\" on \"media_assets\""
+        }
+      },
+      {
+        "description": "verify column \"approved_at\" has type \"timestamp(3) with time zone\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "media_assets",
+          "approved_at",
+          "timestamp(3) with time zone"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.media_assets.processing_json",
+    "label": "Add column \"processing_json\" to \"media_assets\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "processing_json",
+        "table": "media_assets"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"processing_json\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "media_assets",
+          "processing_json"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"processing_json\" on \"media_assets\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"processing_json\"",
+        "sql": "ALTER TABLE \"public\".\"media_assets\" ADD COLUMN \"processing_json\" json"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"processing_json\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "media_assets",
+          "processing_json"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"processing_json\" on \"media_assets\""
+        }
+      },
+      {
+        "description": "verify column \"processing_json\" has type \"json\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "media_assets",
+          "processing_json",
+          "json"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.media_assets.processing_key",
+    "label": "Add column \"processing_key\" to \"media_assets\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "processing_key",
+        "table": "media_assets"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"processing_key\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "media_assets",
+          "processing_key"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"processing_key\" on \"media_assets\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"processing_key\"",
+        "sql": "ALTER TABLE \"public\".\"media_assets\" ADD COLUMN \"processing_key\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"processing_key\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "media_assets",
+          "processing_key"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"processing_key\" on \"media_assets\""
+        }
+      },
+      {
+        "description": "verify column \"processing_key\" has type \"text\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "media_assets",
+          "processing_key",
+          "text"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.media_assets.source_asset_id",
+    "label": "Add column \"source_asset_id\" to \"media_assets\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "source_asset_id",
+        "table": "media_assets"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"source_asset_id\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "media_assets",
+          "source_asset_id"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"source_asset_id\" on \"media_assets\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"source_asset_id\"",
+        "sql": "ALTER TABLE \"public\".\"media_assets\" ADD COLUMN \"source_asset_id\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"source_asset_id\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "media_assets",
+          "source_asset_id"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"source_asset_id\" on \"media_assets\""
+        }
+      },
+      {
+        "description": "verify column \"source_asset_id\" has type \"text\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "media_assets",
+          "source_asset_id",
+          "text"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.media_assets.variant",
+    "label": "Add column \"variant\" to \"media_assets\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "variant",
+        "table": "media_assets"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"variant\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "media_assets",
+          "variant"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"variant\" on \"media_assets\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"variant\"",
+        "sql": "ALTER TABLE \"public\".\"media_assets\" ADD COLUMN \"variant\" text DEFAULT 'original' NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"variant\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "media_assets",
+          "variant"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"variant\" on \"media_assets\""
+        }
+      },
+      {
+        "description": "verify column \"variant\" has type \"text\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "media_assets",
+          "variant",
+          "text"
+        ]
+      },
+      {
+        "description": "verify column \"variant\" is NOT NULL",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"is_nullable\" = $4)) AS \"result\"",
+        "params": [
+          "public",
+          "media_assets",
+          "variant",
+          "NO"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.media_analyses.media_analyses_media_asset_id_kind_version_key",
+    "label": "Add unique constraint on \"media_analyses\" (media_asset_id, kind, version)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "media_analyses_media_asset_id_kind_version_key",
+        "table": "media_analyses"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"media_analyses_media_asset_id_kind_version_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "media_analyses_media_asset_id_kind_version_key",
+          "public",
+          "\"public\".\"media_analyses\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"media_analyses_media_asset_id_kind_version_key\" on \"media_analyses\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"media_analyses_media_asset_id_kind_version_key\"",
+        "sql": "ALTER TABLE \"public\".\"media_analyses\" ADD CONSTRAINT \"media_analyses_media_asset_id_kind_version_key\" UNIQUE (\"media_asset_id\", \"kind\", \"version\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify unique constraint \"media_analyses_media_asset_id_kind_version_key\" exists on (media_asset_id, kind, version)",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb)) AS \"result\"",
+        "params": [
+          "media_analyses_media_asset_id_kind_version_key",
+          "public",
+          "\"public\".\"media_analyses\"",
+          "u",
+          "[\"media_asset_id\",\"kind\",\"version\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "checkConstraint.media_assets.media_assets_variant_check_35eb1c06",
+    "label": "Add check constraint \"media_assets_variant_check_35eb1c06\" on \"media_assets\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "checkConstraint",
+        "name": "media_assets_variant_check_35eb1c06",
+        "table": "media_assets"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"media_assets_variant_check_35eb1c06\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "media_assets_variant_check_35eb1c06",
+          "public",
+          "\"public\".\"media_assets\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"media_assets_variant_check_35eb1c06\" on \"media_assets\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add check constraint \"media_assets_variant_check_35eb1c06\"",
+        "sql": "ALTER TABLE \"public\".\"media_assets\" ADD CONSTRAINT \"media_assets_variant_check_35eb1c06\" CHECK (\"variant\" IN ('original', 'enhanced', 'ai_edited'))"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify check constraint \"media_assets_variant_check_35eb1c06\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4)) AS \"result\"",
+        "params": [
+          "media_assets_variant_check_35eb1c06",
+          "public",
+          "\"public\".\"media_assets\"",
+          "c"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.media_assets.media_assets_source_asset_id_processing_key_key",
+    "label": "Add unique constraint on \"media_assets\" (source_asset_id, processing_key)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "media_assets_source_asset_id_processing_key_key",
+        "table": "media_assets"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"media_assets_source_asset_id_processing_key_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "media_assets_source_asset_id_processing_key_key",
+          "public",
+          "\"public\".\"media_assets\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"media_assets_source_asset_id_processing_key_key\" on \"media_assets\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"media_assets_source_asset_id_processing_key_key\"",
+        "sql": "ALTER TABLE \"public\".\"media_assets\" ADD CONSTRAINT \"media_assets_source_asset_id_processing_key_key\" UNIQUE (\"source_asset_id\", \"processing_key\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify unique constraint \"media_assets_source_asset_id_processing_key_key\" exists on (source_asset_id, processing_key)",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb)) AS \"result\"",
+        "params": [
+          "media_assets_source_asset_id_processing_key_key",
+          "public",
+          "\"public\".\"media_assets\"",
+          "u",
+          "[\"source_asset_id\",\"processing_key\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.media_analyses.media_analyses_media_asset_id_idx_8cdca53d",
+    "label": "Create index \"media_analyses_media_asset_id_idx_8cdca53d\" on \"media_analyses\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "media_analyses_media_asset_id_idx_8cdca53d",
+        "table": "media_analyses"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"media_analyses_media_asset_id_idx_8cdca53d\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"media_analyses_media_asset_id_idx_8cdca53d\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"media_analyses_media_asset_id_idx_8cdca53d\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"media_analyses_media_asset_id_idx_8cdca53d\"",
+        "sql": "CREATE INDEX \"media_analyses_media_asset_id_idx_8cdca53d\" ON \"public\".\"media_analyses\" (\"media_asset_id\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"media_analyses_media_asset_id_idx_8cdca53d\" exists on \"media_analyses\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"media_analyses_media_asset_id_idx_8cdca53d\"",
+          "i",
+          "I",
+          "\"public\".\"media_analyses\"",
+          "btree",
+          "[\"media_asset_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.media_assets.media_assets_source_asset_id_idx_70638d00",
+    "label": "Create index \"media_assets_source_asset_id_idx_70638d00\" on \"media_assets\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "media_assets_source_asset_id_idx_70638d00",
+        "table": "media_assets"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"media_assets_source_asset_id_idx_70638d00\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"media_assets_source_asset_id_idx_70638d00\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"media_assets_source_asset_id_idx_70638d00\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"media_assets_source_asset_id_idx_70638d00\"",
+        "sql": "CREATE INDEX \"media_assets_source_asset_id_idx_70638d00\" ON \"public\".\"media_assets\" (\"source_asset_id\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"media_assets_source_asset_id_idx_70638d00\" exists on \"media_assets\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"media_assets_source_asset_id_idx_70638d00\"",
+          "i",
+          "I",
+          "\"public\".\"media_assets\"",
+          "btree",
+          "[\"source_asset_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.media_analyses.media_analyses_media_asset_id_fkey",
+    "label": "Add foreign key \"media_analyses_media_asset_id_fkey\" on \"media_analyses\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "media_analyses_media_asset_id_fkey",
+        "table": "media_analyses"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"media_analyses_media_asset_id_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "media_analyses_media_asset_id_fkey",
+          "public",
+          "\"public\".\"media_analyses\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"media_analyses_media_asset_id_fkey\" on \"media_analyses\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"media_analyses_media_asset_id_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"media_analyses\"\nADD CONSTRAINT \"media_analyses_media_asset_id_fkey\"\nFOREIGN KEY (\"media_asset_id\")\nREFERENCES \"public\".\"media_assets\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"media_analyses_media_asset_id_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "media_analyses_media_asset_id_fkey",
+          "public",
+          "\"public\".\"media_analyses\"",
+          "f",
+          "[\"media_asset_id\"]",
+          "\"public\".\"media_assets\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.media_assets.media_assets_source_asset_id_fkey",
+    "label": "Add foreign key \"media_assets_source_asset_id_fkey\" on \"media_assets\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "media_assets_source_asset_id_fkey",
+        "table": "media_assets"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"media_assets_source_asset_id_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "media_assets_source_asset_id_fkey",
+          "public",
+          "\"public\".\"media_assets\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"media_assets_source_asset_id_fkey\" on \"media_assets\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"media_assets_source_asset_id_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"media_assets\"\nADD CONSTRAINT \"media_assets_source_asset_id_fkey\"\nFOREIGN KEY (\"source_asset_id\")\nREFERENCES \"public\".\"media_assets\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"media_assets_source_asset_id_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "media_assets_source_asset_id_fkey",
+          "public",
+          "\"public\".\"media_assets\"",
+          "f",
+          "[\"source_asset_id\"]",
+          "\"public\".\"media_assets\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  }
+]

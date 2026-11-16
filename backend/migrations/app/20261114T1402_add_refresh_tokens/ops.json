@@ -1,0 +1,247 @@
+[
+  {
+    "id": "table.auth_refresh_tokens",
+    "label": "Create table \"auth_refresh_tokens\"",
+    "summary": "Creates table \"auth_refresh_tokens\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "auth_refresh_tokens"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"auth_refresh_tokens\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"auth_refresh_tokens\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"auth_refresh_tokens\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"auth_refresh_tokens\"",
+        "sql": "CREATE TABLE \"public\".\"auth_refresh_tokens\" (\n  \"created_at\" timestamptz(3) DEFAULT (now()) NOT NULL,\n  \"expires_at\" timestamptz(3) NOT NULL,\n  \"family_id\" text NOT NULL,\n  \"id\" text NOT NULL,\n  \"revoked_at\" timestamptz(3),\n  \"token_hash\" text NOT NULL,\n  \"user_id\" text NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"auth_refresh_tokens\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"auth_refresh_tokens\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"auth_refresh_tokens\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "unique.auth_refresh_tokens.auth_refresh_tokens_token_hash_key",
+    "label": "Add unique constraint on \"auth_refresh_tokens\" (token_hash)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "auth_refresh_tokens_token_hash_key",
+        "table": "auth_refresh_tokens"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"auth_refresh_tokens_token_hash_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "auth_refresh_tokens_token_hash_key",
+          "public",
+          "\"public\".\"auth_refresh_tokens\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"auth_refresh_tokens_token_hash_key\" on \"auth_refresh_tokens\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"auth_refresh_tokens_token_hash_key\"",
+        "sql": "ALTER TABLE \"public\".\"auth_refresh_tokens\" ADD CONSTRAINT \"auth_refresh_tokens_token_hash_key\" UNIQUE (\"token_hash\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify unique constraint \"auth_refresh_tokens_token_hash_key\" exists on (token_hash)",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb)) AS \"result\"",
+        "params": [
+          "auth_refresh_tokens_token_hash_key",
+          "public",
+          "\"public\".\"auth_refresh_tokens\"",
+          "u",
+          "[\"token_hash\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.auth_refresh_tokens.auth_refresh_tokens_family_id_idx_027b534e",
+    "label": "Create index \"auth_refresh_tokens_family_id_idx_027b534e\" on \"auth_refresh_tokens\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "auth_refresh_tokens_family_id_idx_027b534e",
+        "table": "auth_refresh_tokens"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"auth_refresh_tokens_family_id_idx_027b534e\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"auth_refresh_tokens_family_id_idx_027b534e\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"auth_refresh_tokens_family_id_idx_027b534e\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"auth_refresh_tokens_family_id_idx_027b534e\"",
+        "sql": "CREATE INDEX \"auth_refresh_tokens_family_id_idx_027b534e\" ON \"public\".\"auth_refresh_tokens\" (\"family_id\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"auth_refresh_tokens_family_id_idx_027b534e\" exists on \"auth_refresh_tokens\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"auth_refresh_tokens_family_id_idx_027b534e\"",
+          "i",
+          "I",
+          "\"public\".\"auth_refresh_tokens\"",
+          "btree",
+          "[\"family_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.auth_refresh_tokens.auth_refresh_tokens_user_id_idx_6c952402",
+    "label": "Create index \"auth_refresh_tokens_user_id_idx_6c952402\" on \"auth_refresh_tokens\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "auth_refresh_tokens_user_id_idx_6c952402",
+        "table": "auth_refresh_tokens"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"auth_refresh_tokens_user_id_idx_6c952402\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"auth_refresh_tokens_user_id_idx_6c952402\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"auth_refresh_tokens_user_id_idx_6c952402\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"auth_refresh_tokens_user_id_idx_6c952402\"",
+        "sql": "CREATE INDEX \"auth_refresh_tokens_user_id_idx_6c952402\" ON \"public\".\"auth_refresh_tokens\" (\"user_id\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"auth_refresh_tokens_user_id_idx_6c952402\" exists on \"auth_refresh_tokens\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"auth_refresh_tokens_user_id_idx_6c952402\"",
+          "i",
+          "I",
+          "\"public\".\"auth_refresh_tokens\"",
+          "btree",
+          "[\"user_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.auth_refresh_tokens.auth_refresh_tokens_user_id_fkey",
+    "label": "Add foreign key \"auth_refresh_tokens_user_id_fkey\" on \"auth_refresh_tokens\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "auth_refresh_tokens_user_id_fkey",
+        "table": "auth_refresh_tokens"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"auth_refresh_tokens_user_id_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "auth_refresh_tokens_user_id_fkey",
+          "public",
+          "\"public\".\"auth_refresh_tokens\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"auth_refresh_tokens_user_id_fkey\" on \"auth_refresh_tokens\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"auth_refresh_tokens_user_id_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"auth_refresh_tokens\"\nADD CONSTRAINT \"auth_refresh_tokens_user_id_fkey\"\nFOREIGN KEY (\"user_id\")\nREFERENCES \"public\".\"users\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"auth_refresh_tokens_user_id_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "auth_refresh_tokens_user_id_fkey",
+          "public",
+          "\"public\".\"auth_refresh_tokens\"",
+          "f",
+          "[\"user_id\"]",
+          "\"public\".\"users\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  }
+]

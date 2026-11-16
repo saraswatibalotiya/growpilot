@@ -1,0 +1,1419 @@
+[
+  {
+    "id": "table.business_preferences",
+    "label": "Create table \"business_preferences\"",
+    "summary": "Creates table \"business_preferences\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "business_preferences"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"business_preferences\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"business_preferences\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"business_preferences\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"business_preferences\"",
+        "sql": "CREATE TABLE \"public\".\"business_preferences\" (\n  \"business_id\" text NOT NULL,\n  \"caption_length\" text DEFAULT 'medium' NOT NULL,\n  \"created_at\" timestamptz(3) DEFAULT (now()) NOT NULL,\n  \"hashtag_preference\" text DEFAULT 'few' NOT NULL,\n  \"id\" text NOT NULL,\n  \"poster_style\" text,\n  \"preferred_cta\" text,\n  \"updated_at\" timestamptz(3) NOT NULL,\n  PRIMARY KEY (\"id\"),\n  CONSTRAINT \"business_preferences_caption_length_check_26312363\" CHECK (\"caption_length\" IN ('short', 'medium', 'long')),\n  CONSTRAINT \"business_preferences_hashtag_preference_check_62eea05c\" CHECK (\"hashtag_preference\" IN ('none', 'few', 'moderate', 'many'))\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"business_preferences\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"business_preferences\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"business_preferences\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.conversation_messages",
+    "label": "Create table \"conversation_messages\"",
+    "summary": "Creates table \"conversation_messages\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "conversation_messages"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"conversation_messages\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"conversation_messages\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"conversation_messages\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"conversation_messages\"",
+        "sql": "CREATE TABLE \"public\".\"conversation_messages\" (\n  \"content\" text NOT NULL,\n  \"conversation_id\" text NOT NULL,\n  \"created_at\" timestamptz(3) DEFAULT (now()) NOT NULL,\n  \"id\" text NOT NULL,\n  \"language\" text,\n  \"metadata\" json,\n  \"role\" text NOT NULL,\n  PRIMARY KEY (\"id\"),\n  CONSTRAINT \"conversation_messages_language_check_6bb0b07e\" CHECK (\"language\" IN ('hi', 'mr', 'en')),\n  CONSTRAINT \"conversation_messages_role_check_bc5dc231\" CHECK (\"role\" IN ('user', 'assistant', 'system'))\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"conversation_messages\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"conversation_messages\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"conversation_messages\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.conversations",
+    "label": "Create table \"conversations\"",
+    "summary": "Creates table \"conversations\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "conversations"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"conversations\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"conversations\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"conversations\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"conversations\"",
+        "sql": "CREATE TABLE \"public\".\"conversations\" (\n  \"business_id\" text NOT NULL,\n  \"created_at\" timestamptz(3) DEFAULT (now()) NOT NULL,\n  \"id\" text NOT NULL,\n  \"status\" text DEFAULT 'active' NOT NULL,\n  \"updated_at\" timestamptz(3) NOT NULL,\n  \"user_id\" text NOT NULL,\n  PRIMARY KEY (\"id\"),\n  CONSTRAINT \"conversations_status_check_de0835fb\" CHECK (\"status\" IN ('active', 'closed'))\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"conversations\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"conversations\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"conversations\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.generated_posts",
+    "label": "Create table \"generated_posts\"",
+    "summary": "Creates table \"generated_posts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "generated_posts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"generated_posts\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"generated_posts\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"generated_posts\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"generated_posts\"",
+        "sql": "CREATE TABLE \"public\".\"generated_posts\" (\n  \"business_id\" text NOT NULL,\n  \"call_to_action\" text,\n  \"caption\" text,\n  \"conversation_id\" text,\n  \"created_at\" timestamptz(3) DEFAULT (now()) NOT NULL,\n  \"hashtags\" json,\n  \"headline\" text,\n  \"id\" text NOT NULL,\n  \"instagram_media_id\" text,\n  \"language\" text,\n  \"original_image_url\" text,\n  \"poster_image_url\" text,\n  \"product_id\" text,\n  \"published_at\" timestamptz(3),\n  \"status\" text DEFAULT 'DRAFT' NOT NULL,\n  \"updated_at\" timestamptz(3) NOT NULL,\n  PRIMARY KEY (\"id\"),\n  CONSTRAINT \"generated_posts_language_check_6bb0b07e\" CHECK (\"language\" IN ('hi', 'mr', 'en')),\n  CONSTRAINT \"generated_posts_status_check_953071ff\" CHECK (\"status\" IN ('DRAFT', 'CONTENT_GENERATED', 'PREVIEW_READY', 'USER_APPROVED', 'PUBLISHING', 'PUBLISHED', 'FAILED'))\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"generated_posts\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"generated_posts\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"generated_posts\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.products",
+    "label": "Create table \"products\"",
+    "summary": "Creates table \"products\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "products"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"products\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"products\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"products\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"products\"",
+        "sql": "CREATE TABLE \"public\".\"products\" (\n  \"business_id\" text NOT NULL,\n  \"category\" text,\n  \"created_at\" timestamptz(3) DEFAULT (now()) NOT NULL,\n  \"currency\" text DEFAULT 'INR' NOT NULL,\n  \"description\" text,\n  \"id\" text NOT NULL,\n  \"image_url\" text,\n  \"is_available\" bool DEFAULT true NOT NULL,\n  \"name\" text NOT NULL,\n  \"price\" numeric(12,2),\n  \"updated_at\" timestamptz(3) NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"products\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"products\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"products\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "column.public.businesses.brand_tone",
+    "label": "Add column \"brand_tone\" to \"businesses\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "brand_tone",
+        "table": "businesses"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"brand_tone\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "businesses",
+          "brand_tone"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"brand_tone\" on \"businesses\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"brand_tone\"",
+        "sql": "ALTER TABLE \"public\".\"businesses\" ADD COLUMN \"brand_tone\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"brand_tone\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "businesses",
+          "brand_tone"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"brand_tone\" on \"businesses\""
+        }
+      },
+      {
+        "description": "verify column \"brand_tone\" has type \"text\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "businesses",
+          "brand_tone",
+          "text"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.businesses.supported_languages",
+    "label": "Add column \"supported_languages\" to \"businesses\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "supported_languages",
+        "table": "businesses"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"supported_languages\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "businesses",
+          "supported_languages"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"supported_languages\" on \"businesses\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"supported_languages\"",
+        "sql": "ALTER TABLE \"public\".\"businesses\" ADD COLUMN \"supported_languages\" json"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"supported_languages\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "businesses",
+          "supported_languages"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"supported_languages\" on \"businesses\""
+        }
+      },
+      {
+        "description": "verify column \"supported_languages\" has type \"json\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "businesses",
+          "supported_languages",
+          "json"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.businesses.target_audience",
+    "label": "Add column \"target_audience\" to \"businesses\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "target_audience",
+        "table": "businesses"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"target_audience\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "businesses",
+          "target_audience"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"target_audience\" on \"businesses\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"target_audience\"",
+        "sql": "ALTER TABLE \"public\".\"businesses\" ADD COLUMN \"target_audience\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"target_audience\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "businesses",
+          "target_audience"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"target_audience\" on \"businesses\""
+        }
+      },
+      {
+        "description": "verify column \"target_audience\" has type \"text\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "businesses",
+          "target_audience",
+          "text"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.business_preferences.business_preferences_business_id_key",
+    "label": "Add unique constraint on \"business_preferences\" (business_id)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "business_preferences_business_id_key",
+        "table": "business_preferences"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"business_preferences_business_id_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "business_preferences_business_id_key",
+          "public",
+          "\"public\".\"business_preferences\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"business_preferences_business_id_key\" on \"business_preferences\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"business_preferences_business_id_key\"",
+        "sql": "ALTER TABLE \"public\".\"business_preferences\" ADD CONSTRAINT \"business_preferences_business_id_key\" UNIQUE (\"business_id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify unique constraint \"business_preferences_business_id_key\" exists on (business_id)",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb)) AS \"result\"",
+        "params": [
+          "business_preferences_business_id_key",
+          "public",
+          "\"public\".\"business_preferences\"",
+          "u",
+          "[\"business_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.conversation_messages.conversation_messages_conversation_id_created_at_idx_13048a6f",
+    "label": "Create index \"conversation_messages_conversation_id_created_at_idx_13048a6f\" on \"conversation_messages\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "conversation_messages_conversation_id_created_at_idx_13048a6f",
+        "table": "conversation_messages"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"conversation_messages_conversation_id_created_at_idx_13048a6f\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"conversation_messages_conversation_id_created_at_idx_13048a6f\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"conversation_messages_conversation_id_created_at_idx_13048a6f\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"conversation_messages_conversation_id_created_at_idx_13048a6f\"",
+        "sql": "CREATE INDEX \"conversation_messages_conversation_id_created_at_idx_13048a6f\" ON \"public\".\"conversation_messages\" (\"conversation_id\", \"created_at\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"conversation_messages_conversation_id_created_at_idx_13048a6f\" exists on \"conversation_messages\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"conversation_messages_conversation_id_created_at_idx_13048a6f\"",
+          "i",
+          "I",
+          "\"public\".\"conversation_messages\"",
+          "btree",
+          "[\"conversation_id\",\"created_at\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.conversation_messages.conversation_messages_conversation_id_idx_0c3639df",
+    "label": "Create index \"conversation_messages_conversation_id_idx_0c3639df\" on \"conversation_messages\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "conversation_messages_conversation_id_idx_0c3639df",
+        "table": "conversation_messages"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"conversation_messages_conversation_id_idx_0c3639df\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"conversation_messages_conversation_id_idx_0c3639df\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"conversation_messages_conversation_id_idx_0c3639df\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"conversation_messages_conversation_id_idx_0c3639df\"",
+        "sql": "CREATE INDEX \"conversation_messages_conversation_id_idx_0c3639df\" ON \"public\".\"conversation_messages\" (\"conversation_id\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"conversation_messages_conversation_id_idx_0c3639df\" exists on \"conversation_messages\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"conversation_messages_conversation_id_idx_0c3639df\"",
+          "i",
+          "I",
+          "\"public\".\"conversation_messages\"",
+          "btree",
+          "[\"conversation_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.conversations.conversations_business_id_created_at_idx_a4cd269c",
+    "label": "Create index \"conversations_business_id_created_at_idx_a4cd269c\" on \"conversations\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "conversations_business_id_created_at_idx_a4cd269c",
+        "table": "conversations"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"conversations_business_id_created_at_idx_a4cd269c\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"conversations_business_id_created_at_idx_a4cd269c\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"conversations_business_id_created_at_idx_a4cd269c\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"conversations_business_id_created_at_idx_a4cd269c\"",
+        "sql": "CREATE INDEX \"conversations_business_id_created_at_idx_a4cd269c\" ON \"public\".\"conversations\" (\"business_id\", \"created_at\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"conversations_business_id_created_at_idx_a4cd269c\" exists on \"conversations\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"conversations_business_id_created_at_idx_a4cd269c\"",
+          "i",
+          "I",
+          "\"public\".\"conversations\"",
+          "btree",
+          "[\"business_id\",\"created_at\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.conversations.conversations_business_id_idx_23036de8",
+    "label": "Create index \"conversations_business_id_idx_23036de8\" on \"conversations\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "conversations_business_id_idx_23036de8",
+        "table": "conversations"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"conversations_business_id_idx_23036de8\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"conversations_business_id_idx_23036de8\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"conversations_business_id_idx_23036de8\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"conversations_business_id_idx_23036de8\"",
+        "sql": "CREATE INDEX \"conversations_business_id_idx_23036de8\" ON \"public\".\"conversations\" (\"business_id\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"conversations_business_id_idx_23036de8\" exists on \"conversations\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"conversations_business_id_idx_23036de8\"",
+          "i",
+          "I",
+          "\"public\".\"conversations\"",
+          "btree",
+          "[\"business_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.conversations.conversations_user_id_idx_6c952402",
+    "label": "Create index \"conversations_user_id_idx_6c952402\" on \"conversations\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "conversations_user_id_idx_6c952402",
+        "table": "conversations"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"conversations_user_id_idx_6c952402\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"conversations_user_id_idx_6c952402\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"conversations_user_id_idx_6c952402\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"conversations_user_id_idx_6c952402\"",
+        "sql": "CREATE INDEX \"conversations_user_id_idx_6c952402\" ON \"public\".\"conversations\" (\"user_id\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"conversations_user_id_idx_6c952402\" exists on \"conversations\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"conversations_user_id_idx_6c952402\"",
+          "i",
+          "I",
+          "\"public\".\"conversations\"",
+          "btree",
+          "[\"user_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.generated_posts.generated_posts_business_id_created_at_idx_a4cd269c",
+    "label": "Create index \"generated_posts_business_id_created_at_idx_a4cd269c\" on \"generated_posts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "generated_posts_business_id_created_at_idx_a4cd269c",
+        "table": "generated_posts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"generated_posts_business_id_created_at_idx_a4cd269c\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"generated_posts_business_id_created_at_idx_a4cd269c\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"generated_posts_business_id_created_at_idx_a4cd269c\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"generated_posts_business_id_created_at_idx_a4cd269c\"",
+        "sql": "CREATE INDEX \"generated_posts_business_id_created_at_idx_a4cd269c\" ON \"public\".\"generated_posts\" (\"business_id\", \"created_at\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"generated_posts_business_id_created_at_idx_a4cd269c\" exists on \"generated_posts\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"generated_posts_business_id_created_at_idx_a4cd269c\"",
+          "i",
+          "I",
+          "\"public\".\"generated_posts\"",
+          "btree",
+          "[\"business_id\",\"created_at\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.generated_posts.generated_posts_business_id_idx_23036de8",
+    "label": "Create index \"generated_posts_business_id_idx_23036de8\" on \"generated_posts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "generated_posts_business_id_idx_23036de8",
+        "table": "generated_posts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"generated_posts_business_id_idx_23036de8\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"generated_posts_business_id_idx_23036de8\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"generated_posts_business_id_idx_23036de8\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"generated_posts_business_id_idx_23036de8\"",
+        "sql": "CREATE INDEX \"generated_posts_business_id_idx_23036de8\" ON \"public\".\"generated_posts\" (\"business_id\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"generated_posts_business_id_idx_23036de8\" exists on \"generated_posts\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"generated_posts_business_id_idx_23036de8\"",
+          "i",
+          "I",
+          "\"public\".\"generated_posts\"",
+          "btree",
+          "[\"business_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.generated_posts.generated_posts_conversation_id_idx_0c3639df",
+    "label": "Create index \"generated_posts_conversation_id_idx_0c3639df\" on \"generated_posts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "generated_posts_conversation_id_idx_0c3639df",
+        "table": "generated_posts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"generated_posts_conversation_id_idx_0c3639df\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"generated_posts_conversation_id_idx_0c3639df\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"generated_posts_conversation_id_idx_0c3639df\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"generated_posts_conversation_id_idx_0c3639df\"",
+        "sql": "CREATE INDEX \"generated_posts_conversation_id_idx_0c3639df\" ON \"public\".\"generated_posts\" (\"conversation_id\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"generated_posts_conversation_id_idx_0c3639df\" exists on \"generated_posts\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"generated_posts_conversation_id_idx_0c3639df\"",
+          "i",
+          "I",
+          "\"public\".\"generated_posts\"",
+          "btree",
+          "[\"conversation_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.generated_posts.generated_posts_product_id_idx_22a2b7d2",
+    "label": "Create index \"generated_posts_product_id_idx_22a2b7d2\" on \"generated_posts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "generated_posts_product_id_idx_22a2b7d2",
+        "table": "generated_posts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"generated_posts_product_id_idx_22a2b7d2\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"generated_posts_product_id_idx_22a2b7d2\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"generated_posts_product_id_idx_22a2b7d2\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"generated_posts_product_id_idx_22a2b7d2\"",
+        "sql": "CREATE INDEX \"generated_posts_product_id_idx_22a2b7d2\" ON \"public\".\"generated_posts\" (\"product_id\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"generated_posts_product_id_idx_22a2b7d2\" exists on \"generated_posts\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"generated_posts_product_id_idx_22a2b7d2\"",
+          "i",
+          "I",
+          "\"public\".\"generated_posts\"",
+          "btree",
+          "[\"product_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.products.products_business_id_created_at_idx_a4cd269c",
+    "label": "Create index \"products_business_id_created_at_idx_a4cd269c\" on \"products\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "products_business_id_created_at_idx_a4cd269c",
+        "table": "products"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"products_business_id_created_at_idx_a4cd269c\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"products_business_id_created_at_idx_a4cd269c\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"products_business_id_created_at_idx_a4cd269c\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"products_business_id_created_at_idx_a4cd269c\"",
+        "sql": "CREATE INDEX \"products_business_id_created_at_idx_a4cd269c\" ON \"public\".\"products\" (\"business_id\", \"created_at\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"products_business_id_created_at_idx_a4cd269c\" exists on \"products\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"products_business_id_created_at_idx_a4cd269c\"",
+          "i",
+          "I",
+          "\"public\".\"products\"",
+          "btree",
+          "[\"business_id\",\"created_at\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.products.products_business_id_idx_23036de8",
+    "label": "Create index \"products_business_id_idx_23036de8\" on \"products\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "products_business_id_idx_23036de8",
+        "table": "products"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"products_business_id_idx_23036de8\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"products_business_id_idx_23036de8\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"products_business_id_idx_23036de8\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"products_business_id_idx_23036de8\"",
+        "sql": "CREATE INDEX \"products_business_id_idx_23036de8\" ON \"public\".\"products\" (\"business_id\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"products_business_id_idx_23036de8\" exists on \"products\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"products_business_id_idx_23036de8\"",
+          "i",
+          "I",
+          "\"public\".\"products\"",
+          "btree",
+          "[\"business_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.business_preferences.business_preferences_business_id_fkey",
+    "label": "Add foreign key \"business_preferences_business_id_fkey\" on \"business_preferences\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "business_preferences_business_id_fkey",
+        "table": "business_preferences"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"business_preferences_business_id_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "business_preferences_business_id_fkey",
+          "public",
+          "\"public\".\"business_preferences\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"business_preferences_business_id_fkey\" on \"business_preferences\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"business_preferences_business_id_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"business_preferences\"\nADD CONSTRAINT \"business_preferences_business_id_fkey\"\nFOREIGN KEY (\"business_id\")\nREFERENCES \"public\".\"businesses\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"business_preferences_business_id_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "business_preferences_business_id_fkey",
+          "public",
+          "\"public\".\"business_preferences\"",
+          "f",
+          "[\"business_id\"]",
+          "\"public\".\"businesses\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.conversation_messages.conversation_messages_conversation_id_fkey",
+    "label": "Add foreign key \"conversation_messages_conversation_id_fkey\" on \"conversation_messages\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "conversation_messages_conversation_id_fkey",
+        "table": "conversation_messages"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"conversation_messages_conversation_id_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "conversation_messages_conversation_id_fkey",
+          "public",
+          "\"public\".\"conversation_messages\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"conversation_messages_conversation_id_fkey\" on \"conversation_messages\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"conversation_messages_conversation_id_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"conversation_messages\"\nADD CONSTRAINT \"conversation_messages_conversation_id_fkey\"\nFOREIGN KEY (\"conversation_id\")\nREFERENCES \"public\".\"conversations\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"conversation_messages_conversation_id_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "conversation_messages_conversation_id_fkey",
+          "public",
+          "\"public\".\"conversation_messages\"",
+          "f",
+          "[\"conversation_id\"]",
+          "\"public\".\"conversations\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.conversations.conversations_business_id_fkey",
+    "label": "Add foreign key \"conversations_business_id_fkey\" on \"conversations\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "conversations_business_id_fkey",
+        "table": "conversations"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"conversations_business_id_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "conversations_business_id_fkey",
+          "public",
+          "\"public\".\"conversations\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"conversations_business_id_fkey\" on \"conversations\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"conversations_business_id_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"conversations\"\nADD CONSTRAINT \"conversations_business_id_fkey\"\nFOREIGN KEY (\"business_id\")\nREFERENCES \"public\".\"businesses\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"conversations_business_id_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "conversations_business_id_fkey",
+          "public",
+          "\"public\".\"conversations\"",
+          "f",
+          "[\"business_id\"]",
+          "\"public\".\"businesses\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.conversations.conversations_user_id_fkey",
+    "label": "Add foreign key \"conversations_user_id_fkey\" on \"conversations\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "conversations_user_id_fkey",
+        "table": "conversations"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"conversations_user_id_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "conversations_user_id_fkey",
+          "public",
+          "\"public\".\"conversations\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"conversations_user_id_fkey\" on \"conversations\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"conversations_user_id_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"conversations\"\nADD CONSTRAINT \"conversations_user_id_fkey\"\nFOREIGN KEY (\"user_id\")\nREFERENCES \"public\".\"users\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"conversations_user_id_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "conversations_user_id_fkey",
+          "public",
+          "\"public\".\"conversations\"",
+          "f",
+          "[\"user_id\"]",
+          "\"public\".\"users\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.generated_posts.generated_posts_business_id_fkey",
+    "label": "Add foreign key \"generated_posts_business_id_fkey\" on \"generated_posts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "generated_posts_business_id_fkey",
+        "table": "generated_posts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"generated_posts_business_id_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "generated_posts_business_id_fkey",
+          "public",
+          "\"public\".\"generated_posts\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"generated_posts_business_id_fkey\" on \"generated_posts\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"generated_posts_business_id_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"generated_posts\"\nADD CONSTRAINT \"generated_posts_business_id_fkey\"\nFOREIGN KEY (\"business_id\")\nREFERENCES \"public\".\"businesses\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"generated_posts_business_id_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "generated_posts_business_id_fkey",
+          "public",
+          "\"public\".\"generated_posts\"",
+          "f",
+          "[\"business_id\"]",
+          "\"public\".\"businesses\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.generated_posts.generated_posts_conversation_id_fkey",
+    "label": "Add foreign key \"generated_posts_conversation_id_fkey\" on \"generated_posts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "generated_posts_conversation_id_fkey",
+        "table": "generated_posts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"generated_posts_conversation_id_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "generated_posts_conversation_id_fkey",
+          "public",
+          "\"public\".\"generated_posts\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"generated_posts_conversation_id_fkey\" on \"generated_posts\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"generated_posts_conversation_id_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"generated_posts\"\nADD CONSTRAINT \"generated_posts_conversation_id_fkey\"\nFOREIGN KEY (\"conversation_id\")\nREFERENCES \"public\".\"conversations\" (\"id\")\nON DELETE SET NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"generated_posts_conversation_id_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "generated_posts_conversation_id_fkey",
+          "public",
+          "\"public\".\"generated_posts\"",
+          "f",
+          "[\"conversation_id\"]",
+          "\"public\".\"conversations\"",
+          "[\"id\"]",
+          "n",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.generated_posts.generated_posts_product_id_fkey",
+    "label": "Add foreign key \"generated_posts_product_id_fkey\" on \"generated_posts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "generated_posts_product_id_fkey",
+        "table": "generated_posts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"generated_posts_product_id_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "generated_posts_product_id_fkey",
+          "public",
+          "\"public\".\"generated_posts\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"generated_posts_product_id_fkey\" on \"generated_posts\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"generated_posts_product_id_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"generated_posts\"\nADD CONSTRAINT \"generated_posts_product_id_fkey\"\nFOREIGN KEY (\"product_id\")\nREFERENCES \"public\".\"products\" (\"id\")\nON DELETE SET NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"generated_posts_product_id_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "generated_posts_product_id_fkey",
+          "public",
+          "\"public\".\"generated_posts\"",
+          "f",
+          "[\"product_id\"]",
+          "\"public\".\"products\"",
+          "[\"id\"]",
+          "n",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.products.products_business_id_fkey",
+    "label": "Add foreign key \"products_business_id_fkey\" on \"products\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "products_business_id_fkey",
+        "table": "products"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"products_business_id_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "products_business_id_fkey",
+          "public",
+          "\"public\".\"products\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"products_business_id_fkey\" on \"products\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"products_business_id_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"products\"\nADD CONSTRAINT \"products_business_id_fkey\"\nFOREIGN KEY (\"business_id\")\nREFERENCES \"public\".\"businesses\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"products_business_id_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "products_business_id_fkey",
+          "public",
+          "\"public\".\"products\"",
+          "f",
+          "[\"business_id\"]",
+          "\"public\".\"businesses\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,342 @@
+[
+  {
+    "id": "column.public.reels.animation_level",
+    "label": "Add column \"animation_level\" to \"reels\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "animation_level",
+        "table": "reels"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"animation_level\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "animation_level"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"animation_level\" on \"reels\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"animation_level\"",
+        "sql": "ALTER TABLE \"public\".\"reels\" ADD COLUMN \"animation_level\" text DEFAULT 'BALANCED' NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"animation_level\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "animation_level"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"animation_level\" on \"reels\""
+        }
+      },
+      {
+        "description": "verify column \"animation_level\" has type \"text\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "animation_level",
+          "text"
+        ]
+      },
+      {
+        "description": "verify column \"animation_level\" is NOT NULL",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"is_nullable\" = $4)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "animation_level",
+          "NO"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.reels.background_style",
+    "label": "Add column \"background_style\" to \"reels\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "background_style",
+        "table": "reels"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"background_style\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "background_style"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"background_style\" on \"reels\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"background_style\"",
+        "sql": "ALTER TABLE \"public\".\"reels\" ADD COLUMN \"background_style\" text DEFAULT 'BEIGE_STUDIO' NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"background_style\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "background_style"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"background_style\" on \"reels\""
+        }
+      },
+      {
+        "description": "verify column \"background_style\" has type \"text\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "background_style",
+          "text"
+        ]
+      },
+      {
+        "description": "verify column \"background_style\" is NOT NULL",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"is_nullable\" = $4)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "background_style",
+          "NO"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.reels.music",
+    "label": "Add column \"music\" to \"reels\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "music",
+        "table": "reels"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"music\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "music"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"music\" on \"reels\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"music\"",
+        "sql": "ALTER TABLE \"public\".\"reels\" ADD COLUMN \"music\" text DEFAULT 'NONE' NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"music\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "music"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"music\" on \"reels\""
+        }
+      },
+      {
+        "description": "verify column \"music\" has type \"text\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "music",
+          "text"
+        ]
+      },
+      {
+        "description": "verify column \"music\" is NOT NULL",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"is_nullable\" = $4)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "music",
+          "NO"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.reels.render_report",
+    "label": "Add column \"render_report\" to \"reels\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "render_report",
+        "table": "reels"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"render_report\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "render_report"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"render_report\" on \"reels\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"render_report\"",
+        "sql": "ALTER TABLE \"public\".\"reels\" ADD COLUMN \"render_report\" json"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"render_report\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "render_report"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"render_report\" on \"reels\""
+        }
+      },
+      {
+        "description": "verify column \"render_report\" has type \"json\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "render_report",
+          "json"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.reels.text_style",
+    "label": "Add column \"text_style\" to \"reels\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "text_style",
+        "table": "reels"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"text_style\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "text_style"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"text_style\" on \"reels\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"text_style\"",
+        "sql": "ALTER TABLE \"public\".\"reels\" ADD COLUMN \"text_style\" text DEFAULT 'CLASSIC' NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"text_style\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "text_style"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"text_style\" on \"reels\""
+        }
+      },
+      {
+        "description": "verify column \"text_style\" has type \"text\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "text_style",
+          "text"
+        ]
+      },
+      {
+        "description": "verify column \"text_style\" is NOT NULL",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"is_nullable\" = $4)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "text_style",
+          "NO"
+        ]
+      }
+    ]
+  }
+]

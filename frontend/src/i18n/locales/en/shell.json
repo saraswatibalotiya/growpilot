@@ -1,0 +1,45 @@
+{
+  "main": "Main",
+  "sidebarNote": "Speak in Hindi, Marathi or English. We handle the rest.",
+  "openMenu": "Open menu",
+  "accountMenu": "Account menu",
+  "yourAccount": "Your account",
+  "signOut": "Sign out",
+  "nav": {
+    "home": "Home",
+    "createPost": "Create Post",
+    "createReel": "Create Reel",
+    "myPosts": "My Posts",
+    "products": "Products",
+    "settings": "Settings"
+  },
+  "titles": {
+    "app": "GrowPilot",
+    "home": "Home",
+    "myPosts": "My Posts",
+    "products": "Products",
+    "settings": "Settings",
+    "help": "Help & Support",
+    "ideas": "Post ideas",
+    "create": "Create a post",
+    "generating": "Creating your post",
+    "preview": "Preview & edit",
+    "publish": "Publish",
+    "published": "Published",
+    "reels": "Create a Reel",
+    "reelLibrary": "My Reels",
+    "reelGenerating": "Making your Reel",
+    "reelEdit": "Edit your Reel",
+    "reelPublish": "Publish your Reel",
+    "reelStatus": "Reel status",
+    "reelPreview": "Reel preview"
+  },
+  "ig": {
+    "title": "Instagram connection",
+    "account": "account",
+    "connected": "Connected to Instagram · @{name}",
+    "problem": "Instagram needs reconnecting",
+    "none": "Instagram not connected",
+    "checking": "Checking Instagram…"
+  }
+}

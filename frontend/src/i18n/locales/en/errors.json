@@ -1,0 +1,16 @@
+{
+  "network": "Can't reach GrowPilot right now. Check your connection and try again.",
+  "sessionExpired": "Your session expired. Please sign in again.",
+  "tooMany": "Too many requests. Wait a moment and try again.",
+  "statusFailed": "Something went wrong ({status}).",
+  "generic": "Something went wrong. Please try again.",
+  "speech": {
+    "blocked": "Microphone access is blocked. Allow the microphone in your browser, or type below.",
+    "noSpeech": "We didn't hear anything. Tap the microphone and try again.",
+    "noMic": "No microphone was found. Connect one, or type below.",
+    "network": "Speech recognition needs an internet connection. Try again, or type below.",
+    "language": "This browser cannot recognise that language by voice. Type below instead.",
+    "stopped": "Voice input stopped unexpectedly. You can try again or type below.",
+    "startFailed": "Could not start the microphone. Try again."
+  }
+}

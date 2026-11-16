@@ -1,0 +1,20 @@
+{
+  "status": {
+    "draft": "Draft",
+    "ready": "Ready to review",
+    "approved": "Approved",
+    "publishing": "Publishing",
+    "published": "Published",
+    "failed": "Failed"
+  },
+  "loading": "Loading",
+  "mic": {
+    "stop": "Stop recording",
+    "start": "Start speaking"
+  },
+  "language": {
+    "hi": "Hindi",
+    "mr": "Marathi",
+    "en": "English"
+  }
+}

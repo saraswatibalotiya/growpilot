@@ -1,0 +1,689 @@
+[
+  {
+    "id": "dropConstraint.leads.leads_campaign_id_fkey",
+    "label": "Drop constraint \"leads_campaign_id_fkey\" on \"leads\"",
+    "operationClass": "widening",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "leads_campaign_id_fkey",
+        "table": "leads"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"leads_campaign_id_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "leads_campaign_id_fkey",
+          "public",
+          "\"public\".\"leads\""
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "constraint \"leads_campaign_id_fkey\" on \"leads\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop constraint \"leads_campaign_id_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"leads\" DROP CONSTRAINT \"leads_campaign_id_fkey\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"leads_campaign_id_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "leads_campaign_id_fkey",
+          "public",
+          "\"public\".\"leads\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"leads_campaign_id_fkey\" on \"leads\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "dropTable.audio_suggestions",
+    "label": "Drop table \"audio_suggestions\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "audio_suggestions"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"audio_suggestions\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"audio_suggestions\""
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"audio_suggestions\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop table \"audio_suggestions\"",
+        "sql": "DROP TABLE \"public\".\"audio_suggestions\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"audio_suggestions\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"audio_suggestions\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"audio_suggestions\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "dropTable.auth_refresh_tokens",
+    "label": "Drop table \"auth_refresh_tokens\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "auth_refresh_tokens"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"auth_refresh_tokens\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"auth_refresh_tokens\""
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"auth_refresh_tokens\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop table \"auth_refresh_tokens\"",
+        "sql": "DROP TABLE \"public\".\"auth_refresh_tokens\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"auth_refresh_tokens\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"auth_refresh_tokens\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"auth_refresh_tokens\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "dropTable.campaign_assets",
+    "label": "Drop table \"campaign_assets\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "campaign_assets"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"campaign_assets\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"campaign_assets\""
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"campaign_assets\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop table \"campaign_assets\"",
+        "sql": "DROP TABLE \"public\".\"campaign_assets\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"campaign_assets\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"campaign_assets\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"campaign_assets\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "dropTable.campaign_metrics",
+    "label": "Drop table \"campaign_metrics\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "campaign_metrics"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"campaign_metrics\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"campaign_metrics\""
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"campaign_metrics\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop table \"campaign_metrics\"",
+        "sql": "DROP TABLE \"public\".\"campaign_metrics\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"campaign_metrics\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"campaign_metrics\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"campaign_metrics\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "dropTable.hashtag_templates",
+    "label": "Drop table \"hashtag_templates\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "hashtag_templates"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"hashtag_templates\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"hashtag_templates\""
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"hashtag_templates\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop table \"hashtag_templates\"",
+        "sql": "DROP TABLE \"public\".\"hashtag_templates\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"hashtag_templates\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"hashtag_templates\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"hashtag_templates\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "dropIndex.leads.leads_campaign_id_idx_77cd6c37",
+    "label": "Drop index \"leads_campaign_id_idx_77cd6c37\"",
+    "operationClass": "widening",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "leads_campaign_id_idx_77cd6c37",
+        "table": "leads"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"leads_campaign_id_idx_77cd6c37\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"leads_campaign_id_idx_77cd6c37\""
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"leads_campaign_id_idx_77cd6c37\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop index \"leads_campaign_id_idx_77cd6c37\"",
+        "sql": "DROP INDEX \"public\".\"leads_campaign_id_idx_77cd6c37\"",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"leads_campaign_id_idx_77cd6c37\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"leads_campaign_id_idx_77cd6c37\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"leads_campaign_id_idx_77cd6c37\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "dropColumn.leads.campaign_id",
+    "label": "Drop column \"campaign_id\" from \"leads\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "campaign_id",
+        "table": "leads"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"campaign_id\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "leads",
+          "campaign_id"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"campaign_id\" on \"leads\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop column \"campaign_id\"",
+        "sql": "ALTER TABLE \"public\".\"leads\" DROP COLUMN \"campaign_id\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"campaign_id\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "leads",
+          "campaign_id"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"campaign_id\" on \"leads\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "dropTable.orders",
+    "label": "Drop table \"orders\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "orders"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"orders\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"orders\""
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"orders\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop table \"orders\"",
+        "sql": "DROP TABLE \"public\".\"orders\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"orders\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"orders\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"orders\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "dropTable.publish_logs",
+    "label": "Drop table \"publish_logs\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "publish_logs"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"publish_logs\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"publish_logs\""
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"publish_logs\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop table \"publish_logs\"",
+        "sql": "DROP TABLE \"public\".\"publish_logs\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"publish_logs\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"publish_logs\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"publish_logs\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "dropTable.campaigns",
+    "label": "Drop table \"campaigns\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "campaigns"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"campaigns\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"campaigns\""
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"campaigns\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop table \"campaigns\"",
+        "sql": "DROP TABLE \"public\".\"campaigns\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"campaigns\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"campaigns\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"campaigns\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "column.public.presence_assessments.comment_count",
+    "label": "Add column \"comment_count\" to \"presence_assessments\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "comment_count",
+        "table": "presence_assessments"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"comment_count\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "presence_assessments",
+          "comment_count"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"comment_count\" on \"presence_assessments\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"comment_count\"",
+        "sql": "ALTER TABLE \"public\".\"presence_assessments\" ADD COLUMN \"comment_count\" int4"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"comment_count\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "presence_assessments",
+          "comment_count"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"comment_count\" on \"presence_assessments\""
+        }
+      },
+      {
+        "description": "verify column \"comment_count\" has type \"integer\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "presence_assessments",
+          "comment_count",
+          "integer"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.presence_assessments.like_count",
+    "label": "Add column \"like_count\" to \"presence_assessments\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "like_count",
+        "table": "presence_assessments"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"like_count\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "presence_assessments",
+          "like_count"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"like_count\" on \"presence_assessments\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"like_count\"",
+        "sql": "ALTER TABLE \"public\".\"presence_assessments\" ADD COLUMN \"like_count\" int4"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"like_count\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "presence_assessments",
+          "like_count"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"like_count\" on \"presence_assessments\""
+        }
+      },
+      {
+        "description": "verify column \"like_count\" has type \"integer\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "presence_assessments",
+          "like_count",
+          "integer"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.presence_assessments.view_count",
+    "label": "Add column \"view_count\" to \"presence_assessments\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "view_count",
+        "table": "presence_assessments"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"view_count\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "presence_assessments",
+          "view_count"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"view_count\" on \"presence_assessments\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"view_count\"",
+        "sql": "ALTER TABLE \"public\".\"presence_assessments\" ADD COLUMN \"view_count\" int4"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"view_count\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "presence_assessments",
+          "view_count"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"view_count\" on \"presence_assessments\""
+        }
+      },
+      {
+        "description": "verify column \"view_count\" has type \"integer\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "presence_assessments",
+          "view_count",
+          "integer"
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "title": "Help & Support",
+  "subtitle": "Quick answers to common questions.",
+  "faq": {
+    "makePost": {
+      "q": "How do I make a post?",
+      "a": "Open Home, tap the microphone and say what you want to promote, then add a photo. We write the caption and design the poster. You review it, then decide whether to publish."
+    },
+    "languages": {
+      "q": "Which languages can I speak?",
+      "a": "Hindi, Marathi and English. Pick your language on the Create screen. If your browser cannot recognise voice, type your message instead."
+    },
+    "approval": {
+      "q": "Will anything be posted without my approval?",
+      "a": "No. Posting only happens after you press Publish Now on the confirmation screen."
+    },
+    "mic": {
+      "q": "Why does the microphone say it is blocked?",
+      "a": "Your browser needs permission to use the microphone. Click the lock icon next to the web address and allow the microphone, then try again."
+    },
+    "accounts": {
+      "q": "Which Instagram accounts work?",
+      "a": "Business or Creator accounts. Personal accounts cannot be connected."
+    }
+  }
+}

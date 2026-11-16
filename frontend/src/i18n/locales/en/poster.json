@@ -1,0 +1,85 @@
+{
+  "preview": {
+    "alt": "Poster: {headline}",
+    "label": "Poster preview: {headline}",
+    "photoOf": "Photo {n} of {total}",
+    "stamp": "Preview",
+    "only": "Only",
+    "photoN": "Photo {n}",
+    "all": "All photos in this post"
+  },
+  "studio": {
+    "done": "Done: {changes}",
+    "savedNotice": "Saved. This poster is now the cover of your post.",
+    "title": "Poster",
+    "byAi": "Designed by AI",
+    "standard": "Standard layout",
+    "yours": "Your changes",
+    "intro": "We design a poster around your own photo. Your product photo is never changed, and the price is only ever the one you saved or typed.",
+    "price": "Price (optional)",
+    "pricePlaceholderSaved": "Uses your saved product price",
+    "pricePlaceholder": "For example 699",
+    "priceHint": "Shown only if you saved a price or typed one here.",
+    "offer": "Offer (optional)",
+    "offerPlaceholder": "For example 20% off this week",
+    "offerHint": "Needed for the Offer Poster. Shown exactly as you type it.",
+    "enhance": "Enhance Poster",
+    "template": "Template",
+    "needOffer": "Type an offer above to use this",
+    "background": "Background",
+    "backgroundStyle": "Background style",
+    "bg": {
+      "white": "White",
+      "mist": "Mist",
+      "slate": "Slate",
+      "blush": "Blush",
+      "sage": "Sage",
+      "charcoal": "Charcoal"
+    },
+    "font": "Font",
+    "fontStyle": "Font style",
+    "fonts": {
+      "auto": "Auto",
+      "clean": "Clean",
+      "modern": "Modern",
+      "elegant": "Elegant",
+      "bold": "Bold",
+      "friendly": "Friendly"
+    },
+    "photo": "Photo",
+    "photoEnhance": "Photo enhancement",
+    "treatments": {
+      "natural": {
+        "label": "Natural",
+        "hint": "Your photo as it is"
+      },
+      "brighter": {
+        "label": "Brighter",
+        "hint": "A little lighter"
+      },
+      "vivid": {
+        "label": "Vivid",
+        "hint": "Slightly richer colour"
+      },
+      "soft": {
+        "label": "Soft",
+        "hint": "Gentler contrast"
+      }
+    },
+    "badge": "Price badge",
+    "showing": "Showing {price}",
+    "show": "Show {price}",
+    "priceWord": "price",
+    "bottomRight": "Bottom right",
+    "bottomLeft": "Bottom left",
+    "noPrice": "No price yet. Save a price on your product, or type one above, and a badge can be added.",
+    "tellChange": "Tell us what to change",
+    "example": "For example \"make it look premium\"",
+    "apply": "Apply",
+    "editHint": "Colours, template, photo brightness, the price badge or the headline. Words and prices can't be changed here.",
+    "regenerate": "Regenerate design",
+    "saved": "Poster saved",
+    "save": "Save poster",
+    "redrawing": "Redrawing your poster…"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "step": "चरण 2 / 2",
+  "title": "अपने बिज़नेस के बारे में बताइए",
+  "subtitle": "इससे हम आपके लिए बेहतर पोस्ट बना पाएंगे।",
+  "signInInstead": "इसके बजाय साइन इन करें",
+  "businessName": "बिज़नेस का नाम",
+  "businessPlaceholder": "श्री फ़ैशन स्टूडियो",
+  "category": "बिज़नेस की श्रेणी",
+  "location": "जगह",
+  "locationHint": "शहर या इलाका, जैसे मुंबई, महाराष्ट्र",
+  "preferredLanguage": "पसंदीदा भाषा",
+  "continue": "आगे बढ़ें",
+  "back": "वापस",
+  "categories": {
+    "clothing": "बुटीक / कपड़े",
+    "jewellery": "ज्वेलरी",
+    "grocery": "किराना",
+    "footwear": "जूते-चप्पल"
+  }
+}

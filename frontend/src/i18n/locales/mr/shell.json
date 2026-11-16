@@ -1,0 +1,45 @@
+{
+  "main": "मुख्य मेनू",
+  "sidebarNote": "हिंदी, मराठी किंवा इंग्रजीत बोला. बाकी आम्ही सांभाळू.",
+  "openMenu": "मेनू उघडा",
+  "accountMenu": "खाते मेनू",
+  "yourAccount": "तुमचे खाते",
+  "signOut": "साइन आउट",
+  "nav": {
+    "home": "होम",
+    "createPost": "पोस्ट बनवा",
+    "createReel": "रील बनवा",
+    "myPosts": "माझे पोस्ट",
+    "products": "प्रॉडक्ट",
+    "settings": "सेटिंग्ज"
+  },
+  "titles": {
+    "app": "GrowPilot",
+    "home": "होम",
+    "myPosts": "माझे पोस्ट",
+    "products": "प्रॉडक्ट",
+    "settings": "सेटिंग्ज",
+    "help": "मदत आणि सहाय्य",
+    "ideas": "पोस्टच्या कल्पना",
+    "create": "पोस्ट बनवा",
+    "generating": "तुमचा पोस्ट तयार होत आहे",
+    "preview": "पाहा आणि बदला",
+    "publish": "पब्लिश करा",
+    "published": "पब्लिश झाले",
+    "reels": "रील बनवा",
+    "reelLibrary": "माझ्या रील",
+    "reelGenerating": "तुमची रील तयार होत आहे",
+    "reelEdit": "तुमची रील बदला",
+    "reelPublish": "तुमची रील पब्लिश करा",
+    "reelStatus": "रीलची स्थिती",
+    "reelPreview": "रील प्रीव्ह्यू"
+  },
+  "ig": {
+    "title": "Instagram कनेक्शन",
+    "account": "खाते",
+    "connected": "Instagram शी जोडले आहे · @{name}",
+    "problem": "Instagram पुन्हा जोडावे लागेल",
+    "none": "Instagram जोडलेले नाही",
+    "checking": "Instagram तपासत आहे…"
+  }
+}

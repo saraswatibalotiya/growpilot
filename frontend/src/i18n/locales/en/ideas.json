@@ -1,0 +1,51 @@
+{
+  "useThis": "Use This",
+  "useIdea": "Use this idea: {title}",
+  "section": {
+    "title": "Not sure what to say?",
+    "subtitle": "Here are some popular ideas for your business",
+    "exploreMore": "Explore More"
+  },
+  "page": {
+    "back": "Back",
+    "title": "Post ideas",
+    "forCategory": "Ideas picked for a {category} shop. Choose one to start a post.",
+    "forAny": "Ideas for any small business. Choose one to start a post.",
+    "loadError": "We could not load ideas right now. Please try again."
+  },
+  "groups": {
+    "product": "Product Promotions",
+    "sales": "Sales & Offers",
+    "engagement": "Customer Engagement",
+    "education": "Educational Content",
+    "festival": "Festivals & Occasions",
+    "growth": "Business Growth"
+  },
+  "nouns": {
+    "clothing": "collection",
+    "jewellery": "jewellery pieces",
+    "grocery": "fresh stock",
+    "footwear": "footwear",
+    "generic": "products"
+  },
+  "items": {
+    "newArrivals": { "title": "Show New Arrivals", "description": "Highlight your latest collection or products.", "prompt": "Create an Instagram post showcasing my new {noun}." },
+    "bestseller": { "title": "Feature a Bestseller", "description": "Spotlight the item your customers buy again and again.", "prompt": "Create a post highlighting my bestselling {noun}." },
+    "productStory": { "title": "Tell a Product Story", "description": "Share where an item comes from and why you love it.", "prompt": "Write a post telling the story behind one of my {noun}." },
+    "announceSale": { "title": "Announce a Sale", "description": "Share special discounts or offers.", "prompt": "Create a post announcing a sale on my {noun}." },
+    "weekendOffer": { "title": "Weekend Offer", "description": "A limited-time deal that gives people a reason to visit this weekend.", "prompt": "Create a weekend offer post for my {noun}." },
+    "bundleDeal": { "title": "Bundle Deal", "description": "Pair two or more items at a better combined price.", "prompt": "Create a post about a bundle deal on my {noun}." },
+    "happyCustomer": { "title": "Share a Happy Customer", "description": "Showcase reviews or customer love.", "prompt": "Create a post sharing a happy customer review of my {noun}." },
+    "askOpinion": { "title": "Ask Your Followers", "description": "Ask which design or flavour they like best and invite comments.", "prompt": "Create a post asking my followers which of my {noun} they like best." },
+    "behindScenes": { "title": "Behind the Scenes", "description": "Show how the shop runs, from unpacking to the shop floor.", "prompt": "Create a behind-the-scenes post about my shop and my {noun}." },
+    "quickTip": { "title": "Give a Quick Tip", "description": "Share useful tips related to your business.", "prompt": "Create a short tip post that helps customers choose the right {noun}." },
+    "careGuide": { "title": "Care & Storage Guide", "description": "Show customers how to look after what they buy.", "prompt": "Create a post with simple care tips for my {noun}." },
+    "mythBusting": { "title": "Busting a Myth", "description": "Correct a common misunderstanding about your products.", "prompt": "Create a post that busts a common myth about my {noun}." },
+    "festivalWish": { "title": "Celebrate an Occasion", "description": "Wish your audience on festivals or events.", "prompt": "Create a festive greetings post for my customers with my {noun}." },
+    "giftGuide": { "title": "Gift Guide", "description": "Suggest gifts from your shop for a special day.", "prompt": "Create a gift guide post with ideas from my {noun}." },
+    "seasonLaunch": { "title": "Seasonal Launch", "description": "Introduce your range for the coming season.", "prompt": "Create a post launching my new seasonal {noun}." },
+    "visitUs": { "title": "Invite People to DM", "description": "Invite local people to message you to order or ask about it.", "prompt": "Create a post inviting people nearby to DM me to order the {noun}." },
+    "milestone": { "title": "Share a Milestone", "description": "Celebrate a thank-you moment with your community.", "prompt": "Create a thank-you post to my customers, with a line about my {noun}." },
+    "collab": { "title": "Local Collaboration", "description": "Feature a neighbouring business or creator you work with.", "prompt": "Create a post about a local collaboration featuring my {noun}." }
+  }
+}

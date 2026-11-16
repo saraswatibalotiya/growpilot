@@ -1,0 +1,62 @@
+[
+  {
+    "id": "column.public.reels.extra_image_urls",
+    "label": "Add column \"extra_image_urls\" to \"reels\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "extra_image_urls",
+        "table": "reels"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"extra_image_urls\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "extra_image_urls"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"extra_image_urls\" on \"reels\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"extra_image_urls\"",
+        "sql": "ALTER TABLE \"public\".\"reels\" ADD COLUMN \"extra_image_urls\" json"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"extra_image_urls\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "extra_image_urls"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"extra_image_urls\" on \"reels\""
+        }
+      },
+      {
+        "description": "verify column \"extra_image_urls\" has type \"json\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "extra_image_urls",
+          "json"
+        ]
+      }
+    ]
+  }
+]

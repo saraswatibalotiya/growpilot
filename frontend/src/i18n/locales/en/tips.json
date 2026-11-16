@@ -1,0 +1,30 @@
+{
+  "problem": {
+    "very_blurry": "Hold steady and tap to focus.",
+    "slightly_blurry": "Keep your hands steady.",
+    "too_dark": "Shoot in daylight.",
+    "too_bright": "Avoid harsh sunlight.",
+    "low_contrast": "Use a plain, contrasting background.",
+    "colour_cast": "Avoid yellow bulbs.",
+    "busy_background": "Use a clean, plain background.",
+    "too_much_empty_space": "Move closer.",
+    "product_cut_off": "Fit the whole product in.",
+    "product_at_edge": "Keep space around the product.",
+    "product_not_separated": "Use a different colour behind it.",
+    "low_resolution": "Use the main camera, no zoom.",
+    "awkward_aspect_ratio": "Hold the phone upright."
+  },
+  "pre": {
+    "tip1": "Shoot in bright, natural daylight.",
+    "tip2": "Use a clean, plain background.",
+    "tip3": "Keep space around the product.",
+    "tip4": "Hold the phone upright.",
+    "tip5": "Keep your hands steady and tap to focus.",
+    "tip6": "Use the main camera. Do not zoom.",
+    "tip7": "Show one product clearly, fully in the frame.",
+    "tip8": "Wipe the camera lens first."
+  },
+  "score": "Score {score} out of 100.",
+  "allGood": "Looks great.",
+  "title": "Tips for a great photo"
+}

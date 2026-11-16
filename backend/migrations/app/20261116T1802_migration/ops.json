@@ -1,0 +1,188 @@
+[
+  {
+    "id": "dropDefault.reels.tone",
+    "label": "Drop default on \"reels\".\"tone\"",
+    "operationClass": "widening",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "tone",
+        "table": "reels"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"tone\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "tone"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"tone\" on \"reels\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"tone\"",
+        "sql": "ALTER TABLE \"public\".\"reels\" ALTER COLUMN \"tone\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"tone\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "tone"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.reels.caption_length",
+    "label": "Add column \"caption_length\" to \"reels\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "caption_length",
+        "table": "reels"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"caption_length\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "caption_length"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"caption_length\" on \"reels\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"caption_length\"",
+        "sql": "ALTER TABLE \"public\".\"reels\" ADD COLUMN \"caption_length\" text DEFAULT 'medium' NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"caption_length\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "caption_length"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"caption_length\" on \"reels\""
+        }
+      },
+      {
+        "description": "verify column \"caption_length\" has type \"text\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "caption_length",
+          "text"
+        ]
+      },
+      {
+        "description": "verify column \"caption_length\" is NOT NULL",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"is_nullable\" = $4)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "caption_length",
+          "NO"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.reels.hashtag_level",
+    "label": "Add column \"hashtag_level\" to \"reels\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "hashtag_level",
+        "table": "reels"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"hashtag_level\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "hashtag_level"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"hashtag_level\" on \"reels\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"hashtag_level\"",
+        "sql": "ALTER TABLE \"public\".\"reels\" ADD COLUMN \"hashtag_level\" text DEFAULT 'medium' NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"hashtag_level\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "hashtag_level"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"hashtag_level\" on \"reels\""
+        }
+      },
+      {
+        "description": "verify column \"hashtag_level\" has type \"text\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "hashtag_level",
+          "text"
+        ]
+      },
+      {
+        "description": "verify column \"hashtag_level\" is NOT NULL",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"is_nullable\" = $4)) AS \"result\"",
+        "params": [
+          "public",
+          "reels",
+          "hashtag_level",
+          "NO"
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,505 @@
+// use prisma-8
+
+enum UserStatus {
+  active
+  disabled
+}
+
+enum SocialPlatform {
+  instagram
+}
+
+enum MediaVariant {
+  original
+  enhanced
+  ai_edited
+  poster
+}
+
+enum PostStatus {
+  DRAFT
+  CONTENT_GENERATED
+  PREVIEW_READY
+  USER_APPROVED
+  PUBLISHING
+  PUBLISHED
+  FAILED
+}
+
+enum ConversationStatus {
+  active
+  closed
+}
+
+enum MessageRole {
+  user
+  assistant
+  system
+}
+
+enum BusinessCategory {
+  clothing
+  jewellery
+  grocery
+  footwear
+  other
+}
+
+enum BusinessLanguage {
+  hi
+  mr
+  en
+}
+
+enum SocialAccountStatus {
+  connected
+  expired
+  error
+  disconnected
+}
+
+enum TokenSource {
+  oauth
+  dashboard
+}
+
+enum SyncKind {
+  profile
+  media
+  metrics
+}
+
+enum SyncStatus {
+  queued
+  running
+  succeeded
+  failed
+}
+
+enum RecommendationStatus {
+  active
+  accepted
+  dismissed
+  completed
+}
+
+enum ReelStatus {
+  QUEUED
+  WRITING_SCRIPT
+  GENERATING_VOICE
+  RENDERING
+  READY
+  FAILED
+  CANCELLED
+  APPROVED
+  PUBLISHING
+  PUBLISHED
+  PUBLISH_FAILED
+}
+
+enum ReelStage {
+  UNDERSTANDING
+  SCRIPT
+  VOICEOVER
+  SCENES
+  RENDERING
+  PREVIEW
+}
+
+enum ReelTemplate {
+  SHOWCASE
+  NEW_ARRIVALS
+  SPECIAL_OFFER
+  MINIMAL_PREMIUM
+}
+
+model User {
+  id             String         @id @onCreate(uuid())
+  name           String
+  email          String         @unique
+  passwordHash   String         @map("password_hash")
+  status         UserStatus     @default(active)
+  businesses     Business[]
+  refreshTokens  RefreshToken[]
+  conversations  Conversation[]
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @onCreate(now()) @onUpdate(now()) @map("updated_at")
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String    @id
+  userId    String    @map("user_id")
+  familyId  String    @map("family_id")
+  tokenHash String    @unique @map("token_hash")
+  expiresAt DateTime  @map("expires_at")
+  revokedAt DateTime? @map("revoked_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([familyId])
+  @@map("auth_refresh_tokens")
+}
+
+model Business {
+  id            String   @id @onCreate(uuid())
+  userId        String   @map("user_id")
+  name          String
+  category      BusinessCategory @default(other)
+  description   String?
+  website       String?
+  location      String?
+  primaryGoal   String?  @map("primary_goal")
+  contactMethod String?  @map("contact_method")
+  preferredLanguage BusinessLanguage? @map("preferred_language")
+  city          String?
+  area          String?
+  targetAudience String? @map("target_audience")
+  supportedLanguages Json? @map("supported_languages")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @onCreate(now()) @onUpdate(now()) @map("updated_at")
+
+  user            User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  socialAccounts  SocialAccount[]
+  recommendations Recommendation[]
+  mediaAssets     MediaAsset[]
+  generationCache  GenerationCache[]
+  products        Product[]
+  conversations   Conversation[]
+  generatedPosts  GeneratedPost[]
+  reels           Reel[]
+
+  @@index([userId])
+  @@map("businesses")
+}
+
+model SocialAccount {
+  id                   String              @id @onCreate(uuid())
+  businessId           String              @map("business_id")
+  platform             SocialPlatform
+  platformAccountId    String              @map("platform_account_id")
+  username             String?
+  displayName          String?             @map("display_name")
+  facebookPageId       String?             @map("facebook_page_id")
+  accountType          String?             @map("account_type")
+  permissionsJson      Json?               @map("permissions_json")
+  isMock               Boolean             @default(true) @map("is_mock")
+  lastSyncedAt         DateTime?           @map("last_synced_at")
+  accessTokenEncrypted String?             @map("access_token_encrypted")
+  tokenExpiresAt       DateTime?           @map("token_expires_at")
+  tokenSource          TokenSource         @default(oauth) @map("token_source")
+  lastMediaSyncAt      DateTime?           @map("last_media_sync_at")
+  livePublishAllowed   Boolean             @default(false) @map("live_publish_allowed")
+  followerCount        Int?                @map("follower_count")
+  postCount            Int?                @map("post_count")
+  status               SocialAccountStatus @default(connected)
+  createdAt            DateTime            @default(now()) @map("created_at")
+  updatedAt            DateTime            @onCreate(now()) @onUpdate(now()) @map("updated_at")
+
+  business    Business             @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  posts       InstagramPost[]
+  syncRuns    SyncRun[]
+
+  @@index([businessId])
+  @@index([platformAccountId])
+  @@unique([platform, platformAccountId])
+  @@map("social_accounts")
+}
+
+model Recommendation {
+  id                 String               @id @onCreate(uuid())
+  businessId         String               @map("business_id")
+  title              String
+  description        String?
+  reason             String?
+  actionType         String               @map("action_type")
+  stage              String?
+  bottleneck         String?
+  confidence         NumericString(4, 2)?
+  status             RecommendationStatus @default(active)
+  successMetricsJson Json?                @map("success_metrics_json")
+  payloadJson        Json?                @map("payload_json")
+  createdAt          DateTime             @default(now()) @map("created_at")
+  updatedAt          DateTime             @onCreate(now()) @onUpdate(now()) @map("updated_at")
+
+  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@index([businessId])
+  @@map("recommendations")
+}
+
+model InstagramPost {
+  id               String    @id @onCreate(uuid())
+  socialAccountId  String    @map("social_account_id")
+  platformMediaId  String    @map("platform_media_id")
+  mediaType        String?   @map("media_type")
+  mediaProductType String?   @map("media_product_type")
+  caption          String?
+  permalink        String?
+  mediaUrl         String?   @map("media_url")
+  thumbnailUrl     String?   @map("thumbnail_url")
+  publishedAt      DateTime? @map("published_at")
+  lastSeenAt       DateTime  @map("last_seen_at")
+  deletedAt        DateTime? @map("deleted_at")
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @onCreate(now()) @onUpdate(now()) @map("updated_at")
+
+  socialAccount SocialAccount        @relation(fields: [socialAccountId], references: [id], onDelete: Cascade)
+  snapshots     PostMetricSnapshot[]
+
+  @@unique([socialAccountId, platformMediaId])
+  @@index([socialAccountId, publishedAt])
+  @@map("instagram_posts")
+}
+
+// Append-only: one new row per sync. Metric columns are nullable: NULL = unknown, 0 = zero.
+model PostMetricSnapshot {
+  id              String   @id @onCreate(uuid())
+  instagramPostId String   @map("instagram_post_id")
+  capturedAt      DateTime @default(now()) @map("captured_at")
+  reach           Int?
+  views           Int?
+  likes           Int?
+  comments        Int?
+  saves           Int?
+  shares          Int?
+  profileVisits   Int?     @map("profile_visits")
+
+  post InstagramPost @relation(fields: [instagramPostId], references: [id], onDelete: Cascade)
+
+  @@index([instagramPostId, capturedAt], map: "idx_snapshots_post_captured")
+  @@map("post_metric_snapshots")
+}
+
+model SyncRun {
+  id             String     @id @onCreate(uuid())
+  socialAccountId String    @map("social_account_id")
+  kind           SyncKind
+  status         SyncStatus @default(queued)
+  startedAt      DateTime   @default(now()) @map("started_at")
+  finishedAt     DateTime?  @map("finished_at")
+  itemsProcessed Int        @default(0) @map("items_processed")
+  errorCode      String?    @map("error_code")
+  errorMessage   String?    @map("error_message")
+
+  socialAccount SocialAccount @relation(fields: [socialAccountId], references: [id], onDelete: Cascade)
+
+  @@index([socialAccountId, startedAt])
+  @@map("sync_runs")
+}
+
+// Original product photo. The file lives in Cloudinary; we keep only its metadata and public id.
+// A processed version (Photo Studio) is also a MediaAsset, linked to the photo it came from.
+model MediaAsset {
+  id                String   @id @onCreate(uuid())
+  businessId        String   @map("business_id")
+  cloudinaryPublicId String  @map("cloudinary_public_id")
+  secureUrl         String   @map("secure_url")
+  mimeType          String   @map("mime_type")
+  width             Int?
+  height            Int?
+  bytes             Int
+  sha256            String
+  sourceAssetId     String?  @map("source_asset_id")
+  variant           MediaVariant @default(original)
+  processingKey     String?  @map("processing_key")
+  processingJson    Json?    @map("processing_json")
+  approvedAt        DateTime? @map("approved_at")
+  createdAt         DateTime @default(now()) @map("created_at")
+
+  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  source   MediaAsset?  @relation("MediaVariants", fields: [sourceAssetId], references: [id], onDelete: Cascade)
+  variants MediaAsset[] @relation("MediaVariants")
+  analyses MediaAnalysis[]
+  reels    Reel[]
+
+  @@index([businessId, createdAt])
+  @@index([sourceAssetId])
+  @@unique([sourceAssetId, processingKey])
+  @@map("media_assets")
+}
+
+/// Photo Studio analysis of an original photo. Cached so Claude is asked at most once per photo and prompt version.
+model MediaAnalysis {
+  id            String   @id @onCreate(uuid())
+  mediaAssetId  String   @map("media_asset_id")
+  kind          String
+  version       String
+  resultJson    Json     @map("result_json")
+  usageJson     Json?    @map("usage_json")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  mediaAsset MediaAsset @relation(fields: [mediaAssetId], references: [id], onDelete: Cascade)
+
+  @@unique([mediaAssetId, kind, version])
+  @@map("media_analyses")
+}
+
+model Product {
+  id          String         @id @onCreate(uuid())
+  businessId  String         @map("business_id")
+  name        String
+  description String?
+  category    String?
+  price       NumericString(12, 2)?
+  currency    String         @default("INR")
+  imageUrl    String?        @map("image_url")
+  isAvailable Boolean        @default(true) @map("is_available")
+  createdAt   DateTime       @default(now()) @map("created_at")
+  updatedAt   DateTime       @onCreate(now()) @onUpdate(now()) @map("updated_at")
+
+  business       Business        @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  generatedPosts GeneratedPost[]
+  reels          Reel[]
+
+  @@index([businessId, createdAt])
+  @@map("products")
+}
+
+model Conversation {
+  id         String             @id @onCreate(uuid())
+  businessId String             @map("business_id")
+  userId     String             @map("user_id")
+  status     ConversationStatus @default(active)
+  createdAt  DateTime           @default(now()) @map("created_at")
+  updatedAt  DateTime           @onCreate(now()) @onUpdate(now()) @map("updated_at")
+
+  business       Business              @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  user           User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages       ConversationMessage[]
+  generatedPosts GeneratedPost[]
+
+  @@index([businessId, createdAt])
+  @@map("conversations")
+}
+
+model ConversationMessage {
+  id             String       @id @onCreate(uuid())
+  conversationId String       @map("conversation_id")
+  role           MessageRole
+  content        String
+  language       BusinessLanguage?
+  metadata       Json?
+  createdAt      DateTime     @default(now()) @map("created_at")
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, createdAt])
+  @@map("conversation_messages")
+}
+
+model GeneratedPost {
+  id               String          @id @onCreate(uuid())
+  businessId       String          @map("business_id")
+  conversationId   String?         @map("conversation_id")
+  productId        String?         @map("product_id")
+  originalImageUrl String?         @map("original_image_url")
+  posterImageUrl   String?         @map("poster_image_url")
+  caption          String?
+  headline         String?
+  callToAction     String?         @map("call_to_action")
+  hashtags         Json?
+  language         BusinessLanguage?
+  status           PostStatus      @default(DRAFT)
+  instagramMediaId String?         @map("instagram_media_id")
+  publishedAt      DateTime?       @map("published_at")
+  createdAt        DateTime        @default(now()) @map("created_at")
+  updatedAt        DateTime        @onCreate(now()) @onUpdate(now()) @map("updated_at")
+
+  business     Business      @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  conversation Conversation? @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+  product      Product?      @relation(fields: [productId], references: [id], onDelete: SetNull)
+  images       PostImage[]
+
+  @@index([businessId, createdAt])
+  @@map("generated_posts")
+}
+
+// One photo in a post's carousel. position 0 is the cover. Instagram allows up to 10 per carousel.
+model PostImage {
+  id              String   @id @onCreate(uuid())
+  postId          String   @map("post_id")
+  position        Int
+  imageUrl        String   @map("image_url")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  post GeneratedPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, position])
+  @@map("post_images")
+}
+
+/// An AI Reel: product photo + template + AI voiceover rendered to a 10 s 9:16 MP4. voiceStale/videoStale say which assets no longer match the content.
+model Reel {
+  id               String            @id @onCreate(uuid())
+  businessId       String            @map("business_id")
+  productId        String?           @map("product_id")
+  mediaAssetId     String?           @map("media_asset_id")
+  sourceImageUrl   String            @map("source_image_url")
+  /// Up to four more photos (https URLs) used in the middle scenes.
+  extraImageUrls   Json?             @map("extra_image_urls")
+  language         BusinessLanguage
+  template         ReelTemplate
+  /// How the photo is shown: FULL_PHOTO, or AI_<STYLE> for a Gemini-generated background scene.
+  look             String            @default("FULL_PHOTO")
+  /// Composer options; see reels.constants.ts for the allowed values.
+  backgroundStyle  String            @default("BEIGE_STUDIO") @map("background_style")
+  animationLevel   String            @default("BALANCED") @map("animation_level")
+  textStyle        String            @default("CLASSIC") @map("text_style")
+  music            String            @default("NONE")
+  /// Quality-control result of the last render (checks run before the video is shown).
+  renderReport     Json?             @map("render_report")
+  instruction      String?
+  /// One of TONES in src/common/constants.ts. The owner picks it for every reel, so there is no default.
+  tone             String
+  captionLength    String            @default("medium") @map("caption_length")
+  hashtagLevel     String            @default("medium") @map("hashtag_level")
+  productName      String            @map("product_name")
+  price            String?
+  businessName     String            @map("business_name")
+  offerText        String?           @map("offer_text")
+  script           String?
+  scenes           Json?
+  caption          String?
+  hashtags         Json?
+  status           ReelStatus        @default(QUEUED)
+  stage            ReelStage         @default(UNDERSTANDING)
+  error            String?
+  voiceUrl         String?           @map("voice_url")
+  videoUrl         String?           @map("video_url")
+  thumbnailUrl     String?           @map("thumbnail_url")
+  durationSeconds  Int               @default(10) @map("duration_seconds")
+  voiceStale       Boolean           @default(true) @map("voice_stale")
+  videoStale       Boolean           @default(true) @map("video_stale")
+  publishAmbiguous Boolean           @default(false) @map("publish_ambiguous")
+  instagramMediaId String?           @map("instagram_media_id")
+  permalink        String?
+  publishedAt      DateTime?         @map("published_at")
+  approvedAt       DateTime?         @map("approved_at")
+  createdAt        DateTime          @default(now()) @map("created_at")
+  updatedAt        DateTime          @onCreate(now()) @onUpdate(now()) @map("updated_at")
+
+  business   Business    @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  product    Product?    @relation(fields: [productId], references: [id], onDelete: SetNull)
+  mediaAsset MediaAsset? @relation(fields: [mediaAssetId], references: [id], onDelete: SetNull)
+
+  @@index([businessId, createdAt])
+  @@map("reels")
+}
+
+/// A saved AI answer. Same business + same photos + same words + same language reuses it instead of calling the model again.
+model GenerationCache {
+  id           String   @id @onCreate(uuid())
+  businessId   String   @map("business_id")
+  cacheKey     String   @map("cache_key")
+  responseJson Json     @map("response_json")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@unique([businessId, cacheKey])
+  @@map("generation_cache")
+}

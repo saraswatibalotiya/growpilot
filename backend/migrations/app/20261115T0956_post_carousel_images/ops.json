@@ -1,0 +1,199 @@
+[
+  {
+    "id": "table.post_images",
+    "label": "Create table \"post_images\"",
+    "summary": "Creates table \"post_images\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "post_images"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"post_images\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"post_images\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"post_images\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"post_images\"",
+        "sql": "CREATE TABLE \"public\".\"post_images\" (\n  \"created_at\" timestamptz(3) DEFAULT (now()) NOT NULL,\n  \"id\" text NOT NULL,\n  \"image_url\" text NOT NULL,\n  \"position\" int4 NOT NULL,\n  \"post_id\" text NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"post_images\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"post_images\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"post_images\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "unique.post_images.post_images_post_id_position_key",
+    "label": "Add unique constraint on \"post_images\" (post_id, position)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "post_images_post_id_position_key",
+        "table": "post_images"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"post_images_post_id_position_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "post_images_post_id_position_key",
+          "public",
+          "\"public\".\"post_images\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"post_images_post_id_position_key\" on \"post_images\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"post_images_post_id_position_key\"",
+        "sql": "ALTER TABLE \"public\".\"post_images\" ADD CONSTRAINT \"post_images_post_id_position_key\" UNIQUE (\"post_id\", \"position\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify unique constraint \"post_images_post_id_position_key\" exists on (post_id, position)",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb)) AS \"result\"",
+        "params": [
+          "post_images_post_id_position_key",
+          "public",
+          "\"public\".\"post_images\"",
+          "u",
+          "[\"post_id\",\"position\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.post_images.post_images_post_id_idx_865a6df2",
+    "label": "Create index \"post_images_post_id_idx_865a6df2\" on \"post_images\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "post_images_post_id_idx_865a6df2",
+        "table": "post_images"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"post_images_post_id_idx_865a6df2\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"post_images_post_id_idx_865a6df2\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"post_images_post_id_idx_865a6df2\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"post_images_post_id_idx_865a6df2\"",
+        "sql": "CREATE INDEX \"post_images_post_id_idx_865a6df2\" ON \"public\".\"post_images\" (\"post_id\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"post_images_post_id_idx_865a6df2\" exists on \"post_images\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"post_images_post_id_idx_865a6df2\"",
+          "i",
+          "I",
+          "\"public\".\"post_images\"",
+          "btree",
+          "[\"post_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.post_images.post_images_post_id_fkey",
+    "label": "Add foreign key \"post_images_post_id_fkey\" on \"post_images\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "post_images_post_id_fkey",
+        "table": "post_images"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"post_images_post_id_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "post_images_post_id_fkey",
+          "public",
+          "\"public\".\"post_images\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"post_images_post_id_fkey\" on \"post_images\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"post_images_post_id_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"post_images\"\nADD CONSTRAINT \"post_images_post_id_fkey\"\nFOREIGN KEY (\"post_id\")\nREFERENCES \"public\".\"generated_posts\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"post_images_post_id_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "post_images_post_id_fkey",
+          "public",
+          "\"public\".\"post_images\"",
+          "f",
+          "[\"post_id\"]",
+          "\"public\".\"generated_posts\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  }
+]

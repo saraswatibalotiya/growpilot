@@ -1,0 +1,22 @@
+{
+  "title": "सेटिंग्स",
+  "subtitle": "आपके बिज़नेस की जानकारी और कनेक्शन।",
+  "business": "बिज़नेस",
+  "saved": "सेव हो गया।",
+  "businessName": "बिज़नेस का नाम",
+  "category": "श्रेणी",
+  "location": "जगह",
+  "preferredLanguage": "पसंदीदा भाषा",
+  "saveChanges": "बदलाव सेव करें",
+  "connectedAs": "इस खाते से जुड़ा है:",
+  "problemBefore": "इस खाते का कनेक्शन:",
+  "problemAfter": "की स्थिति: {status}। पब्लिश करते रहने के लिए दोबारा जोड़ें।",
+  "noInstagram": "अभी कोई Instagram खाता जुड़ा नहीं है।",
+  "checking": "जांच रहे हैं…",
+  "reconnect": "दोबारा जोड़ें",
+  "connect": "Instagram जोड़ें",
+  "refresh": "स्थिति ताज़ा करें",
+  "privacy": "हम आपका Instagram पासवर्ड कभी नहीं दिखाते और न सेव करते हैं। एक्सेस टोकन हमारे सर्वर पर ही रहते हैं।",
+  "account": "खाता",
+  "signOut": "साइन आउट"
+}

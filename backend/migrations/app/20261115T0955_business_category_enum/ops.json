@@ -1,0 +1,85 @@
+[
+  {
+    "id": "setDefault.businesses.category",
+    "label": "Set default on \"businesses\".\"category\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "category",
+        "table": "businesses"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"category\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "businesses",
+          "category"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"category\" on \"businesses\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "set default on \"category\"",
+        "sql": "ALTER TABLE \"public\".\"businesses\" ALTER COLUMN \"category\" SET DEFAULT 'other'"
+      }
+    ],
+    "postcheck": []
+  },
+  {
+    "id": "checkConstraint.businesses.businesses_category_check_06109f42",
+    "label": "Add check constraint \"businesses_category_check_06109f42\" on \"businesses\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "checkConstraint",
+        "name": "businesses_category_check_06109f42",
+        "table": "businesses"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"businesses_category_check_06109f42\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "businesses_category_check_06109f42",
+          "public",
+          "\"public\".\"businesses\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"businesses_category_check_06109f42\" on \"businesses\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add check constraint \"businesses_category_check_06109f42\"",
+        "sql": "ALTER TABLE \"public\".\"businesses\" ADD CONSTRAINT \"businesses_category_check_06109f42\" CHECK (\"category\" IN ('clothing', 'jewellery', 'grocery', 'footwear', 'other'))"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify check constraint \"businesses_category_check_06109f42\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4)) AS \"result\"",
+        "params": [
+          "businesses_category_check_06109f42",
+          "public",
+          "\"public\".\"businesses\"",
+          "c"
+        ]
+      }
+    ]
+  }
+]

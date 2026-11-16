@@ -1,0 +1,21 @@
+{
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "daysAgo": "{days} days ago",
+  "goodMorning": "Good morning",
+  "goodAfternoon": "Good afternoon",
+  "goodEvening": "Good evening",
+  "greetingName": "{greeting}, {name}!",
+  "greeting": "{greeting}!",
+  "untitled": "Untitled post",
+  "title": "What would you like to promote today?",
+  "subtitle": "Tell us in Hindi, Marathi or English. We turn it into a post.",
+  "tapToSpeak": "Tap to speak",
+  "example": "“New arrivals, make a post”",
+  "createPost": "Create a Post",
+  "recent": "Recent posts",
+  "viewAll": "View all →",
+  "noPosts": "No posts yet",
+  "firstPost": "Make your first post",
+  "noPostsHint": "Tap the microphone and describe something you sell. Your first post takes about a minute."
+}

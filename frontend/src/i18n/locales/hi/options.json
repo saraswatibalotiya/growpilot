@@ -1,0 +1,15 @@
+{
+  "captionLength": {
+    "title": "कैप्शन की लंबाई",
+    "short": "छोटा",
+    "medium": "मध्यम",
+    "long": "लंबा"
+  },
+  "hashtags": {
+    "title": "हैशटैग",
+    "few": "कम",
+    "medium": "मध्यम",
+    "many": "ज़्यादा"
+  },
+  "needTone": "एक टोन चुनें।"
+}

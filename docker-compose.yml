@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: growpilot_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: growpilot_db
+      POSTGRES_USER: growpilot_user
+      POSTGRES_PASSWORD: growpilot_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - growpilot_postgres_data:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer:latest
+    container_name: growpilot_adminer
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+
+  redis:
+    image: redis:7
+    container_name: growpilot_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - growpilot_redis_data:/data
+
+volumes:
+  growpilot_postgres_data:
+  growpilot_redis_data:

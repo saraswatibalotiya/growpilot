@@ -1,0 +1,296 @@
+[
+  {
+    "caseId": "TC001_ZERO_PRESENCE_RETAIL",
+    "business": {
+      "name": "Sunday Staples",
+      "category": "retail",
+      "description": "Small local store selling daily essentials and home products.",
+      "location": "Mumbai",
+      "primaryGoal": "get_visibility",
+      "contactMethod": "whatsapp"
+    },
+    "instagram": {
+      "connected": true,
+      "accountType": "business",
+      "postCount": 0,
+      "followerCount": 12,
+      "bioComplete": false,
+      "contactPresent": false
+    },
+    "campaignHistory": [],
+    "expectedRecommendation": {
+      "actionType": "business_intro_post",
+      "bottleneck": "no_content",
+      "stage": "no_presence"
+    }
+  },
+  {
+    "caseId": "TC002_LOW_REACH_FASHION",
+    "business": {
+      "name": "Lorianne",
+      "category": "fashion",
+      "description": "Boutique fashion brand selling dresses and accessories.",
+      "location": "London",
+      "primaryGoal": "get_enquiries",
+      "contactMethod": "website"
+    },
+    "instagram": {
+      "connected": true,
+      "accountType": "business",
+      "postCount": 8,
+      "followerCount": 180,
+      "bioComplete": true,
+      "contactPresent": true
+    },
+    "recentMetrics": {
+      "averageReach": 45,
+      "averageLikes": 3,
+      "averageComments": 0,
+      "enquiries": 0,
+      "orders": 0
+    },
+    "expectedRecommendation": {
+      "actionType": "visibility_post",
+      "bottleneck": "low_reach",
+      "stage": "visibility"
+    }
+  },
+  {
+    "caseId": "TC003_HIGH_REACH_LOW_ENQUIRY",
+    "business": {
+      "name": "Fresh Crumbs Bakery",
+      "category": "food",
+      "description": "Home bakery selling custom cakes and cookies.",
+      "location": "Dubai",
+      "primaryGoal": "get_whatsapp_messages",
+      "contactMethod": "whatsapp"
+    },
+    "instagram": {
+      "connected": true,
+      "accountType": "creator",
+      "postCount": 15,
+      "followerCount": 900,
+      "bioComplete": true,
+      "contactPresent": true
+    },
+    "recentMetrics": {
+      "reach": 2100,
+      "profileVisits": 140,
+      "clicks": 3,
+      "enquiries": 0,
+      "orders": 0
+    },
+    "expectedRecommendation": {
+      "actionType": "cta_conversion_post",
+      "bottleneck": "high_reach_low_clicks",
+      "stage": "enquiry"
+    }
+  },
+  {
+    "caseId": "TC004_CLICKS_NO_ENQUIRIES",
+    "business": {
+      "name": "Glow Room Salon",
+      "category": "beauty",
+      "description": "Beauty salon offering facials, nails, and bridal makeup.",
+      "location": "Delhi",
+      "primaryGoal": "get_bookings",
+      "contactMethod": "whatsapp"
+    },
+    "instagram": {
+      "connected": true,
+      "accountType": "business",
+      "postCount": 23,
+      "followerCount": 1300,
+      "bioComplete": true,
+      "contactPresent": true
+    },
+    "recentMetrics": {
+      "reach": 3000,
+      "profileVisits": 280,
+      "clicks": 65,
+      "enquiries": 2,
+      "orders": 0
+    },
+    "expectedRecommendation": {
+      "actionType": "trust_offer_post",
+      "bottleneck": "high_clicks_low_enquiries",
+      "stage": "enquiry"
+    }
+  },
+  {
+    "caseId": "TC005_ENQUIRIES_LOW_ORDERS",
+    "business": {
+      "name": "FitFuel Meals",
+      "category": "food",
+      "description": "Healthy meal prep delivery service.",
+      "location": "Bangalore",
+      "primaryGoal": "get_orders",
+      "contactMethod": "whatsapp"
+    },
+    "instagram": {
+      "connected": true,
+      "accountType": "business",
+      "postCount": 35,
+      "followerCount": 2400,
+      "bioComplete": true,
+      "contactPresent": true
+    },
+    "recentMetrics": {
+      "reach": 4500,
+      "clicks": 90,
+      "enquiries": 22,
+      "orders": 2,
+      "revenue": 1200
+    },
+    "expectedRecommendation": {
+      "actionType": "trust_offer_post",
+      "bottleneck": "enquiries_low_orders",
+      "stage": "sales"
+    }
+  },
+  {
+    "caseId": "TC006_WINNING_CAMPAIGN",
+    "business": {
+      "name": "Clay & Co",
+      "category": "handmade",
+      "description": "Handmade ceramic mugs and home decor.",
+      "location": "Toronto",
+      "primaryGoal": "increase_sales",
+      "contactMethod": "instagram_dm"
+    },
+    "instagram": {
+      "connected": true,
+      "accountType": "business",
+      "postCount": 42,
+      "followerCount": 3100,
+      "bioComplete": true,
+      "contactPresent": true
+    },
+    "campaignHistory": [
+      {
+        "type": "product_showcase",
+        "product": "blue ceramic mug",
+        "reach": 6200,
+        "clicks": 210,
+        "enquiries": 45,
+        "orders": 18,
+        "revenue": 900
+      }
+    ],
+    "expectedRecommendation": {
+      "actionType": "repeat_winning_format",
+      "bottleneck": "winning_campaign_found",
+      "stage": "scaling"
+    }
+  },
+  {
+    "caseId": "TC007_INCOMPLETE_PROFILE",
+    "business": {
+      "name": "Urban Barber Studio",
+      "category": "service",
+      "description": "Men's grooming and barber shop.",
+      "location": "Manchester",
+      "primaryGoal": "get_bookings",
+      "contactMethod": "phone"
+    },
+    "instagram": {
+      "connected": true,
+      "accountType": "business",
+      "postCount": 6,
+      "followerCount": 220,
+      "bioComplete": false,
+      "contactPresent": false
+    },
+    "recentMetrics": {
+      "reach": 200,
+      "clicks": 0,
+      "enquiries": 0,
+      "orders": 0
+    },
+    "expectedRecommendation": {
+      "actionType": "profile_improvement",
+      "bottleneck": "incomplete_profile",
+      "stage": "presence_started"
+    }
+  },
+  {
+    "caseId": "TC008_NO_INSTAGRAM_CONNECTED",
+    "business": {
+      "name": "Aroma Beans Cafe",
+      "category": "cafe",
+      "description": "Local cafe serving coffee and fresh pastries.",
+      "location": "Melbourne",
+      "primaryGoal": "get_visibility",
+      "contactMethod": "phone"
+    },
+    "instagram": {
+      "connected": false
+    },
+    "expectedRecommendation": {
+      "actionType": "connect_instagram",
+      "bottleneck": "missing_data",
+      "stage": "setup"
+    }
+  },
+  {
+    "caseId": "TC009_METRICS_UNAVAILABLE",
+    "business": {
+      "name": "Zen Yoga Studio",
+      "category": "wellness",
+      "description": "Yoga classes, meditation, and wellness workshops.",
+      "location": "Singapore",
+      "primaryGoal": "get_bookings",
+      "contactMethod": "website"
+    },
+    "instagram": {
+      "connected": true,
+      "accountType": "business",
+      "postCount": 12,
+      "followerCount": 650,
+      "bioComplete": true,
+      "contactPresent": true
+    },
+    "recentMetrics": {
+      "reach": null,
+      "clicks": null,
+      "enquiries": 0,
+      "orders": 0
+    },
+    "expectedRecommendation": {
+      "actionType": "visibility_post",
+      "bottleneck": "insufficient_data",
+      "stage": "visibility"
+    }
+  },
+  {
+    "caseId": "TC010_LIVE_INSTAGRAM_SAFE_PUBLISH_TEST",
+    "business": {
+      "name": "Collective Test Store",
+      "category": "retail",
+      "description": "Test business account used only for Collective integration testing.",
+      "location": "Test City",
+      "primaryGoal": "test_publishing",
+      "contactMethod": "instagram_dm"
+    },
+    "instagram": {
+      "connected": true,
+      "accountType": "business",
+      "postCount": 1,
+      "followerCount": 5,
+      "bioComplete": true,
+      "contactPresent": true,
+      "isTestAccount": true
+    },
+    "campaign": {
+      "type": "business_intro_post",
+      "status": "preview_ready",
+      "requiresHumanApproval": true,
+      "publishAllowedOnlyWhen": "status=approved AND CONFIRM_LIVE_PUBLISH=true"
+    },
+    "expectedBehavior": {
+      "withoutApproval": "publish_blocked",
+      "withApproval": "publish_allowed",
+      "onFailure": "draft_preserved"
+    }
+  }
+]

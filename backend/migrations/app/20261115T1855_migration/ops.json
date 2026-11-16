@@ -1,0 +1,399 @@
+[
+  {
+    "id": "table.reels",
+    "label": "Create table \"reels\"",
+    "summary": "Creates table \"reels\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "reels"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"reels\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"reels\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"reels\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"reels\"",
+        "sql": "CREATE TABLE \"public\".\"reels\" (\n  \"approved_at\" timestamptz(3),\n  \"business_id\" text NOT NULL,\n  \"business_name\" text NOT NULL,\n  \"caption\" text,\n  \"created_at\" timestamptz(3) DEFAULT (now()) NOT NULL,\n  \"duration_seconds\" int4 DEFAULT 10 NOT NULL,\n  \"error\" text,\n  \"hashtags\" json,\n  \"id\" text NOT NULL,\n  \"instagram_media_id\" text,\n  \"instruction\" text,\n  \"language\" text NOT NULL,\n  \"media_asset_id\" text,\n  \"offer_text\" text,\n  \"permalink\" text,\n  \"price\" text,\n  \"product_id\" text,\n  \"product_name\" text NOT NULL,\n  \"publish_ambiguous\" bool DEFAULT false NOT NULL,\n  \"published_at\" timestamptz(3),\n  \"scenes\" json,\n  \"script\" text,\n  \"source_image_url\" text NOT NULL,\n  \"stage\" text DEFAULT 'UNDERSTANDING' NOT NULL,\n  \"status\" text DEFAULT 'QUEUED' NOT NULL,\n  \"template\" text NOT NULL,\n  \"thumbnail_url\" text,\n  \"tone\" text DEFAULT 'elegant' NOT NULL,\n  \"updated_at\" timestamptz(3) NOT NULL,\n  \"video_stale\" bool DEFAULT true NOT NULL,\n  \"video_url\" text,\n  \"voice_stale\" bool DEFAULT true NOT NULL,\n  \"voice_url\" text,\n  PRIMARY KEY (\"id\"),\n  CONSTRAINT \"reels_language_check_6bb0b07e\" CHECK (\"language\" IN ('hi', 'mr', 'en')),\n  CONSTRAINT \"reels_stage_check_448ddf6a\" CHECK (\"stage\" IN ('UNDERSTANDING', 'SCRIPT', 'VOICEOVER', 'SCENES', 'RENDERING', 'PREVIEW')),\n  CONSTRAINT \"reels_status_check_f1df3722\" CHECK (\"status\" IN ('QUEUED', 'WRITING_SCRIPT', 'GENERATING_VOICE', 'RENDERING', 'READY', 'FAILED', 'CANCELLED', 'APPROVED', 'PUBLISHING', 'PUBLISHED', 'PUBLISH_FAILED')),\n  CONSTRAINT \"reels_template_check_4ef14015\" CHECK (\"template\" IN ('SHOWCASE', 'NEW_ARRIVALS', 'SPECIAL_OFFER', 'MINIMAL_PREMIUM'))\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"reels\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"reels\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"reels\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "index.reels.reels_business_id_created_at_idx_a4cd269c",
+    "label": "Create index \"reels_business_id_created_at_idx_a4cd269c\" on \"reels\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "reels_business_id_created_at_idx_a4cd269c",
+        "table": "reels"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"reels_business_id_created_at_idx_a4cd269c\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"reels_business_id_created_at_idx_a4cd269c\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"reels_business_id_created_at_idx_a4cd269c\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"reels_business_id_created_at_idx_a4cd269c\"",
+        "sql": "CREATE INDEX \"reels_business_id_created_at_idx_a4cd269c\" ON \"public\".\"reels\" (\"business_id\", \"created_at\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"reels_business_id_created_at_idx_a4cd269c\" exists on \"reels\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"reels_business_id_created_at_idx_a4cd269c\"",
+          "i",
+          "I",
+          "\"public\".\"reels\"",
+          "btree",
+          "[\"business_id\",\"created_at\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.reels.reels_business_id_idx_23036de8",
+    "label": "Create index \"reels_business_id_idx_23036de8\" on \"reels\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "reels_business_id_idx_23036de8",
+        "table": "reels"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"reels_business_id_idx_23036de8\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"reels_business_id_idx_23036de8\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"reels_business_id_idx_23036de8\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"reels_business_id_idx_23036de8\"",
+        "sql": "CREATE INDEX \"reels_business_id_idx_23036de8\" ON \"public\".\"reels\" (\"business_id\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"reels_business_id_idx_23036de8\" exists on \"reels\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"reels_business_id_idx_23036de8\"",
+          "i",
+          "I",
+          "\"public\".\"reels\"",
+          "btree",
+          "[\"business_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.reels.reels_media_asset_id_idx_8cdca53d",
+    "label": "Create index \"reels_media_asset_id_idx_8cdca53d\" on \"reels\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "reels_media_asset_id_idx_8cdca53d",
+        "table": "reels"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"reels_media_asset_id_idx_8cdca53d\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"reels_media_asset_id_idx_8cdca53d\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"reels_media_asset_id_idx_8cdca53d\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"reels_media_asset_id_idx_8cdca53d\"",
+        "sql": "CREATE INDEX \"reels_media_asset_id_idx_8cdca53d\" ON \"public\".\"reels\" (\"media_asset_id\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"reels_media_asset_id_idx_8cdca53d\" exists on \"reels\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"reels_media_asset_id_idx_8cdca53d\"",
+          "i",
+          "I",
+          "\"public\".\"reels\"",
+          "btree",
+          "[\"media_asset_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.reels.reels_product_id_idx_22a2b7d2",
+    "label": "Create index \"reels_product_id_idx_22a2b7d2\" on \"reels\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "reels_product_id_idx_22a2b7d2",
+        "table": "reels"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"reels_product_id_idx_22a2b7d2\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"reels_product_id_idx_22a2b7d2\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"reels_product_id_idx_22a2b7d2\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"reels_product_id_idx_22a2b7d2\"",
+        "sql": "CREATE INDEX \"reels_product_id_idx_22a2b7d2\" ON \"public\".\"reels\" (\"product_id\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"reels_product_id_idx_22a2b7d2\" exists on \"reels\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"reels_product_id_idx_22a2b7d2\"",
+          "i",
+          "I",
+          "\"public\".\"reels\"",
+          "btree",
+          "[\"product_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.reels.reels_business_id_fkey",
+    "label": "Add foreign key \"reels_business_id_fkey\" on \"reels\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "reels_business_id_fkey",
+        "table": "reels"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"reels_business_id_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "reels_business_id_fkey",
+          "public",
+          "\"public\".\"reels\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"reels_business_id_fkey\" on \"reels\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"reels_business_id_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"reels\"\nADD CONSTRAINT \"reels_business_id_fkey\"\nFOREIGN KEY (\"business_id\")\nREFERENCES \"public\".\"businesses\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"reels_business_id_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "reels_business_id_fkey",
+          "public",
+          "\"public\".\"reels\"",
+          "f",
+          "[\"business_id\"]",
+          "\"public\".\"businesses\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.reels.reels_product_id_fkey",
+    "label": "Add foreign key \"reels_product_id_fkey\" on \"reels\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "reels_product_id_fkey",
+        "table": "reels"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"reels_product_id_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "reels_product_id_fkey",
+          "public",
+          "\"public\".\"reels\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"reels_product_id_fkey\" on \"reels\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"reels_product_id_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"reels\"\nADD CONSTRAINT \"reels_product_id_fkey\"\nFOREIGN KEY (\"product_id\")\nREFERENCES \"public\".\"products\" (\"id\")\nON DELETE SET NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"reels_product_id_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "reels_product_id_fkey",
+          "public",
+          "\"public\".\"reels\"",
+          "f",
+          "[\"product_id\"]",
+          "\"public\".\"products\"",
+          "[\"id\"]",
+          "n",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.reels.reels_media_asset_id_fkey",
+    "label": "Add foreign key \"reels_media_asset_id_fkey\" on \"reels\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "reels_media_asset_id_fkey",
+        "table": "reels"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"reels_media_asset_id_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "reels_media_asset_id_fkey",
+          "public",
+          "\"public\".\"reels\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"reels_media_asset_id_fkey\" on \"reels\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"reels_media_asset_id_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"reels\"\nADD CONSTRAINT \"reels_media_asset_id_fkey\"\nFOREIGN KEY (\"media_asset_id\")\nREFERENCES \"public\".\"media_assets\" (\"id\")\nON DELETE SET NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"reels_media_asset_id_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "reels_media_asset_id_fkey",
+          "public",
+          "\"public\".\"reels\"",
+          "f",
+          "[\"media_asset_id\"]",
+          "\"public\".\"media_assets\"",
+          "[\"id\"]",
+          "n",
+          "a"
+        ]
+      }
+    ]
+  }
+]

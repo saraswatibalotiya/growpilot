@@ -1,0 +1,22 @@
+{
+  "title": "Settings",
+  "subtitle": "Your business details and connections.",
+  "business": "Business",
+  "saved": "Saved.",
+  "businessName": "Business name",
+  "category": "Category",
+  "location": "Location",
+  "preferredLanguage": "Preferred language",
+  "saveChanges": "Save changes",
+  "connectedAs": "Connected as",
+  "problemBefore": "The connection for",
+  "problemAfter": "is {status}. Reconnect to keep publishing.",
+  "noInstagram": "No Instagram account is connected yet.",
+  "checking": "Checking…",
+  "reconnect": "Reconnect",
+  "connect": "Connect Instagram",
+  "refresh": "Refresh status",
+  "privacy": "We never show or store your Instagram password. Access tokens stay on our server.",
+  "account": "Account",
+  "signOut": "Sign out"
+}

@@ -1,0 +1,19 @@
+{
+  "tips": {
+    "region": "Photo tips",
+    "language": "Tips language",
+    "stop": "Stop",
+    "listen": "Listen"
+  },
+  "viewer": {
+    "region": "Photos, swipe or use the arrow keys",
+    "cover": "Cover photo",
+    "photoN": "Photo {n}",
+    "previous": "Previous photo",
+    "next": "Next photo",
+    "show": "Show photo {n}"
+  },
+  "language": {
+    "label": "Language"
+  }
+}

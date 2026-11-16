@@ -1,0 +1,20 @@
+{
+  "step": "Step 2 of 2",
+  "title": "Tell us about your business",
+  "subtitle": "This helps us create better posts for you.",
+  "signInInstead": "Sign in instead",
+  "businessName": "Business name",
+  "businessPlaceholder": "Shree Fashion Studio",
+  "category": "Business category",
+  "location": "Location",
+  "locationHint": "City or area, for example Mumbai, Maharashtra",
+  "preferredLanguage": "Preferred language",
+  "continue": "Continue",
+  "back": "Back",
+  "categories": {
+    "clothing": "Boutique / Clothing",
+    "jewellery": "Jewellery",
+    "grocery": "Grocery",
+    "footwear": "Footwear"
+  }
+}

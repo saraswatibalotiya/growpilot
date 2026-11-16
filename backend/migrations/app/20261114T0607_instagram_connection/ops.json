@@ -1,0 +1,360 @@
+[
+  {
+    "id": "column.public.social_accounts.display_name",
+    "label": "Add column \"display_name\" to \"social_accounts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "display_name",
+        "table": "social_accounts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"display_name\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "display_name"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"display_name\" on \"social_accounts\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"display_name\"",
+        "sql": "ALTER TABLE \"public\".\"social_accounts\" ADD COLUMN \"display_name\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"display_name\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "display_name"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"display_name\" on \"social_accounts\""
+        }
+      },
+      {
+        "description": "verify column \"display_name\" has type \"text\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "display_name",
+          "text"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.social_accounts.facebook_page_id",
+    "label": "Add column \"facebook_page_id\" to \"social_accounts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "facebook_page_id",
+        "table": "social_accounts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"facebook_page_id\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "facebook_page_id"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"facebook_page_id\" on \"social_accounts\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"facebook_page_id\"",
+        "sql": "ALTER TABLE \"public\".\"social_accounts\" ADD COLUMN \"facebook_page_id\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"facebook_page_id\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "facebook_page_id"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"facebook_page_id\" on \"social_accounts\""
+        }
+      },
+      {
+        "description": "verify column \"facebook_page_id\" has type \"text\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "facebook_page_id",
+          "text"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.social_accounts.is_mock",
+    "label": "Add column \"is_mock\" to \"social_accounts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "is_mock",
+        "table": "social_accounts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"is_mock\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "is_mock"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"is_mock\" on \"social_accounts\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"is_mock\"",
+        "sql": "ALTER TABLE \"public\".\"social_accounts\" ADD COLUMN \"is_mock\" bool DEFAULT true NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"is_mock\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "is_mock"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"is_mock\" on \"social_accounts\""
+        }
+      },
+      {
+        "description": "verify column \"is_mock\" has type \"boolean\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "is_mock",
+          "boolean"
+        ]
+      },
+      {
+        "description": "verify column \"is_mock\" is NOT NULL",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"is_nullable\" = $4)) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "is_mock",
+          "NO"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.social_accounts.last_synced_at",
+    "label": "Add column \"last_synced_at\" to \"social_accounts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "last_synced_at",
+        "table": "social_accounts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"last_synced_at\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "last_synced_at"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"last_synced_at\" on \"social_accounts\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"last_synced_at\"",
+        "sql": "ALTER TABLE \"public\".\"social_accounts\" ADD COLUMN \"last_synced_at\" timestamptz(3)"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"last_synced_at\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "last_synced_at"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"last_synced_at\" on \"social_accounts\""
+        }
+      },
+      {
+        "description": "verify column \"last_synced_at\" has type \"timestamp(3) with time zone\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "last_synced_at",
+          "timestamp(3) with time zone"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.social_accounts.permissions_json",
+    "label": "Add column \"permissions_json\" to \"social_accounts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "permissions_json",
+        "table": "social_accounts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"permissions_json\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "permissions_json"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"permissions_json\" on \"social_accounts\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"permissions_json\"",
+        "sql": "ALTER TABLE \"public\".\"social_accounts\" ADD COLUMN \"permissions_json\" json"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"permissions_json\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "permissions_json"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"permissions_json\" on \"social_accounts\""
+        }
+      },
+      {
+        "description": "verify column \"permissions_json\" has type \"json\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "permissions_json",
+          "json"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.social_accounts.social_accounts_platform_platform_account_id_key",
+    "label": "Add unique constraint on \"social_accounts\" (platform, platform_account_id)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "social_accounts_platform_platform_account_id_key",
+        "table": "social_accounts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"social_accounts_platform_platform_account_id_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "social_accounts_platform_platform_account_id_key",
+          "public",
+          "\"public\".\"social_accounts\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"social_accounts_platform_platform_account_id_key\" on \"social_accounts\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"social_accounts_platform_platform_account_id_key\"",
+        "sql": "ALTER TABLE \"public\".\"social_accounts\" ADD CONSTRAINT \"social_accounts_platform_platform_account_id_key\" UNIQUE (\"platform\", \"platform_account_id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify unique constraint \"social_accounts_platform_platform_account_id_key\" exists on (platform, platform_account_id)",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb)) AS \"result\"",
+        "params": [
+          "social_accounts_platform_platform_account_id_key",
+          "public",
+          "\"public\".\"social_accounts\"",
+          "u",
+          "[\"platform\",\"platform_account_id\"]"
+        ]
+      }
+    ]
+  }
+]

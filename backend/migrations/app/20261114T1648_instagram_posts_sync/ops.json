@@ -1,0 +1,888 @@
+[
+  {
+    "id": "table.instagram_posts",
+    "label": "Create table \"instagram_posts\"",
+    "summary": "Creates table \"instagram_posts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "instagram_posts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"instagram_posts\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"instagram_posts\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"instagram_posts\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"instagram_posts\"",
+        "sql": "CREATE TABLE \"public\".\"instagram_posts\" (\n  \"caption\" text,\n  \"created_at\" timestamptz(3) DEFAULT (now()) NOT NULL,\n  \"deleted_at\" timestamptz(3),\n  \"id\" text NOT NULL,\n  \"last_seen_at\" timestamptz(3) NOT NULL,\n  \"media_product_type\" text,\n  \"media_type\" text,\n  \"media_url\" text,\n  \"permalink\" text,\n  \"platform_media_id\" text NOT NULL,\n  \"published_at\" timestamptz(3),\n  \"social_account_id\" text NOT NULL,\n  \"thumbnail_url\" text,\n  \"updated_at\" timestamptz(3) NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"instagram_posts\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"instagram_posts\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"instagram_posts\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.post_metric_snapshots",
+    "label": "Create table \"post_metric_snapshots\"",
+    "summary": "Creates table \"post_metric_snapshots\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "post_metric_snapshots"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"post_metric_snapshots\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"post_metric_snapshots\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"post_metric_snapshots\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"post_metric_snapshots\"",
+        "sql": "CREATE TABLE \"public\".\"post_metric_snapshots\" (\n  \"captured_at\" timestamptz(3) DEFAULT (now()) NOT NULL,\n  \"comments\" int4,\n  \"id\" text NOT NULL,\n  \"instagram_post_id\" text NOT NULL,\n  \"likes\" int4,\n  \"profile_visits\" int4,\n  \"reach\" int4,\n  \"saves\" int4,\n  \"shares\" int4,\n  \"views\" int4,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"post_metric_snapshots\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"post_metric_snapshots\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"post_metric_snapshots\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.sync_runs",
+    "label": "Create table \"sync_runs\"",
+    "summary": "Creates table \"sync_runs\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "sync_runs"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"sync_runs\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"sync_runs\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"sync_runs\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"sync_runs\"",
+        "sql": "CREATE TABLE \"public\".\"sync_runs\" (\n  \"error_code\" text,\n  \"error_message\" text,\n  \"finished_at\" timestamptz(3),\n  \"id\" text NOT NULL,\n  \"items_processed\" int4 DEFAULT 0 NOT NULL,\n  \"kind\" text NOT NULL,\n  \"social_account_id\" text NOT NULL,\n  \"started_at\" timestamptz(3) DEFAULT (now()) NOT NULL,\n  \"status\" text DEFAULT 'queued' NOT NULL,\n  PRIMARY KEY (\"id\"),\n  CONSTRAINT \"sync_runs_kind_check_62c9bd5d\" CHECK (\"kind\" IN ('profile', 'media', 'metrics')),\n  CONSTRAINT \"sync_runs_status_check_d0e38641\" CHECK (\"status\" IN ('queued', 'running', 'succeeded', 'failed'))\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"sync_runs\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"sync_runs\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"sync_runs\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "column.public.social_accounts.last_media_sync_at",
+    "label": "Add column \"last_media_sync_at\" to \"social_accounts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "last_media_sync_at",
+        "table": "social_accounts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"last_media_sync_at\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "last_media_sync_at"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"last_media_sync_at\" on \"social_accounts\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"last_media_sync_at\"",
+        "sql": "ALTER TABLE \"public\".\"social_accounts\" ADD COLUMN \"last_media_sync_at\" timestamptz(3)"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"last_media_sync_at\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "last_media_sync_at"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"last_media_sync_at\" on \"social_accounts\""
+        }
+      },
+      {
+        "description": "verify column \"last_media_sync_at\" has type \"timestamp(3) with time zone\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "last_media_sync_at",
+          "timestamp(3) with time zone"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.social_accounts.live_publish_allowed",
+    "label": "Add column \"live_publish_allowed\" to \"social_accounts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "live_publish_allowed",
+        "table": "social_accounts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"live_publish_allowed\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "live_publish_allowed"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"live_publish_allowed\" on \"social_accounts\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"live_publish_allowed\"",
+        "sql": "ALTER TABLE \"public\".\"social_accounts\" ADD COLUMN \"live_publish_allowed\" bool DEFAULT false NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"live_publish_allowed\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "live_publish_allowed"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"live_publish_allowed\" on \"social_accounts\""
+        }
+      },
+      {
+        "description": "verify column \"live_publish_allowed\" has type \"boolean\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "live_publish_allowed",
+          "boolean"
+        ]
+      },
+      {
+        "description": "verify column \"live_publish_allowed\" is NOT NULL",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"is_nullable\" = $4)) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "live_publish_allowed",
+          "NO"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.social_accounts.token_source",
+    "label": "Add column \"token_source\" to \"social_accounts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "token_source",
+        "table": "social_accounts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"token_source\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "token_source"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"token_source\" on \"social_accounts\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"token_source\"",
+        "sql": "ALTER TABLE \"public\".\"social_accounts\" ADD COLUMN \"token_source\" text DEFAULT 'oauth' NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"token_source\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "token_source"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"token_source\" on \"social_accounts\""
+        }
+      },
+      {
+        "description": "verify column \"token_source\" has type \"text\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "token_source",
+          "text"
+        ]
+      },
+      {
+        "description": "verify column \"token_source\" is NOT NULL",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"is_nullable\" = $4)) AS \"result\"",
+        "params": [
+          "public",
+          "social_accounts",
+          "token_source",
+          "NO"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.instagram_posts.instagram_posts_social_account_id_platform_media_id_key",
+    "label": "Add unique constraint on \"instagram_posts\" (social_account_id, platform_media_id)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "instagram_posts_social_account_id_platform_media_id_key",
+        "table": "instagram_posts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"instagram_posts_social_account_id_platform_media_id_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "instagram_posts_social_account_id_platform_media_id_key",
+          "public",
+          "\"public\".\"instagram_posts\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"instagram_posts_social_account_id_platform_media_id_key\" on \"instagram_posts\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"instagram_posts_social_account_id_platform_media_id_key\"",
+        "sql": "ALTER TABLE \"public\".\"instagram_posts\" ADD CONSTRAINT \"instagram_posts_social_account_id_platform_media_id_key\" UNIQUE (\"social_account_id\", \"platform_media_id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify unique constraint \"instagram_posts_social_account_id_platform_media_id_key\" exists on (social_account_id, platform_media_id)",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb)) AS \"result\"",
+        "params": [
+          "instagram_posts_social_account_id_platform_media_id_key",
+          "public",
+          "\"public\".\"instagram_posts\"",
+          "u",
+          "[\"social_account_id\",\"platform_media_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "checkConstraint.social_accounts.social_accounts_token_source_check_7e89e9de",
+    "label": "Add check constraint \"social_accounts_token_source_check_7e89e9de\" on \"social_accounts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "checkConstraint",
+        "name": "social_accounts_token_source_check_7e89e9de",
+        "table": "social_accounts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"social_accounts_token_source_check_7e89e9de\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "social_accounts_token_source_check_7e89e9de",
+          "public",
+          "\"public\".\"social_accounts\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"social_accounts_token_source_check_7e89e9de\" on \"social_accounts\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add check constraint \"social_accounts_token_source_check_7e89e9de\"",
+        "sql": "ALTER TABLE \"public\".\"social_accounts\" ADD CONSTRAINT \"social_accounts_token_source_check_7e89e9de\" CHECK (\"token_source\" IN ('oauth', 'dashboard'))"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify check constraint \"social_accounts_token_source_check_7e89e9de\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4)) AS \"result\"",
+        "params": [
+          "social_accounts_token_source_check_7e89e9de",
+          "public",
+          "\"public\".\"social_accounts\"",
+          "c"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.instagram_posts.instagram_posts_social_account_id_idx_d0e0b0d0",
+    "label": "Create index \"instagram_posts_social_account_id_idx_d0e0b0d0\" on \"instagram_posts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "instagram_posts_social_account_id_idx_d0e0b0d0",
+        "table": "instagram_posts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"instagram_posts_social_account_id_idx_d0e0b0d0\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"instagram_posts_social_account_id_idx_d0e0b0d0\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"instagram_posts_social_account_id_idx_d0e0b0d0\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"instagram_posts_social_account_id_idx_d0e0b0d0\"",
+        "sql": "CREATE INDEX \"instagram_posts_social_account_id_idx_d0e0b0d0\" ON \"public\".\"instagram_posts\" (\"social_account_id\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"instagram_posts_social_account_id_idx_d0e0b0d0\" exists on \"instagram_posts\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"instagram_posts_social_account_id_idx_d0e0b0d0\"",
+          "i",
+          "I",
+          "\"public\".\"instagram_posts\"",
+          "btree",
+          "[\"social_account_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.instagram_posts.instagram_posts_social_account_id_published_at_idx_52625efc",
+    "label": "Create index \"instagram_posts_social_account_id_published_at_idx_52625efc\" on \"instagram_posts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "instagram_posts_social_account_id_published_at_idx_52625efc",
+        "table": "instagram_posts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"instagram_posts_social_account_id_published_at_idx_52625efc\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"instagram_posts_social_account_id_published_at_idx_52625efc\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"instagram_posts_social_account_id_published_at_idx_52625efc\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"instagram_posts_social_account_id_published_at_idx_52625efc\"",
+        "sql": "CREATE INDEX \"instagram_posts_social_account_id_published_at_idx_52625efc\" ON \"public\".\"instagram_posts\" (\"social_account_id\", \"published_at\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"instagram_posts_social_account_id_published_at_idx_52625efc\" exists on \"instagram_posts\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"instagram_posts_social_account_id_published_at_idx_52625efc\"",
+          "i",
+          "I",
+          "\"public\".\"instagram_posts\"",
+          "btree",
+          "[\"social_account_id\",\"published_at\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.post_metric_snapshots.idx_snapshots_post_captured",
+    "label": "Create index \"idx_snapshots_post_captured\" on \"post_metric_snapshots\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "idx_snapshots_post_captured",
+        "table": "post_metric_snapshots"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"idx_snapshots_post_captured\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"idx_snapshots_post_captured\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"idx_snapshots_post_captured\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"idx_snapshots_post_captured\"",
+        "sql": "CREATE INDEX \"idx_snapshots_post_captured\" ON \"public\".\"post_metric_snapshots\" (\"instagram_post_id\", \"captured_at\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"idx_snapshots_post_captured\" exists on \"post_metric_snapshots\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"idx_snapshots_post_captured\"",
+          "i",
+          "I",
+          "\"public\".\"post_metric_snapshots\"",
+          "btree",
+          "[\"instagram_post_id\",\"captured_at\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.post_metric_snapshots.post_metric_snapshots_instagram_post_id_idx_ff0d6eb5",
+    "label": "Create index \"post_metric_snapshots_instagram_post_id_idx_ff0d6eb5\" on \"post_metric_snapshots\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "post_metric_snapshots_instagram_post_id_idx_ff0d6eb5",
+        "table": "post_metric_snapshots"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"post_metric_snapshots_instagram_post_id_idx_ff0d6eb5\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"post_metric_snapshots_instagram_post_id_idx_ff0d6eb5\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"post_metric_snapshots_instagram_post_id_idx_ff0d6eb5\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"post_metric_snapshots_instagram_post_id_idx_ff0d6eb5\"",
+        "sql": "CREATE INDEX \"post_metric_snapshots_instagram_post_id_idx_ff0d6eb5\" ON \"public\".\"post_metric_snapshots\" (\"instagram_post_id\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"post_metric_snapshots_instagram_post_id_idx_ff0d6eb5\" exists on \"post_metric_snapshots\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"post_metric_snapshots_instagram_post_id_idx_ff0d6eb5\"",
+          "i",
+          "I",
+          "\"public\".\"post_metric_snapshots\"",
+          "btree",
+          "[\"instagram_post_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.sync_runs.sync_runs_social_account_id_idx_d0e0b0d0",
+    "label": "Create index \"sync_runs_social_account_id_idx_d0e0b0d0\" on \"sync_runs\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "sync_runs_social_account_id_idx_d0e0b0d0",
+        "table": "sync_runs"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"sync_runs_social_account_id_idx_d0e0b0d0\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"sync_runs_social_account_id_idx_d0e0b0d0\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"sync_runs_social_account_id_idx_d0e0b0d0\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"sync_runs_social_account_id_idx_d0e0b0d0\"",
+        "sql": "CREATE INDEX \"sync_runs_social_account_id_idx_d0e0b0d0\" ON \"public\".\"sync_runs\" (\"social_account_id\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"sync_runs_social_account_id_idx_d0e0b0d0\" exists on \"sync_runs\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"sync_runs_social_account_id_idx_d0e0b0d0\"",
+          "i",
+          "I",
+          "\"public\".\"sync_runs\"",
+          "btree",
+          "[\"social_account_id\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.sync_runs.sync_runs_social_account_id_started_at_idx_f1278598",
+    "label": "Create index \"sync_runs_social_account_id_started_at_idx_f1278598\" on \"sync_runs\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "sync_runs_social_account_id_started_at_idx_f1278598",
+        "table": "sync_runs"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"sync_runs_social_account_id_started_at_idx_f1278598\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"sync_runs_social_account_id_started_at_idx_f1278598\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"sync_runs_social_account_id_started_at_idx_f1278598\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"sync_runs_social_account_id_started_at_idx_f1278598\"",
+        "sql": "CREATE INDEX \"sync_runs_social_account_id_started_at_idx_f1278598\" ON \"public\".\"sync_runs\" (\"social_account_id\", \"started_at\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"sync_runs_social_account_id_started_at_idx_f1278598\" exists on \"sync_runs\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"sync_runs_social_account_id_started_at_idx_f1278598\"",
+          "i",
+          "I",
+          "\"public\".\"sync_runs\"",
+          "btree",
+          "[\"social_account_id\",\"started_at\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.instagram_posts.instagram_posts_social_account_id_fkey",
+    "label": "Add foreign key \"instagram_posts_social_account_id_fkey\" on \"instagram_posts\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "instagram_posts_social_account_id_fkey",
+        "table": "instagram_posts"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"instagram_posts_social_account_id_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "instagram_posts_social_account_id_fkey",
+          "public",
+          "\"public\".\"instagram_posts\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"instagram_posts_social_account_id_fkey\" on \"instagram_posts\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"instagram_posts_social_account_id_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"instagram_posts\"\nADD CONSTRAINT \"instagram_posts_social_account_id_fkey\"\nFOREIGN KEY (\"social_account_id\")\nREFERENCES \"public\".\"social_accounts\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"instagram_posts_social_account_id_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "instagram_posts_social_account_id_fkey",
+          "public",
+          "\"public\".\"instagram_posts\"",
+          "f",
+          "[\"social_account_id\"]",
+          "\"public\".\"social_accounts\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.post_metric_snapshots.post_metric_snapshots_instagram_post_id_fkey",
+    "label": "Add foreign key \"post_metric_snapshots_instagram_post_id_fkey\" on \"post_metric_snapshots\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "post_metric_snapshots_instagram_post_id_fkey",
+        "table": "post_metric_snapshots"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"post_metric_snapshots_instagram_post_id_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "post_metric_snapshots_instagram_post_id_fkey",
+          "public",
+          "\"public\".\"post_metric_snapshots\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"post_metric_snapshots_instagram_post_id_fkey\" on \"post_metric_snapshots\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"post_metric_snapshots_instagram_post_id_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"post_metric_snapshots\"\nADD CONSTRAINT \"post_metric_snapshots_instagram_post_id_fkey\"\nFOREIGN KEY (\"instagram_post_id\")\nREFERENCES \"public\".\"instagram_posts\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"post_metric_snapshots_instagram_post_id_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "post_metric_snapshots_instagram_post_id_fkey",
+          "public",
+          "\"public\".\"post_metric_snapshots\"",
+          "f",
+          "[\"instagram_post_id\"]",
+          "\"public\".\"instagram_posts\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.sync_runs.sync_runs_social_account_id_fkey",
+    "label": "Add foreign key \"sync_runs_social_account_id_fkey\" on \"sync_runs\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "sync_runs_social_account_id_fkey",
+        "table": "sync_runs"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"sync_runs_social_account_id_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "sync_runs_social_account_id_fkey",
+          "public",
+          "\"public\".\"sync_runs\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"sync_runs_social_account_id_fkey\" on \"sync_runs\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"sync_runs_social_account_id_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"sync_runs\"\nADD CONSTRAINT \"sync_runs_social_account_id_fkey\"\nFOREIGN KEY (\"social_account_id\")\nREFERENCES \"public\".\"social_accounts\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"sync_runs_social_account_id_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "sync_runs_social_account_id_fkey",
+          "public",
+          "\"public\".\"sync_runs\"",
+          "f",
+          "[\"social_account_id\"]",
+          "\"public\".\"social_accounts\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  }
+]

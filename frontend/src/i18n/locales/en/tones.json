@@ -1,0 +1,18 @@
+{
+  "title": "Choose a tone",
+  "hint": "The tone sets how your text sounds.",
+  "names": {
+    "professional": "Professional",
+    "trendy": "Trendy",
+    "friendly": "Friendly",
+    "luxury": "Luxury",
+    "promotional": "Promotional",
+    "storytelling": "Storytelling",
+    "funny": "Funny",
+    "minimal": "Minimal",
+    "festive": "Festive",
+    "influencer": "Influencer-style",
+    "elegant": "Elegant",
+    "local": "Local"
+  }
+}

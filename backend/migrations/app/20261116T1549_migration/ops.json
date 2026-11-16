@@ -1,0 +1,92 @@
+[
+  {
+    "id": "dropTable.leads",
+    "label": "Drop table \"leads\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "leads"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"leads\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"leads\""
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"leads\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop table \"leads\"",
+        "sql": "DROP TABLE \"public\".\"leads\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"leads\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"leads\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"leads\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "dropTable.presence_assessments",
+    "label": "Drop table \"presence_assessments\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "presence_assessments"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"presence_assessments\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"presence_assessments\""
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"presence_assessments\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop table \"presence_assessments\"",
+        "sql": "DROP TABLE \"public\".\"presence_assessments\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"presence_assessments\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"presence_assessments\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"presence_assessments\""
+        }
+      }
+    ]
+  }
+]

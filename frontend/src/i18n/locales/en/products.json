@@ -1,0 +1,34 @@
+{
+  "form": {
+    "editTitle": "Edit product",
+    "addTitle": "Add a product",
+    "addLabel": "Add product",
+    "add": "Add product",
+    "save": "Save changes",
+    "close": "Close",
+    "name": "Name",
+    "price": "Price (₹)",
+    "priceError": "Use numbers only, for example 899 or 899.50.",
+    "category": "Category",
+    "categoryPlaceholder": "kurti",
+    "description": "Description",
+    "photo": "Photo",
+    "replace": "Replace",
+    "upload": "Upload",
+    "available": "Available to sell"
+  },
+  "confirmDelete": "Delete \"{name}\"? Posts that used it keep their history.",
+  "title": "Products",
+  "subtitle": "Save what you sell so posts can reuse the photo and price.",
+  "empty": {
+    "title": "No products yet",
+    "action": "Add your first product",
+    "hint": "Add a product with its photo and price. Then you can make a post about it in one tap."
+  },
+  "noPrice": "No price",
+  "availableBadge": "Available",
+  "hidden": "Hidden",
+  "edit": "Edit",
+  "delete": "Delete",
+  "deleteName": "Delete {name}"
+}

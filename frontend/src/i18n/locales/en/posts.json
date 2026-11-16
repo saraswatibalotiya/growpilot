@@ -1,0 +1,45 @@
+{
+  "sync": {
+    "running": "Syncing with Instagram…",
+    "doneOne": "Up to date with Instagram. {count} post checked.",
+    "doneMany": "Up to date with Instagram. {count} posts checked.",
+    "alreadyRunning": "(A sync was already running.)",
+    "failed": "Sync failed: {reason}",
+    "unknown": "unknown error",
+    "still": "Still syncing. Check again in a minute.",
+    "button": "Sync with Instagram"
+  },
+  "title": "My Posts",
+  "subtitle": "Everything you've made with GrowPilot.",
+  "new": "New post",
+  "sections": {
+    "all": "All",
+    "pending": "Pending drafts",
+    "approved": "Approved drafts",
+    "published": "Published",
+    "failed": "Failed"
+  },
+  "hints": {
+    "pending": "Not approved yet. Open one to keep editing.",
+    "approved": "Approved but not posted. Editing sends it back to pending until you approve it again."
+  },
+  "tryAgain": "Try again",
+  "empty": {
+    "title": "Nothing here yet",
+    "make": "Make a post",
+    "all": "Your posts will show up here.",
+    "section": "No posts in this section."
+  },
+  "nothingHere": "Nothing here.",
+  "untitled": "Untitled post",
+  "removed": "Removed from Instagram",
+  "removedHint": "It is no longer on your Instagram (archived or deleted there). You can post the same photo again.",
+  "photos": "{count} photos",
+  "edit": "Edit",
+  "delete": "Delete",
+  "confirm": {
+    "title": "Delete this draft?",
+    "yes": "Yes, delete",
+    "body": "This pending draft will be removed for good. Nothing has been posted."
+  }
+}
