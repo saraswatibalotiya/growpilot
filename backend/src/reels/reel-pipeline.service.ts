@@ -104,14 +104,32 @@ export class ReelPipelineService {
       image ??= await this.loadImage(reel.sourceImageUrl);
       // AI looks swap in a cached (or newly generated) full-screen scene around the same product.
       const look = reel.look ?? 'FULL_PHOTO';
-      const plate = look !== 'FULL_PHOTO';
+      let plate = look !== 'FULL_PHOTO' && this.aiLooksAvailable();
       const style = LOOK_STYLE[look as keyof typeof LOOK_STYLE] ?? 'enhance';
-      const extraImages: Buffer[] = [];
+      let extraImages: Buffer[] = [];
       for (const url of reel.extraImageUrls ?? []) {
-        const extra = await this.loadImage(url);
-        extraImages.push(plate ? await this.studio.reelScene(reel.businessId, extra, style) : extra);
+        extraImages.push(await this.loadImage(url));
       }
-      if (plate) image = await this.studio.reelScene(reel.businessId, image, style);
+      if (plate) {
+        try {
+          const enhancedExtras: Buffer[] = [];
+          for (const extra of extraImages) {
+            await assertActive();
+            enhancedExtras.push(await this.studio.reelScene(reel.businessId, extra, style));
+          }
+          await assertActive();
+          const enhancedImage = await this.studio.reelScene(reel.businessId, image, style);
+          image = enhancedImage;
+          extraImages = enhancedExtras;
+        } catch (error) {
+          if (error instanceof JobStopped) throw error;
+          plate = false;
+          this.logger.warn({ event: 'reel_enhance_skipped', reelId, reason: this.userMessage(error) });
+        }
+      }
+      if (!plate && look !== 'FULL_PHOTO') {
+        reel = await move('RENDERING', 'SCENES', { look: 'FULL_PHOTO' });
+      }
       await assertActive();
       const rendered = await this.renderVideo({
         image,

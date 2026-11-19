@@ -1,0 +1,162 @@
+{
+ "label": "FICTIONAL SAMPLE DATA for testing. Not real Instagram data. Not a real-world benchmark.",
+ "demo": "new_business",
+ "eval_date": "2026-11-17",
+ "profile_id": "demo_new_business",
+ "profile": {
+  "profile_type": "BUSINESS",
+  "name": "Neem & Co (fictional demo)",
+  "instagram_username": "neemandco.demo",
+  "category": "handmade soaps",
+  "niche": "beauty",
+  "description": "A fictional brand-new Jaipur business selling handmade soaps. The account was created weeks ago.",
+  "target_audience": "Shoppers looking for natural, handmade skincare",
+  "country": "India",
+  "region": "Rajasthan",
+  "city": "Jaipur",
+  "primary_language": "en",
+  "brand_voice": "simple, natural",
+  "goals": [
+   "BRAND_AWARENESS",
+   "SALES"
+  ],
+  "products": [
+   "neem soap",
+   "rose soap"
+  ],
+  "services": [],
+  "preferred_topics": [],
+  "excluded_topics": [],
+  "preferred_formats": [],
+  "posting_frequency_per_week": 2
+ },
+ "posts": [
+  {
+   "media_id": "new__000",
+   "caption": "Meet the neem soap #neem",
+   "media_type": "IMAGE",
+   "media_product_type": "FEED",
+   "posted_at": "2026-10-31T19:00:00+05:30",
+   "permalink": "https://example.com/sample/new_business/000",
+   "reach": 195,
+   "likes": 9,
+   "comments": 0,
+   "saves": 1,
+   "shares": 1,
+   "follower_count": 240
+  },
+  {
+   "media_id": "new__001",
+   "caption": "Meet the neem soap #neem",
+   "media_type": "IMAGE",
+   "media_product_type": "FEED",
+   "posted_at": "2026-11-05T12:30:00+05:30",
+   "permalink": "https://example.com/sample/new_business/001",
+   "reach": 196,
+   "likes": 7,
+   "comments": 0,
+   "saves": 3,
+   "shares": 1,
+   "follower_count": 240
+  },
+  {
+   "media_id": "new__002",
+   "caption": "Our first batch of handmade soap #handmade #soap",
+   "media_type": "IMAGE",
+   "media_product_type": "FEED",
+   "posted_at": "2026-11-10T18:00:00+05:30",
+   "permalink": "https://example.com/sample/new_business/002",
+   "reach": 159,
+   "likes": 7,
+   "comments": 0,
+   "saves": 1,
+   "shares": 1,
+   "follower_count": 240
+  }
+ ],
+ "comments": [
+  {
+   "comment_id": "new__c000",
+   "text": "Where can I buy?",
+   "posted_at": "2026-11-06T12:00:00+05:30",
+   "like_count": 1
+  },
+  {
+   "comment_id": "new__c001",
+   "text": "Price?",
+   "posted_at": "2026-11-14T10:00:00+05:30",
+   "like_count": 3
+  }
+ ],
+ "trends": [
+  {
+   "trend_id": "demo_trend_budget_skincare",
+   "title": "Budget skincare routines",
+   "description": "Fictional sample: creators and shoppers favour affordable skincare routines",
+   "category": "BEAUTY",
+   "region": "India",
+   "language": "en",
+   "kind": "FACT",
+   "source_name": "Sample Trend Desk (fictional)",
+   "source_url": "https://example.com/sample-trends/demo_trend_budget_skincare",
+   "published_date": "2026-11-13",
+   "verified_date": "2026-11-13",
+   "starts_on": null,
+   "expiry_date": "2026-12-15",
+   "relevance_score": 0.85,
+   "confidence_score": 0.75,
+   "hashtags": [],
+   "source_type": "SAMPLE",
+   "is_sample": true,
+   "first_observed_date": "2026-11-13",
+   "direction": "UNKNOWN",
+   "evidence": []
+  },
+  {
+   "trend_id": "demo_trend_viral_audio",
+   "title": "A viral comedy audio everyone is using",
+   "description": "Fictional sample: a comedy audio clip used across all niches",
+   "category": "ENTERTAINMENT",
+   "region": "Global",
+   "language": "en",
+   "kind": "FACT",
+   "source_name": "Sample World Desk (fictional)",
+   "source_url": "https://example.com/sample-trends/demo_trend_viral_audio",
+   "published_date": "2026-11-14",
+   "verified_date": "2026-11-14",
+   "starts_on": null,
+   "expiry_date": "2026-12-15",
+   "relevance_score": 0.95,
+   "confidence_score": 0.9,
+   "hashtags": [],
+   "source_type": "SAMPLE",
+   "is_sample": true,
+   "first_observed_date": "2026-11-14",
+   "direction": "UNKNOWN",
+   "evidence": []
+  },
+  {
+   "trend_id": "demo_trend_ai_tools",
+   "title": "AI tools for creators",
+   "description": "Fictional sample: creators share workflow tips using AI tools",
+   "category": "TECHNOLOGY",
+   "region": "India",
+   "language": "en",
+   "kind": "FACT",
+   "source_name": "Sample Trend Desk (fictional)",
+   "source_url": "https://example.com/sample-trends/demo_trend_ai_tools",
+   "published_date": "2026-11-12",
+   "verified_date": "2026-11-12",
+   "starts_on": null,
+   "expiry_date": "2026-12-15",
+   "relevance_score": 0.9,
+   "confidence_score": 0.85,
+   "hashtags": [],
+   "source_type": "SAMPLE",
+   "is_sample": true,
+   "first_observed_date": "2026-11-12",
+   "direction": "UNKNOWN",
+   "evidence": []
+  }
+ ]
+}

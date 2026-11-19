@@ -1,0 +1,319 @@
+[
+ {
+  "festival_id": "fest_independence_day_2026",
+  "name": "Independence Day",
+  "date": "2026-08-15",
+  "year": 2026,
+  "region": "All India",
+  "category": "National holiday",
+  "description": "National holiday marked with patriotic and community content.",
+  "relevant_industries": [
+   "retail",
+   "restaurant",
+   "fashion",
+   "travel"
+  ],
+  "relevant_content_themes": [
+   "patriotic themes",
+   "community",
+   "sale"
+  ],
+  "source": "Bundled SAMPLE dataset: not an official calendar",
+  "verification_status": "SAMPLE_UNVERIFIED",
+  "date_note": "2026-08-15 is fixed by law"
+ },
+ {
+  "festival_id": "fest_onam_2026",
+  "name": "Onam",
+  "date": "2026-08-26",
+  "year": 2026,
+  "region": "Kerala",
+  "category": "Regional festival",
+  "description": "Harvest festival of Kerala.",
+  "relevant_industries": [
+   "food",
+   "restaurant",
+   "fashion"
+  ],
+  "relevant_content_themes": [
+   "sadya",
+   "traditional wear",
+   "flower decor"
+  ],
+  "source": "Bundled SAMPLE dataset: not an official calendar",
+  "verification_status": "SAMPLE_UNVERIFIED",
+  "date_note": "Approximate: check a Malayalam calendar"
+ },
+ {
+  "festival_id": "fest_raksha_bandhan_2026",
+  "name": "Raksha Bandhan",
+  "date": "2026-08-28",
+  "year": 2026,
+  "region": "All India",
+  "category": "Major festival",
+  "description": "Festival celebrating siblings, with gifting.",
+  "relevant_industries": [
+   "fashion",
+   "ecommerce",
+   "jewellery",
+   "food"
+  ],
+  "relevant_content_themes": [
+   "gifting",
+   "sibling stories",
+   "festive wear"
+  ],
+  "source": "Bundled SAMPLE dataset: not an official calendar",
+  "verification_status": "SAMPLE_UNVERIFIED",
+  "date_note": "Approximate: depends on the lunar calendar"
+ },
+ {
+  "festival_id": "fest_ganesh_chaturthi_2026",
+  "name": "Ganesh Chaturthi",
+  "date": "2026-09-14",
+  "year": 2026,
+  "region": "Maharashtra",
+  "category": "Major festival",
+  "description": "Ten-day festival, especially in Maharashtra.",
+  "relevant_industries": [
+   "food",
+   "restaurant",
+   "fashion",
+   "decor"
+  ],
+  "relevant_content_themes": [
+   "modak recipes",
+   "festive wear",
+   "decor"
+  ],
+  "source": "Bundled SAMPLE dataset: not an official calendar",
+  "verification_status": "SAMPLE_UNVERIFIED",
+  "date_note": "Approximate: depends on the lunar calendar"
+ },
+ {
+  "festival_id": "fest_navratri_2026",
+  "name": "Navratri",
+  "date": "2026-10-11",
+  "year": 2026,
+  "region": "All India",
+  "category": "Major festival",
+  "description": "Nine nights of festivities; colour and garba themes.",
+  "relevant_industries": [
+   "fashion",
+   "food",
+   "beauty",
+   "jewellery"
+  ],
+  "relevant_content_themes": [
+   "garba outfits",
+   "nine colours",
+   "festive makeup"
+  ],
+  "source": "Bundled SAMPLE dataset: not an official calendar",
+  "verification_status": "SAMPLE_UNVERIFIED",
+  "date_note": "Approximate start date: verify a regional calendar"
+ },
+ {
+  "festival_id": "fest_durga_puja_2026",
+  "name": "Durga Puja",
+  "date": "2026-10-18",
+  "year": 2026,
+  "region": "West Bengal",
+  "category": "Regional festival",
+  "description": "Major festival in Bengal and across India.",
+  "relevant_industries": [
+   "food",
+   "fashion",
+   "travel"
+  ],
+  "relevant_content_themes": [
+   "pandal hopping",
+   "traditional wear",
+   "bengali food"
+  ],
+  "source": "Bundled SAMPLE dataset: not an official calendar",
+  "verification_status": "SAMPLE_UNVERIFIED",
+  "date_note": "Approximate: depends on the lunar calendar"
+ },
+ {
+  "festival_id": "fest_dussehra_2026",
+  "name": "Dussehra",
+  "date": "2026-10-20",
+  "year": 2026,
+  "region": "All India",
+  "category": "Major festival",
+  "description": "Victory of good over evil.",
+  "relevant_industries": [
+   "retail",
+   "food",
+   "fashion"
+  ],
+  "relevant_content_themes": [
+   "traditions",
+   "family gatherings"
+  ],
+  "source": "Bundled SAMPLE dataset: not an official calendar",
+  "verification_status": "SAMPLE_UNVERIFIED",
+  "date_note": "Approximate: depends on the lunar calendar"
+ },
+ {
+  "festival_id": "fest_karwa_chauth_2026",
+  "name": "Karwa Chauth",
+  "date": "2026-10-29",
+  "year": 2026,
+  "region": "North India",
+  "category": "Cultural occasion",
+  "description": "Observed mainly in North India.",
+  "relevant_industries": [
+   "fashion",
+   "beauty",
+   "jewellery"
+  ],
+  "relevant_content_themes": [
+   "mehendi",
+   "festive makeup",
+   "traditional wear"
+  ],
+  "source": "Bundled SAMPLE dataset: not an official calendar",
+  "verification_status": "SAMPLE_UNVERIFIED",
+  "date_note": "Approximate: depends on the lunar calendar"
+ },
+ {
+  "festival_id": "fest_dhanteras_2026",
+  "name": "Dhanteras",
+  "date": "2026-11-06",
+  "year": 2026,
+  "region": "All India",
+  "category": "Shopping season",
+  "description": "Considered auspicious for buying gold, silver and utensils.",
+  "relevant_industries": [
+   "jewellery",
+   "ecommerce",
+   "retail"
+  ],
+  "relevant_content_themes": [
+   "gold buying",
+   "gifting"
+  ],
+  "source": "Bundled SAMPLE dataset: not an official calendar",
+  "verification_status": "SAMPLE_UNVERIFIED",
+  "date_note": "Approximate: depends on the lunar calendar"
+ },
+ {
+  "festival_id": "fest_diwali_2026",
+  "name": "Diwali",
+  "date": "2026-11-08",
+  "year": 2026,
+  "region": "All India",
+  "category": "Major festival",
+  "description": "Festival of lights and the biggest shopping season of the year.",
+  "relevant_industries": [
+   "fashion",
+   "food",
+   "restaurant",
+   "jewellery",
+   "ecommerce",
+   "beauty"
+  ],
+  "relevant_content_themes": [
+   "festive wear",
+   "gifting",
+   "home decor",
+   "sweets",
+   "festive menu"
+  ],
+  "source": "Bundled SAMPLE dataset: not an official calendar",
+  "verification_status": "SAMPLE_UNVERIFIED",
+  "date_note": "Approximate: verify against an official calendar"
+ },
+ {
+  "festival_id": "fest_christmas_2026",
+  "name": "Christmas",
+  "date": "2026-12-25",
+  "year": 2026,
+  "region": "All India",
+  "category": "Major festival",
+  "description": "Celebrated widely with gifting and parties.",
+  "relevant_industries": [
+   "food",
+   "restaurant",
+   "retail",
+   "travel"
+  ],
+  "relevant_content_themes": [
+   "gifting",
+   "party outfits",
+   "year-end trips"
+  ],
+  "source": "Bundled SAMPLE dataset: not an official calendar",
+  "verification_status": "SAMPLE_UNVERIFIED",
+  "date_note": "2026-12-25 is fixed"
+ },
+ {
+  "festival_id": "fest_makar_sankranti_2027",
+  "name": "Makar Sankranti / Pongal",
+  "date": "2027-01-14",
+  "year": 2027,
+  "region": "All India",
+  "category": "Regional festival",
+  "description": "Harvest festival known as Pongal in Tamil Nadu.",
+  "relevant_industries": [
+   "food",
+   "restaurant",
+   "fashion"
+  ],
+  "relevant_content_themes": [
+   "traditional food",
+   "kite flying",
+   "harvest"
+  ],
+  "source": "Bundled SAMPLE dataset: not an official calendar",
+  "verification_status": "SAMPLE_UNVERIFIED",
+  "date_note": "Approximate: verify a regional calendar"
+ },
+ {
+  "festival_id": "fest_republic_day_2027",
+  "name": "Republic Day",
+  "date": "2027-01-26",
+  "year": 2027,
+  "region": "All India",
+  "category": "National holiday",
+  "description": "National holiday.",
+  "relevant_industries": [
+   "retail",
+   "restaurant",
+   "travel"
+  ],
+  "relevant_content_themes": [
+   "patriotic themes",
+   "long weekend trips"
+  ],
+  "source": "Bundled SAMPLE dataset: not an official calendar",
+  "verification_status": "SAMPLE_UNVERIFIED",
+  "date_note": "2027-01-26 is fixed by law"
+ },
+ {
+  "festival_id": "fest_valentines_day_2027",
+  "name": "Valentine's Day",
+  "date": "2027-02-14",
+  "year": 2027,
+  "region": "All India",
+  "category": "Shopping season",
+  "description": "Gifting and date-night occasion.",
+  "relevant_industries": [
+   "restaurant",
+   "jewellery",
+   "ecommerce",
+   "beauty",
+   "fashion"
+  ],
+  "relevant_content_themes": [
+   "gifting",
+   "couple dining",
+   "date-night outfits"
+  ],
+  "source": "Bundled SAMPLE dataset: not an official calendar",
+  "verification_status": "SAMPLE_UNVERIFIED",
+  "date_note": "2027-02-14 is fixed"
+ }
+]

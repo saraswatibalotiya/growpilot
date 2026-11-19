@@ -44,6 +44,20 @@ Not available on the backend yet, so the frontend handles them honestly:
 
 When the backend ships an endpoint, set the matching flag in `.env` (see `.env.example`): `VITE_FEATURE_AI=true`, `VITE_FEATURE_PUBLISHING=true`.
 
+## AI Overview (`/ai-insights`)
+
+A screen that shows what the Python AI engine found: account health, best-performing content, audience insights, current trends and the latest
+content ideas (with Save / Not for me). It calls only the backend's `/ai-insights/*` routes with the owner's normal access token. The
+browser never contacts the engine, never sees its address or token, and never sends a business id.
+
+- **Off unless the backend turns it on.** `GET /ai-insights/status` decides: the sidebar link and the page appear only when the backend reports `enabled`. With it off or the engine down the rest of the app is unchanged.
+- **Each block loads on its own.** One that fails or has no data yet (for example no comments, or too few posts) shows a plain message and never blanks the others.
+- **No invented numbers.** "Account health" is a list of signs, each with the engine's numbers behind it, not a score. Opportunity (ranking) and Confidence (evidence) are shown separately, and the screen says opportunity is not a prediction. Sample trends carry a "Sample" badge, and a demo Instagram account shows a "demo data" banner.
+- **Files:** `pages/AiOverviewPage.tsx`, `components/AiInsightCards.tsx`, `hooks/useAiOverview.ts`, `services/aiInsights.ts`, `lib/aiOverview.ts` (pure logic), `styles/ai-insights.css`, `i18n/locales/*/aiInsights.json`.
+- **Limits:** the engine's own sentences (the evidence lines) are English only; the Hindi and Marathi interface text should be reviewed by a native speaker; the backend does not yet send comments, so the audience block says "not enough data" until it does.
+
+`npm run test:unit` runs the logic tests (Node's built-in runner, `frontend/tests`).
+
 ## Security notes
 
 - No API keys or Meta credentials are in this code. Instagram tokens stay on the server.

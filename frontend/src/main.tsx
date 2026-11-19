@@ -8,6 +8,7 @@ import './styles/components.css'
 import './styles/shell.css'
 import './styles/pages.css'
 import './styles/reels.css'
+import './styles/ai-insights.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

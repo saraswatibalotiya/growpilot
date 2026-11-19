@@ -2,6 +2,7 @@ import { lazy, Suspense, type ReactNode } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { AppShell } from './components/AppShell'
 import { Spinner } from './components/ui'
+import { AiOverviewPage } from './pages/AiOverviewPage'
 import { CreatePage } from './pages/CreatePage'
 import { DonePage } from './pages/DonePage'
 import { GeneratingPage } from './pages/GeneratingPage'
@@ -77,6 +78,7 @@ export default function App() {
               <Route path="/posts" element={<PostsPage />} />
               <Route path="/products" element={<ProductsPage />} />
               <Route path="/recommendations" element={<RecommendationsPage />} />
+              <Route path="/ai-insights" element={<AiOverviewPage />} />
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/help" element={<HelpPage />} />
             </Route>

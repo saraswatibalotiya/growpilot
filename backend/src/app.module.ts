@@ -13,6 +13,7 @@ import { PosterModule } from './poster/poster.module';
 import { ReelsModule } from './reels/reels.module';
 import { PublishingModule } from './publishing/publishing.module';
 import { AiModule } from './ai/ai.module';
+import { AiEngineModule } from './ai-engine/ai-engine.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { HealthModule } from './health/health.module';
@@ -37,6 +38,7 @@ import { PrismaModule } from './database/prisma.module';
     PosterModule,
     ReelsModule,
     AiModule,
+    AiEngineModule,
     InstagramModule,
     ThrottlerModule.forRoot([{ ttl: 60000, limit: 60 }]),
   ],

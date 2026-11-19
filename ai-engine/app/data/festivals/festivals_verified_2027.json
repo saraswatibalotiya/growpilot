@@ -1,0 +1,668 @@
+[
+ {
+  "festival_id": "dopt_id_ul_fitr_2027",
+  "name": "Id-ul-Fitr",
+  "date": "2027-03-10",
+  "year": 2027,
+  "region": "All India",
+  "category": "Major festival",
+  "description": "Id-ul-Fitr, in the Government of India's 2027 compulsory holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "fashion",
+   "food",
+   "restaurant",
+   "jewellery",
+   "beauty",
+   "ecommerce"
+  ],
+  "relevant_content_themes": [
+   "festive outfits",
+   "gifting",
+   "sweets and feasts"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure I. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT. Subject to change after moon sighting (O.M. para 5.1): confirm closer to the day."
+ },
+ {
+  "festival_id": "dopt_holi_2027",
+  "name": "Holi",
+  "date": "2027-03-23",
+  "year": 2027,
+  "region": "All India",
+  "category": "Major festival",
+  "description": "Holi, in the Government of India's 2027 compulsory holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "fashion",
+   "food",
+   "restaurant",
+   "beauty",
+   "retail"
+  ],
+  "relevant_content_themes": [
+   "colours",
+   "festive outfits",
+   "party and gatherings"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure I. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_good_friday_2027",
+  "name": "Good Friday",
+  "date": "2027-03-26",
+  "year": 2027,
+  "region": "All India",
+  "category": "Public holiday",
+  "description": "Good Friday, in the Government of India's 2027 compulsory holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "travel",
+   "restaurant"
+  ],
+  "relevant_content_themes": [
+   "long weekend trips"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure I. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_ram_navami_2027",
+  "name": "Ram Navami",
+  "date": "2027-04-15",
+  "year": 2027,
+  "region": "All India",
+  "category": "Major festival",
+  "description": "Ram Navami, in the Government of India's 2027 compulsory holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "food",
+   "restaurant",
+   "retail"
+  ],
+  "relevant_content_themes": [
+   "family gatherings"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure I. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_mahavir_jayanti_2027",
+  "name": "Mahavir Jayanti",
+  "date": "2027-04-19",
+  "year": 2027,
+  "region": "All India",
+  "category": "Public holiday",
+  "description": "Mahavir Jayanti, in the Government of India's 2027 compulsory holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [],
+  "relevant_content_themes": [],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure I. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_id_ul_zuha_bakrid_2027",
+  "name": "Id-ul-Zuha (Bakrid)",
+  "date": "2027-05-17",
+  "year": 2027,
+  "region": "All India",
+  "category": "Major festival",
+  "description": "Id-ul-Zuha (Bakrid), in the Government of India's 2027 compulsory holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "fashion",
+   "food",
+   "restaurant",
+   "jewellery",
+   "ecommerce"
+  ],
+  "relevant_content_themes": [
+   "festive outfits",
+   "gifting",
+   "feasts"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure I. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT. Subject to change after moon sighting (O.M. para 5.1): confirm closer to the day."
+ },
+ {
+  "festival_id": "dopt_budha_purnima_2027",
+  "name": "Budha Purnima",
+  "date": "2027-05-20",
+  "year": 2027,
+  "region": "All India",
+  "category": "Public holiday",
+  "description": "Budha Purnima, in the Government of India's 2027 compulsory holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "travel"
+  ],
+  "relevant_content_themes": [
+   "long weekend trips"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure I. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_muharram_2027",
+  "name": "Muharram",
+  "date": "2027-06-16",
+  "year": 2027,
+  "region": "All India",
+  "category": "Public holiday",
+  "description": "Muharram, in the Government of India's 2027 compulsory holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [],
+  "relevant_content_themes": [],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure I. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT. Subject to change after moon sighting (O.M. para 5.1): confirm closer to the day."
+ },
+ {
+  "festival_id": "dopt_milad_un_nabi_id_e_milad_2027",
+  "name": "Milad-un-Nabi (Id-e-Milad)",
+  "date": "2027-08-15",
+  "year": 2027,
+  "region": "All India",
+  "category": "Public holiday",
+  "description": "Milad-un-Nabi (Id-e-Milad), in the Government of India's 2027 compulsory holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [],
+  "relevant_content_themes": [],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure I. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT. Subject to change after moon sighting (O.M. para 5.1): confirm closer to the day."
+ },
+ {
+  "festival_id": "dopt_janmashtami_2027",
+  "name": "Janmashtami",
+  "date": "2027-08-25",
+  "year": 2027,
+  "region": "All India",
+  "category": "Major festival",
+  "description": "Janmashtami, in the Government of India's 2027 compulsory holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "food",
+   "restaurant",
+   "retail",
+   "fashion"
+  ],
+  "relevant_content_themes": [
+   "family gatherings",
+   "festive outfits",
+   "sweets"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure I. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_dussehra_2027",
+  "name": "Dussehra",
+  "date": "2027-10-09",
+  "year": 2027,
+  "region": "All India",
+  "category": "Major festival",
+  "description": "Dussehra, in the Government of India's 2027 compulsory holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "fashion",
+   "jewellery",
+   "retail",
+   "food",
+   "restaurant",
+   "ecommerce"
+  ],
+  "relevant_content_themes": [
+   "festive outfits",
+   "shopping season",
+   "gifting"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure I. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_diwali_2027",
+  "name": "Diwali",
+  "date": "2027-10-29",
+  "year": 2027,
+  "region": "All India",
+  "category": "Major festival",
+  "description": "Diwali, in the Government of India's 2027 compulsory holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "fashion",
+   "jewellery",
+   "retail",
+   "food",
+   "restaurant",
+   "beauty",
+   "ecommerce",
+   "grocery",
+   "footwear"
+  ],
+  "relevant_content_themes": [
+   "gifting",
+   "festive outfits",
+   "home decor",
+   "sweets",
+   "sale"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure I. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_guru_nanak_s_birthday_2027",
+  "name": "Guru Nanak's Birthday",
+  "date": "2027-11-14",
+  "year": 2027,
+  "region": "All India",
+  "category": "Public holiday",
+  "description": "Guru Nanak's Birthday, in the Government of India's 2027 compulsory holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "food",
+   "restaurant"
+  ],
+  "relevant_content_themes": [
+   "community meals"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure I. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_makar_sankranti_magha_bihu_2027",
+  "name": "Makar Sankranti / Magha Bihu",
+  "date": "2027-01-14",
+  "year": 2027,
+  "region": "All India",
+  "category": "Regional festival",
+  "description": "Makar Sankranti / Magha Bihu, in the Government of India's 2027 restricted holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "food",
+   "restaurant",
+   "fashion"
+  ],
+  "relevant_content_themes": [
+   "harvest",
+   "traditional food",
+   "kite flying"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure II. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_pongal_2027",
+  "name": "Pongal",
+  "date": "2027-01-15",
+  "year": 2027,
+  "region": "Tamil Nadu",
+  "category": "Regional festival",
+  "description": "Pongal, in the Government of India's 2027 restricted holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "food",
+   "restaurant",
+   "fashion"
+  ],
+  "relevant_content_themes": [
+   "harvest",
+   "traditional food",
+   "traditional wear"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure II. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_basant_panchami_2027",
+  "name": "Basant Panchami",
+  "date": "2027-02-11",
+  "year": 2027,
+  "region": "All India",
+  "category": "Regional festival",
+  "description": "Basant Panchami, in the Government of India's 2027 restricted holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "fashion",
+   "food",
+   "education"
+  ],
+  "relevant_content_themes": [
+   "yellow outfits",
+   "sweets"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure II. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_maha_shivratri_2027",
+  "name": "Maha Shivratri",
+  "date": "2027-03-06",
+  "year": 2027,
+  "region": "All India",
+  "category": "Major festival",
+  "description": "Maha Shivratri, in the Government of India's 2027 restricted holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "food",
+   "restaurant"
+  ],
+  "relevant_content_themes": [
+   "fasting menus"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure II. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_gudi_padwa_ugadi_2027",
+  "name": "Gudi Padwa / Ugadi",
+  "date": "2027-04-07",
+  "year": 2027,
+  "region": "All India",
+  "category": "Regional festival",
+  "description": "Gudi Padwa / Ugadi, in the Government of India's 2027 restricted holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "fashion",
+   "food",
+   "restaurant",
+   "jewellery"
+  ],
+  "relevant_content_themes": [
+   "new year",
+   "traditional wear",
+   "traditional food"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure II. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_vaisakhi_meshadi_tamil_new_year_2027",
+  "name": "Vaisakhi / Meshadi (Tamil New Year)",
+  "date": "2027-04-14",
+  "year": 2027,
+  "region": "Tamil Nadu",
+  "category": "Regional festival",
+  "description": "Vaisakhi / Meshadi (Tamil New Year), in the Government of India's 2027 restricted holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "fashion",
+   "food",
+   "restaurant",
+   "jewellery"
+  ],
+  "relevant_content_themes": [
+   "new year",
+   "traditional wear"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure II. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_vaisakhadi_bengal_bahag_bihu_assam_2027",
+  "name": "Vaisakhadi (Bengal) / Bahag Bihu (Assam)",
+  "date": "2027-04-15",
+  "year": 2027,
+  "region": "West Bengal",
+  "category": "Regional festival",
+  "description": "Vaisakhadi (Bengal) / Bahag Bihu (Assam), in the Government of India's 2027 restricted holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "fashion",
+   "food",
+   "restaurant"
+  ],
+  "relevant_content_themes": [
+   "new year",
+   "traditional wear",
+   "Bengali food"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure II. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_rath_yatra_2027",
+  "name": "Rath Yatra",
+  "date": "2027-07-05",
+  "year": 2027,
+  "region": "Odisha",
+  "category": "Regional festival",
+  "description": "Rath Yatra, in the Government of India's 2027 restricted holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "travel",
+   "food"
+  ],
+  "relevant_content_themes": [
+   "pilgrimage travel"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure II. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_raksha_bandhan_2027",
+  "name": "Raksha Bandhan",
+  "date": "2027-08-17",
+  "year": 2027,
+  "region": "All India",
+  "category": "Major festival",
+  "description": "Raksha Bandhan, in the Government of India's 2027 restricted holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "fashion",
+   "ecommerce",
+   "jewellery",
+   "food",
+   "beauty",
+   "retail"
+  ],
+  "relevant_content_themes": [
+   "gifting",
+   "sibling stories",
+   "sweets"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure II. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_ganesh_chaturthi_2027",
+  "name": "Ganesh Chaturthi",
+  "date": "2027-09-04",
+  "year": 2027,
+  "region": "All India",
+  "category": "Major festival",
+  "description": "Ganesh Chaturthi, in the Government of India's 2027 restricted holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "food",
+   "restaurant",
+   "fashion",
+   "retail",
+   "ecommerce"
+  ],
+  "relevant_content_themes": [
+   "home decor",
+   "sweets",
+   "festive outfits"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure II. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_onam_2027",
+  "name": "Onam",
+  "date": "2027-09-12",
+  "year": 2027,
+  "region": "Kerala",
+  "category": "Regional festival",
+  "description": "Onam, in the Government of India's 2027 restricted holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "food",
+   "restaurant",
+   "fashion"
+  ],
+  "relevant_content_themes": [
+   "sadya",
+   "traditional wear",
+   "flower decor"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure II. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_dussehra_saptami_2027",
+  "name": "Dussehra (Saptami)",
+  "date": "2027-10-06",
+  "year": 2027,
+  "region": "All India",
+  "category": "Major festival",
+  "description": "Dussehra (Saptami), in the Government of India's 2027 restricted holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "fashion",
+   "jewellery",
+   "food",
+   "restaurant",
+   "beauty"
+  ],
+  "relevant_content_themes": [
+   "garba outfits",
+   "festive outfits",
+   "fasting menus"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure II. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_karwa_chauth_2027",
+  "name": "Karwa Chauth",
+  "date": "2027-10-18",
+  "year": 2027,
+  "region": "All India",
+  "category": "Major festival",
+  "description": "Karwa Chauth, in the Government of India's 2027 restricted holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "jewellery",
+   "fashion",
+   "beauty",
+   "ecommerce"
+  ],
+  "relevant_content_themes": [
+   "gifting",
+   "mehendi",
+   "festive outfits"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure II. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_naraka_chaturdasi_2027",
+  "name": "Naraka Chaturdasi",
+  "date": "2027-10-28",
+  "year": 2027,
+  "region": "All India",
+  "category": "Major festival",
+  "description": "Naraka Chaturdasi, in the Government of India's 2027 restricted holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "jewellery",
+   "retail",
+   "ecommerce",
+   "grocery",
+   "beauty"
+  ],
+  "relevant_content_themes": [
+   "festive prep",
+   "home decor",
+   "gifting"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure II. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_govardhan_puja_2027",
+  "name": "Govardhan Puja",
+  "date": "2027-10-30",
+  "year": 2027,
+  "region": "All India",
+  "category": "Major festival",
+  "description": "Govardhan Puja, in the Government of India's 2027 restricted holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "food",
+   "restaurant"
+  ],
+  "relevant_content_themes": [
+   "festive meals"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure II. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_bhai_dooj_2027",
+  "name": "Bhai Dooj",
+  "date": "2027-10-31",
+  "year": 2027,
+  "region": "All India",
+  "category": "Major festival",
+  "description": "Bhai Dooj, in the Government of India's 2027 restricted holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "ecommerce",
+   "jewellery",
+   "fashion",
+   "food"
+  ],
+  "relevant_content_themes": [
+   "gifting",
+   "sibling stories"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure II. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_chhath_puja_2027",
+  "name": "Chhath Puja",
+  "date": "2027-11-04",
+  "year": 2027,
+  "region": "Bihar",
+  "category": "Regional festival",
+  "description": "Chhath Puja, in the Government of India's 2027 restricted holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "food",
+   "fashion",
+   "retail"
+  ],
+  "relevant_content_themes": [
+   "traditional wear",
+   "festive baskets"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure II. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ },
+ {
+  "festival_id": "dopt_christmas_eve_2027",
+  "name": "Christmas Eve",
+  "date": "2027-12-24",
+  "year": 2027,
+  "region": "All India",
+  "category": "Occasion",
+  "description": "Christmas Eve, in the Government of India's 2027 restricted holiday list. The date is from the source; region, industry and theme tags are GrowPilot annotations.",
+  "relevant_industries": [
+   "food",
+   "restaurant",
+   "retail",
+   "travel",
+   "fashion"
+  ],
+  "relevant_content_themes": [
+   "party outfits",
+   "gifting"
+  ],
+  "source": "Government of India, Dept. of Personnel & Training, O.M. F.No.12/2/2023-JCA (July 2026), Holidays in Central Government Offices during 2027, Annexure II. https://dopt.gov.in/static/uploads/2026/08/2ffd159748162a48c025f7e6ca5807d5.pdf",
+  "verification_status": "VERIFIED_SOURCE",
+  "date_note": "Date as listed by DoPT for offices in Delhi/New Delhi; observance can differ by state and community."
+ }
+]

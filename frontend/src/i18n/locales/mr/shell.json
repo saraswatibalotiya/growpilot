@@ -11,7 +11,8 @@
     "createReel": "रील बनवा",
     "myPosts": "माझे पोस्ट",
     "products": "प्रॉडक्ट",
-    "settings": "सेटिंग्ज"
+    "settings": "सेटिंग्ज",
+    "aiInsights": "AI आढावा"
   },
   "titles": {
     "app": "GrowPilot",
@@ -32,7 +33,8 @@
     "reelEdit": "तुमची रील बदला",
     "reelPublish": "तुमची रील पब्लिश करा",
     "reelStatus": "रीलची स्थिती",
-    "reelPreview": "रील प्रीव्ह्यू"
+    "reelPreview": "रील प्रीव्ह्यू",
+    "aiInsights": "AI आढावा"
   },
   "ig": {
     "title": "Instagram कनेक्शन",

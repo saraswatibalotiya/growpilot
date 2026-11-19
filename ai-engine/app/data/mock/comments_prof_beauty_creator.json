@@ -1,0 +1,162 @@
+{
+ "comments": [
+  {
+   "comment_id": "bea_c000",
+   "text": "Which sunscreen is this?",
+   "posted_at": "2026-10-02T08:00:00+05:30",
+   "like_count": null,
+   "post_media_id": "bea_025"
+  },
+  {
+   "comment_id": "bea_c001",
+   "text": "Please make a video for dry skin",
+   "posted_at": "2026-09-27T16:00:00+05:30",
+   "like_count": 1,
+   "post_media_id": "bea_028"
+  },
+  {
+   "comment_id": "bea_c002",
+   "text": "This routine changed my skin, thank you!",
+   "posted_at": "2026-09-08T10:00:00+05:30",
+   "like_count": 1,
+   "post_media_id": "bea_024"
+  },
+  {
+   "comment_id": "bea_c003",
+   "text": "Where can I buy that serum?",
+   "posted_at": "2026-08-20T18:00:00+05:30",
+   "like_count": 1,
+   "post_media_id": "bea_030"
+  },
+  {
+   "comment_id": "bea_c004",
+   "text": "Is this safe for sensitive skin?",
+   "posted_at": "2026-08-10T10:00:00+05:30",
+   "like_count": 0,
+   "post_media_id": "bea_017"
+  },
+  {
+   "comment_id": "bea_c005",
+   "text": "Can you review a budget foundation?",
+   "posted_at": "2026-08-18T12:00:00+05:30",
+   "like_count": 2,
+   "post_media_id": "bea_004"
+  },
+  {
+   "comment_id": "bea_c006",
+   "text": "I broke out after using this.",
+   "posted_at": "2026-08-25T14:00:00+05:30",
+   "like_count": null,
+   "post_media_id": "bea_000"
+  },
+  {
+   "comment_id": "bea_c007",
+   "text": "Love your honest reviews ❤️",
+   "posted_at": "2026-09-27T17:00:00+05:30",
+   "like_count": 1,
+   "post_media_id": "bea_024"
+  },
+  {
+   "comment_id": "bea_c008",
+   "text": "Price of that lipstick?",
+   "posted_at": "2026-08-10T15:00:00+05:30",
+   "like_count": 2,
+   "post_media_id": "bea_001"
+  },
+  {
+   "comment_id": "bea_c009",
+   "text": "Tutorial for beginners please",
+   "posted_at": "2026-08-31T17:00:00+05:30",
+   "like_count": 0,
+   "post_media_id": "bea_027"
+  },
+  {
+   "comment_id": "bea_c010",
+   "text": "क्या ये ऑयली स्किन के लिए है?",
+   "posted_at": "2026-09-08T21:00:00+05:30",
+   "like_count": 5,
+   "post_media_id": "bea_012"
+  },
+  {
+   "comment_id": "bea_c011",
+   "text": "Shade name please",
+   "posted_at": "2026-09-15T10:00:00+05:30",
+   "like_count": 2,
+   "post_media_id": "bea_007"
+  },
+  {
+   "comment_id": "bea_c012",
+   "text": "Can you do a drugstore vs luxury comparison?",
+   "posted_at": "2026-09-19T21:00:00+05:30",
+   "like_count": null,
+   "post_media_id": "bea_002"
+  },
+  {
+   "comment_id": "bea_c013",
+   "text": "Very helpful!",
+   "posted_at": "2026-08-15T14:00:00+05:30",
+   "like_count": null,
+   "post_media_id": "bea_009"
+  },
+  {
+   "comment_id": "bea_c014",
+   "text": "This did not work for me.",
+   "posted_at": "2026-09-08T15:00:00+05:30",
+   "like_count": 0,
+   "post_media_id": "bea_023"
+  },
+  {
+   "comment_id": "bea_c015",
+   "text": "Link to the product?",
+   "posted_at": "2026-09-28T21:00:00+05:30",
+   "like_count": 0,
+   "post_media_id": "bea_010"
+  },
+  {
+   "comment_id": "bea_c016",
+   "text": "What is the price?",
+   "posted_at": "2026-08-22T19:00:00+05:30",
+   "like_count": 0,
+   "post_media_id": "bea_027"
+  },
+  {
+   "comment_id": "bea_c017",
+   "text": "Please make a video on acne marks",
+   "posted_at": "2026-09-27T18:00:00+05:30",
+   "like_count": 2,
+   "post_media_id": "bea_016"
+  },
+  {
+   "comment_id": "bea_c018",
+   "text": "Amazing tips",
+   "posted_at": "2026-09-15T22:00:00+05:30",
+   "like_count": 2,
+   "post_media_id": "bea_001"
+  },
+  {
+   "comment_id": "bea_c019",
+   "text": "Do you have a discount code?",
+   "posted_at": "2026-08-25T14:00:00+05:30",
+   "like_count": 0,
+   "post_media_id": "bea_022"
+  }
+ ],
+ "demographics": {
+  "top_locations": [
+   {
+    "name": "Delhi",
+    "share": 0.46
+   },
+   {
+    "name": "Other Indian cities",
+    "share": 0.38
+   }
+  ],
+  "age_ranges": {
+   "18-24": 0.28,
+   "25-34": 0.44,
+   "35-44": 0.2,
+   "45+": 0.08
+  }
+ }
+}

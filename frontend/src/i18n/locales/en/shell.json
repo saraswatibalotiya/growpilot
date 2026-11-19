@@ -11,7 +11,8 @@
     "createReel": "Create Reel",
     "myPosts": "My Posts",
     "products": "Products",
-    "settings": "Settings"
+    "settings": "Settings",
+    "aiInsights": "AI Overview"
   },
   "titles": {
     "app": "GrowPilot",
@@ -32,7 +33,8 @@
     "reelEdit": "Edit your Reel",
     "reelPublish": "Publish your Reel",
     "reelStatus": "Reel status",
-    "reelPreview": "Reel preview"
+    "reelPreview": "Reel preview",
+    "aiInsights": "AI Overview"
   },
   "ig": {
     "title": "Instagram connection",

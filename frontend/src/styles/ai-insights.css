@@ -1,0 +1,231 @@
+/* ---------- AI Overview ---------- */
+.ai-data-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 14px;
+  max-width: 640px;
+  margin-bottom: 12px;
+}
+.ai-data-controls .select {
+  width: 100%;
+  min-width: 0;
+}
+.ai-overview-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+.ai-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 18px;
+  margin: 16px 0 18px;
+}
+.ai-card-head h2 {
+  font-size: 1.05rem;
+}
+.ai-hint,
+.ai-muted,
+.ai-fine {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  margin: 4px 0 0;
+}
+.ai-fine {
+  margin-top: 12px;
+  color: var(--text-faint);
+  font-size: 0.8rem;
+}
+.ai-lead {
+  margin: 12px 0 8px;
+  font-weight: 600;
+}
+.ai-loading {
+  display: grid;
+  place-items: center;
+  padding: 32px 0;
+}
+.ai-card h3 {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin: 14px 0 6px;
+}
+
+.ai-health,
+.ai-posts,
+.ai-list,
+.ai-recs {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.ai-health-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.ai-health-item small,
+.ai-list small,
+.ai-post small {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin-top: 2px;
+}
+.ai-dot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-top: 6px;
+  background: var(--text-faint);
+}
+.tone-good .ai-dot {
+  background: var(--success);
+}
+.tone-watch .ai-dot {
+  background: var(--warning);
+}
+.tone-steady .ai-dot {
+  background: var(--primary-400);
+}
+
+.ai-post {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.ai-post-main {
+  display: grid;
+  gap: 4px;
+}
+.ai-post-stats {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.ai-stat {
+  font-weight: 700;
+  color: var(--primary-700);
+}
+.ai-stat.muted {
+  font-weight: 500;
+  color: var(--text-muted);
+}
+.ai-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.ai-chip,
+.ai-badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-lavender);
+  color: var(--primary-700);
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+.ai-badge {
+  margin-left: 8px;
+  background: var(--info-bg);
+}
+.ai-badge.sample {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+.ai-count {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.ai-rec {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: grid;
+  gap: 8px;
+}
+.ai-rec.is-acted {
+  opacity: 0.6;
+}
+.ai-rec-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+}
+.ai-rec p {
+  margin: 0;
+}
+.ai-meters {
+  display: grid;
+  gap: 6px;
+  max-width: 420px;
+}
+.ai-meter {
+  display: grid;
+  grid-template-columns: 96px 1fr 34px;
+  gap: 10px;
+  align-items: center;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+.ai-meter b {
+  color: var(--text);
+  text-align: right;
+}
+.ai-meter-bar {
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-lavender);
+  overflow: hidden;
+}
+.ai-meter-bar i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+}
+.ai-meter-bar.opportunity i {
+  background: var(--primary-grad);
+}
+.ai-meter-bar.confidence i {
+  background: var(--success);
+}
+.ai-evidence {
+  color: var(--text-muted);
+}
+.ai-caveat {
+  color: var(--warning);
+}
+.ai-rec-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.ai-acted {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+.ai-generate {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.ai-generate small {
+  color: var(--text-muted);
+  max-width: 520px;
+}

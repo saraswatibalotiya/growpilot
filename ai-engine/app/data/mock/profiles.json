@@ -1,0 +1,173 @@
+{
+ "prof_boutique_mumbai": {
+  "profile_type": "BUSINESS",
+  "name": "Rangrez Ethnic Boutique (fictional)",
+  "instagram_username": "rangrez.ethnic.demo",
+  "category": "ethnic clothing",
+  "niche": "fashion",
+  "description": "A Mumbai boutique selling kurtis, sarees, lehengas and dupattas for festive and wedding wear.",
+  "target_audience": "Women 22-40 in Mumbai shopping for festive and occasion wear",
+  "country": "India",
+  "region": "Maharashtra",
+  "city": "Mumbai",
+  "primary_language": "en",
+  "brand_voice": "warm, elegant, festive",
+  "goals": [
+   "SALES",
+   "PRODUCT_DISCOVERY"
+  ],
+  "products": [
+   "cotton kurtis",
+   "silk sarees",
+   "bridal lehengas",
+   "dupattas"
+  ],
+  "services": [
+   "custom tailoring"
+  ],
+  "preferred_topics": [
+   "festive wear",
+   "styling"
+  ],
+  "excluded_topics": [
+   "politics"
+  ],
+  "preferred_formats": [
+   "REEL",
+   "CAROUSEL"
+  ],
+  "posting_frequency_per_week": 4
+ },
+ "prof_beauty_creator": {
+  "profile_type": "CREATOR",
+  "name": "Meera Beauty Diaries (fictional)",
+  "instagram_username": "meera.beauty.demo",
+  "category": "beauty",
+  "niche": "beauty",
+  "description": "An Indian beauty creator sharing budget skincare, makeup tutorials and honest reviews.",
+  "target_audience": "Indian women 18-30 who want affordable skincare and makeup",
+  "country": "India",
+  "region": "Delhi NCR",
+  "city": "Delhi",
+  "primary_language": "en",
+  "brand_voice": "honest, friendly, practical",
+  "goals": [
+   "ENGAGEMENT",
+   "REACH"
+  ],
+  "products": [],
+  "services": [],
+  "preferred_topics": [
+   "skincare",
+   "makeup tutorial"
+  ],
+  "excluded_topics": [
+   "skin lightening"
+  ],
+  "preferred_formats": [
+   "REEL",
+   "CAROUSEL"
+  ],
+  "posting_frequency_per_week": 5
+ },
+ "prof_food_creator": {
+  "profile_type": "CREATOR",
+  "name": "Swad Safar Food Stories (fictional)",
+  "instagram_username": "swad.safar.demo",
+  "category": "food",
+  "niche": "food",
+  "description": "A Pune food creator covering street food, home recipes and regional dishes.",
+  "target_audience": "Indian food lovers 20-40",
+  "country": "India",
+  "region": "Maharashtra",
+  "city": "Pune",
+  "primary_language": "en",
+  "brand_voice": "enthusiastic, down-to-earth",
+  "goals": [
+   "REACH",
+   "SHARES",
+   "COMMUNITY_BUILDING"
+  ],
+  "products": [],
+  "services": [],
+  "preferred_topics": [
+   "street food",
+   "recipes"
+  ],
+  "excluded_topics": [],
+  "preferred_formats": [
+   "REEL"
+  ],
+  "posting_frequency_per_week": 5
+ },
+ "prof_restaurant_bengaluru": {
+  "profile_type": "BUSINESS",
+  "name": "Masala Mile Kitchen (fictional)",
+  "instagram_username": "masala.mile.demo",
+  "category": "restaurant",
+  "niche": "food",
+  "description": "A Bengaluru restaurant serving regional Indian thalis, biryani and festive menus.",
+  "target_audience": "Families and office groups in Bengaluru who dine out and order in",
+  "country": "India",
+  "region": "Karnataka",
+  "city": "Bengaluru",
+  "primary_language": "en",
+  "brand_voice": "inviting, homely",
+  "goals": [
+   "LEADS",
+   "SALES",
+   "BRAND_AWARENESS"
+  ],
+  "products": [
+   "thali",
+   "biryani",
+   "festive menu"
+  ],
+  "services": [
+   "dine-in",
+   "catering",
+   "delivery"
+  ],
+  "preferred_topics": [
+   "menu",
+   "festive menu"
+  ],
+  "excluded_topics": [],
+  "preferred_formats": [
+   "REEL",
+   "SINGLE_IMAGE"
+  ],
+  "posting_frequency_per_week": 4
+ },
+ "prof_travel_creator": {
+  "profile_type": "CREATOR",
+  "name": "Wanderlust With Anaya (fictional)",
+  "instagram_username": "anaya.wanders.demo",
+  "category": "travel",
+  "niche": "travel",
+  "description": "A Mumbai-based travel creator sharing budget itineraries and offbeat Indian destinations.",
+  "target_audience": "Indian travellers 20-35 planning short trips",
+  "country": "India",
+  "region": "Maharashtra",
+  "city": "Mumbai",
+  "primary_language": "en",
+  "brand_voice": "adventurous, practical",
+  "goals": [
+   "SAVES",
+   "REACH",
+   "COMMUNITY_BUILDING"
+  ],
+  "products": [],
+  "services": [],
+  "preferred_topics": [
+   "budget travel",
+   "itineraries"
+  ],
+  "excluded_topics": [],
+  "preferred_formats": [
+   "REEL",
+   "CAROUSEL"
+  ],
+  "posting_frequency_per_week": 4
+ }
+}

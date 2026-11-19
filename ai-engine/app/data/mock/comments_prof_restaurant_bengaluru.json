@@ -1,0 +1,162 @@
+{
+ "comments": [
+  {
+   "comment_id": "res_c000",
+   "text": "Do you take bookings for 10 people?",
+   "posted_at": "2026-09-08T21:00:00+05:30",
+   "like_count": 2,
+   "post_media_id": "res_030"
+  },
+  {
+   "comment_id": "res_c001",
+   "text": "What is the price of the festive thali?",
+   "posted_at": "2026-09-06T12:00:00+05:30",
+   "like_count": 0,
+   "post_media_id": "res_012"
+  },
+  {
+   "comment_id": "res_c002",
+   "text": "Is the biryani available for delivery?",
+   "posted_at": "2026-09-17T08:00:00+05:30",
+   "like_count": 5,
+   "post_media_id": "res_025"
+  },
+  {
+   "comment_id": "res_c003",
+   "text": "Loved the food, will come back ❤️",
+   "posted_at": "2026-09-02T15:00:00+05:30",
+   "like_count": 5,
+   "post_media_id": "res_009"
+  },
+  {
+   "comment_id": "res_c004",
+   "text": "Do you have a vegetarian menu?",
+   "posted_at": "2026-09-25T14:00:00+05:30",
+   "like_count": 2,
+   "post_media_id": "res_013"
+  },
+  {
+   "comment_id": "res_c005",
+   "text": "Where exactly are you located?",
+   "posted_at": "2026-09-15T22:00:00+05:30",
+   "like_count": null,
+   "post_media_id": "res_020"
+  },
+  {
+   "comment_id": "res_c006",
+   "text": "The service was slow last Sunday.",
+   "posted_at": "2026-09-21T17:00:00+05:30",
+   "like_count": 5,
+   "post_media_id": "res_016"
+  },
+  {
+   "comment_id": "res_c007",
+   "text": "Can I order online?",
+   "posted_at": "2026-09-25T19:00:00+05:30",
+   "like_count": 5,
+   "post_media_id": "res_022"
+  },
+  {
+   "comment_id": "res_c008",
+   "text": "Please share the menu",
+   "posted_at": "2026-08-27T22:00:00+05:30",
+   "like_count": null,
+   "post_media_id": "res_024"
+  },
+  {
+   "comment_id": "res_c009",
+   "text": "Do you cater for events?",
+   "posted_at": "2026-08-25T18:00:00+05:30",
+   "like_count": 2,
+   "post_media_id": "res_017"
+  },
+  {
+   "comment_id": "res_c010",
+   "text": "बुकिंग कैसे करें?",
+   "posted_at": "2026-09-21T14:00:00+05:30",
+   "like_count": 2,
+   "post_media_id": "res_010"
+  },
+  {
+   "comment_id": "res_c011",
+   "text": "थाली का रेट क्या है?",
+   "posted_at": "2026-10-04T16:00:00+05:30",
+   "like_count": 2,
+   "post_media_id": "res_001"
+  },
+  {
+   "comment_id": "res_c012",
+   "text": "Great ambience",
+   "posted_at": "2026-08-09T09:00:00+05:30",
+   "like_count": 0,
+   "post_media_id": "res_027"
+  },
+  {
+   "comment_id": "res_c013",
+   "text": "Is parking available?",
+   "posted_at": "2026-09-28T18:00:00+05:30",
+   "like_count": null,
+   "post_media_id": "res_015"
+  },
+  {
+   "comment_id": "res_c014",
+   "text": "Delivery to HSR layout?",
+   "posted_at": "2026-08-25T12:00:00+05:30",
+   "like_count": 2,
+   "post_media_id": "res_024"
+  },
+  {
+   "comment_id": "res_c015",
+   "text": "The portion was small for the price.",
+   "posted_at": "2026-09-25T12:00:00+05:30",
+   "like_count": 0,
+   "post_media_id": "res_029"
+  },
+  {
+   "comment_id": "res_c016",
+   "text": "Fantastic biryani!",
+   "posted_at": "2026-08-12T13:00:00+05:30",
+   "like_count": 1,
+   "post_media_id": "res_020"
+  },
+  {
+   "comment_id": "res_c017",
+   "text": "Opening hours on Sunday?",
+   "posted_at": "2026-09-20T14:00:00+05:30",
+   "like_count": null,
+   "post_media_id": "res_003"
+  },
+  {
+   "comment_id": "res_c018",
+   "text": "Can you do a corporate lunch?",
+   "posted_at": "2026-09-10T10:00:00+05:30",
+   "like_count": 2,
+   "post_media_id": "res_007"
+  },
+  {
+   "comment_id": "res_c019",
+   "text": "Price for the combo?",
+   "posted_at": "2026-09-13T19:00:00+05:30",
+   "like_count": 1,
+   "post_media_id": "res_021"
+  }
+ ],
+ "demographics": {
+  "top_locations": [
+   {
+    "name": "Bengaluru",
+    "share": 0.46
+   },
+   {
+    "name": "Other Indian cities",
+    "share": 0.38
+   }
+  ],
+  "age_ranges": {
+   "18-24": 0.28,
+   "25-34": 0.44,
+   "35-44": 0.2,
+   "45+": 0.08
+  }
+ }
+}

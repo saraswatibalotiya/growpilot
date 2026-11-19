@@ -1,0 +1,118 @@
+{
+  "preview": {
+    "source": "Data source",
+    "live": "My Instagram (live)",
+    "mock": "Mock version",
+    "industry": "Mock business",
+    "fashion": "Fashion boutique",
+    "grooming": "Grooming studio",
+    "beauty": "Beauty salon",
+    "cafe": "Café & bakery",
+    "notice": "Mock data: {industry}. All metrics and ideas are synthetic, not your Instagram results. Saved choices last only in this preview.",
+    "reset": "Reset sample ideas"
+  },
+  "title": "AI Overview",
+  "subtitle": "What your Instagram results, your audience and the market say about what to post next.",
+  "refresh": "Refresh",
+  "retry": "Try again",
+  "unavailable": "AI insights are temporarily unavailable. The rest of GrowPilot works as usual.",
+  "demoData": "You are viewing a demo Instagram account, so everything here rests on demo data.",
+  "connect": "Connect Instagram in Settings to base these insights on your real posts.",
+  "off": {
+    "title": "AI insights are not turned on",
+    "body": "This feature is switched off for your account. Everything else in GrowPilot works as usual.",
+    "home": "Back to Home"
+  },
+  "state": {
+    "empty": "Not enough data yet",
+    "unavailable": "Temporarily unavailable",
+    "error": "Something went wrong"
+  },
+  "formats": {
+    "REEL": "Reel",
+    "CAROUSEL": "Carousel",
+    "IMAGE": "Photo",
+    "VIDEO": "Video",
+    "STORY": "Story",
+    "UNKNOWN": "Post",
+    "SINGLE_IMAGE": "Photo",
+    "EDUCATIONAL_POST": "Educational post",
+    "PRODUCT_SHOWCASE": "Product showcase",
+    "BEHIND_THE_SCENES": "Behind the scenes",
+    "TUTORIAL": "Tutorial",
+    "PROMOTIONAL": "Promotional post",
+    "UGC_CONCEPT": "Customer story"
+  },
+  "health": {
+    "title": "Account health",
+    "hint": "How your recent posts are doing",
+    "note": "These are signs from your own posts, not a score. Each one shows the numbers behind it.",
+    "trend": {
+      "good": "Engagement is up {percent}% on your recent posts",
+      "watch": "Engagement is down {percent}% on your recent posts",
+      "steady": "Engagement is steady"
+    },
+    "recent": {
+      "good": "Your last {posts} posts do better than usual ({index}× typical)",
+      "watch": "Your last {posts} posts do worse than usual ({index}× typical)",
+      "steady": "Your last {posts} posts are about typical ({index}×)"
+    },
+    "rhythm": {
+      "watch": "You post about {perWeek} times a week, with a gap of {gap} days",
+      "steady": "You post about {perWeek} times a week"
+    },
+    "data": {
+      "watch": "Only {posts} posts to learn from, so these signs are tentative",
+      "steady": "Based on {posts} of your posts"
+    }
+  },
+  "best": {
+    "title": "Best-performing content",
+    "hint": "Compared with your usual posts of the same type",
+    "none": "No posts to compare yet.",
+    "format": "{format} posts do best for you ({rate} engagement).",
+    "formatNoRate": "{format} posts do best for you.",
+    "index": "{index}× typical",
+    "rate": "{rate} engagement",
+    "open": "Open on Instagram",
+    "note": "“Typical” means the middle post of the same type on your account."
+  },
+  "audience": {
+    "title": "Audience insights",
+    "hint": "From your followers' comments",
+    "analysed": "{count} comments analysed.",
+    "questions": "What people keep asking",
+    "interests": "What they mention"
+  },
+  "trends": {
+    "title": "Current trends",
+    "hint": "Only trends that fit your business and are still fresh",
+    "none": "No current trend fits your business right now.",
+    "sample": "Sample",
+    "sampleNote": "“Sample” trends are made-up examples, not real observations.",
+    "source": "Source: {source}, checked {date}",
+    "noSource": "No source",
+    "relevance": "{percent}% relevant to you",
+    "direction": {
+      "RISING": "Rising",
+      "STABLE": "Steady",
+      "FALLING": "Falling"
+    }
+  },
+  "recs": {
+    "title": "Content ideas",
+    "hint": "Ranked, with the evidence behind each one",
+    "none": "No ideas yet. Generate some below.",
+    "opportunity": "Opportunity",
+    "confidence": "Confidence",
+    "because": "Why: {evidence}",
+    "noEvidence": "A general good-practice idea. No data of yours backs it yet.",
+    "save": "Save",
+    "notRelevant": "Not for me",
+    "saved": "Saved",
+    "hidden": "Hidden. You will not see it again.",
+    "generate": "Generate ideas",
+    "regenerate": "Generate new ideas",
+    "disclaimer": "Opportunity ranks ideas against each other. It is not a prediction of views or sales. Confidence shows how well the evidence supports the idea."
+  }
+}

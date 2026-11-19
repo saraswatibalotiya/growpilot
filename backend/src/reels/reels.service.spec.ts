@@ -244,7 +244,7 @@ describe('ReelsService editing and staleness', () => {
     expect(t.studio.reelScene).not.toHaveBeenCalled();
   });
 
-  it('an AI look renders over the generated scene, and is refused when AI is not set up', async () => {
+  it('an AI look renders over the generated scene, and uses the original when AI is not set up', async () => {
     const t = await build({ ai: true });
     const id = await t.make({ look: 'AI_FESTIVE' });
     expect(t.studio.reelScene).toHaveBeenCalledWith('biz-1', t.image, 'festive');
@@ -252,7 +252,38 @@ describe('ReelsService editing and staleness', () => {
     expect(t.status(id)).toBe('READY');
 
     const off = await build();
-    await expect(off.service.generate('u1', { language: 'en', template: 'SHOWCASE', productId: 'prod-1', look: 'AI_STUDIO' } as never)).rejects.toThrow('AI backgrounds are not set up');
+    const fallbackId = await off.make({ look: 'AI_STUDIO' });
+    expect(off.row(fallbackId)).toMatchObject({ status: 'READY', look: 'FULL_PHOTO', error: null });
+    expect(off.studio.reelScene).not.toHaveBeenCalled();
+    expect(off.render).toHaveBeenCalledWith(expect.objectContaining({ image: off.image, plate: false }));
+  });
+
+  it.each([
+    new ServiceUnavailableException('Gemini is unavailable'),
+    new HttpException('Daily image limit reached', 429),
+    new Error('Connection timed out'),
+  ])('continues rendering with the original photo after an AI enhancement failure: %s', async (error) => {
+    const t = await build({ ai: true });
+    t.studio.reelScene.mockRejectedValueOnce(error);
+    const id = await t.make();
+    expect(t.row(id)).toMatchObject({ status: 'READY', look: 'FULL_PHOTO', error: null });
+    expect(t.render).toHaveBeenCalledWith(expect.objectContaining({ image: t.image, plate: false }));
+    expect(t.cloudinary.upload).toHaveBeenCalledWith(expect.any(Buffer), 'video/mp4', expect.any(String), 'reel.mp4', 'video');
+  });
+
+  it('keeps every original photo when enhancement fails after one extra photo succeeds', async () => {
+    const t = await build({ ai: true });
+    t.studio.reelScene.mockResolvedValueOnce(t.scene).mockRejectedValueOnce(new ServiceUnavailableException('Gemini is unavailable'));
+    const id = await t.make({ extraMediaAssetIds: ['asset-1'] });
+    expect(t.row(id)).toMatchObject({ status: 'READY', look: 'FULL_PHOTO', error: null });
+    expect(t.render).toHaveBeenCalledWith(expect.objectContaining({ image: t.image, extraImages: [t.image], plate: false }));
+  });
+
+  it('ignores an unavailable AI look while editing and still accepts other changes', async () => {
+    const t = await build();
+    const id = await t.make();
+    const updated = await t.service.update('u1', id, { look: 'AI_STUDIO', caption: 'Updated caption' });
+    expect(updated).toMatchObject({ look: 'FULL_PHOTO', caption: 'Updated caption', stale: { video: false } });
   });
 
   it('stores the style options, passes them to the renderer and keeps the quality report', async () => {

@@ -36,10 +36,8 @@ export class ReelsService implements OnModuleInit {
     private readonly publishing: PublishingService,
   ) {}
 
-  private assertLookAvailable(look: string | undefined) {
-    if (look && look !== 'FULL_PHOTO' && !this.pipeline.aiLooksAvailable()) {
-      throw new BadRequestException('AI backgrounds are not set up for this app. Choose "Full photo" instead.');
-    }
+  private resolveLook(look: CreateReelDto['look']) {
+    return this.pipeline.aiLooksAvailable() ? look ?? 'AI_ENHANCE' : 'FULL_PHOTO';
   }
 
   /** A job that was running when the server stopped will never finish: say so instead of leaving it spinning. */
@@ -134,7 +132,6 @@ export class ReelsService implements OnModuleInit {
     }
     const offerText = clean(dto.offerText);
     if (dto.template === 'SPECIAL_OFFER' && !offerText && !price) throw new BadRequestException('The Special Offer template needs an offer or a price. Type the offer you want shown.');
-    this.assertLookAvailable(dto.look);
     const extraImageUrls = await this.extraPhotos(business.id, dto.extraMediaAssetIds, url);
 
     const reel = await this.repository.create(randomUUID(), {
@@ -146,7 +143,7 @@ export class ReelsService implements OnModuleInit {
       language: dto.language,
       template: dto.template,
       // Gemini's gentle "enhance" is the default when it is available; without it the free full-photo look is used.
-      look: dto.look ?? (this.pipeline.aiLooksAvailable() ? 'AI_ENHANCE' : 'FULL_PHOTO'),
+      look: this.resolveLook(dto.look),
       backgroundStyle: dto.backgroundStyle ?? DEFAULT_BACKGROUND,
       animationLevel: dto.animationLevel ?? 'BALANCED',
       textStyle: dto.textStyle ?? 'CLASSIC',
@@ -213,9 +210,11 @@ export class ReelsService implements OnModuleInit {
       videoStale = true;
     }
     if (dto.look !== undefined && dto.look !== reel.look) {
-      this.assertLookAvailable(dto.look);
-      patch.look = dto.look;
-      videoStale = true;
+      const look = this.resolveLook(dto.look);
+      if (look !== reel.look) {
+        patch.look = look;
+        videoStale = true;
+      }
     }
     for (const key of ['backgroundStyle', 'animationLevel', 'textStyle', 'music'] as const) {
       if (dto[key] !== undefined && dto[key] !== reel[key]) {

@@ -21,6 +21,7 @@ const TITLE_KEYS: Record<string, string> = {
   '/settings': 'settings',
   '/help': 'help',
   '/recommendations': 'ideas',
+  '/ai-insights': 'aiInsights',
   '/create': 'create',
   '/create/generating': 'generating',
   '/create/preview': 'preview',
@@ -61,6 +62,10 @@ export function AppShell() {
               {t(item.labelKey)}
             </NavLink>
           ))}
+          <NavLink to="/ai-insights" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+            <Icon name="sparkle" />
+            {t('shell.nav.aiInsights')}
+          </NavLink>
         </nav>
         <div className="sidebar-foot">
           <div className="sidebar-note">{t('shell.sidebarNote')}</div>

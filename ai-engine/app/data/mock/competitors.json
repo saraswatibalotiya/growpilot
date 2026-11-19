@@ -1,0 +1,1827 @@
+{
+ "prof_boutique_mumbai": [
+  {
+   "username": "silk.and.thread.demo",
+   "niche": "ethnic clothing boutique",
+   "description": "Fictional Mumbai ethnic wear label posting festive collections.",
+   "reason": "Same city and category, posts festive and bridal wear",
+   "confidence": 0.82,
+   "public_posts": [
+    {
+     "media_id": "silk.and.thread.demo_0",
+     "caption": "3 ways to style one dupatta #styling #ethnicwear",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-11T20:00:00+05:30",
+     "likes": 294,
+     "comments": 18
+    },
+    {
+     "media_id": "silk.and.thread.demo_1",
+     "caption": "How our tailors finish a blouse #behindthescenes",
+     "media_type": "IMAGE",
+     "posted_at": "2026-08-02T19:00:00+05:30",
+     "likes": 325,
+     "comments": 20
+    },
+    {
+     "media_id": "silk.and.thread.demo_2",
+     "caption": "Styling a silk saree for the evening #saree #styling",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-15T12:00:00+05:30",
+     "likes": 1346,
+     "comments": 23
+    },
+    {
+     "media_id": "silk.and.thread.demo_3",
+     "caption": "Styling a silk saree for the evening #saree #styling",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-29T19:00:00+05:30",
+     "likes": 841,
+     "comments": 27
+    },
+    {
+     "media_id": "silk.and.thread.demo_4",
+     "caption": "New cotton kurtis just landed #newarrivals #kurti",
+     "media_type": "IMAGE",
+     "posted_at": "2026-08-25T20:00:00+05:30",
+     "likes": 2037,
+     "comments": 57
+    },
+    {
+     "media_id": "silk.and.thread.demo_5",
+     "caption": "How our tailors finish a blouse #behindthescenes",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-03T20:00:00+05:30",
+     "likes": 688,
+     "comments": 64
+    },
+    {
+     "media_id": "silk.and.thread.demo_6",
+     "caption": "Styling a silk saree for the evening #saree #styling",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-02T20:00:00+05:30",
+     "likes": 2303,
+     "comments": 84
+    },
+    {
+     "media_id": "silk.and.thread.demo_7",
+     "caption": "Our new festive collection is here #festive #kurti",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-04T20:00:00+05:30",
+     "likes": 1089,
+     "comments": 39
+    },
+    {
+     "media_id": "silk.and.thread.demo_8",
+     "caption": "Bridal lehenga details we love #bridal #lehenga",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-10T12:00:00+05:30",
+     "likes": 101,
+     "comments": 56
+    },
+    {
+     "media_id": "silk.and.thread.demo_9",
+     "caption": "Festive kurti set for the season #festivewear #ethnicwear",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-19T19:00:00+05:30",
+     "likes": 1202,
+     "comments": 5
+    },
+    {
+     "media_id": "silk.and.thread.demo_10",
+     "caption": "3 ways to style one dupatta #styling #ethnicwear",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-18T12:00:00+05:30",
+     "likes": 1974,
+     "comments": 73
+    },
+    {
+     "media_id": "silk.and.thread.demo_11",
+     "caption": "Styling a silk saree for the evening #saree #styling",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-26T19:00:00+05:30",
+     "likes": 448,
+     "comments": 88
+    },
+    {
+     "media_id": "silk.and.thread.demo_12",
+     "caption": "Festive kurti set for the season #festivewear #ethnicwear",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-29T12:00:00+05:30",
+     "likes": null,
+     "comments": 28
+    },
+    {
+     "media_id": "silk.and.thread.demo_13",
+     "caption": "New cotton kurtis just landed #newarrivals #kurti",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-10-02T19:00:00+05:30",
+     "likes": 424,
+     "comments": null
+    }
+   ]
+  },
+  {
+   "username": "the.saree.studio.demo",
+   "niche": "sarees",
+   "description": "Fictional saree studio with styling content.",
+   "reason": "Overlaps on sarees and styling content",
+   "confidence": 0.74,
+   "public_posts": [
+    {
+     "media_id": "the.saree.studio.demo_0",
+     "caption": "3 ways to style one dupatta #styling #ethnicwear",
+     "media_type": "VIDEO",
+     "posted_at": "2026-07-29T20:00:00+05:30",
+     "likes": 346,
+     "comments": null
+    },
+    {
+     "media_id": "the.saree.studio.demo_1",
+     "caption": "Festive kurti set for the season #festivewear #ethnicwear",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-08-26T20:00:00+05:30",
+     "likes": 653,
+     "comments": 15
+    },
+    {
+     "media_id": "the.saree.studio.demo_2",
+     "caption": "A day at the workshop #bts",
+     "media_type": "IMAGE",
+     "posted_at": "2026-08-07T12:00:00+05:30",
+     "likes": 133,
+     "comments": 41
+    },
+    {
+     "media_id": "the.saree.studio.demo_3",
+     "caption": "A day at the workshop #bts",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-30T12:00:00+05:30",
+     "likes": 421,
+     "comments": 79
+    },
+    {
+     "media_id": "the.saree.studio.demo_4",
+     "caption": "A day at the workshop #bts",
+     "media_type": "IMAGE",
+     "posted_at": "2026-08-27T20:00:00+05:30",
+     "likes": 1721,
+     "comments": 16
+    },
+    {
+     "media_id": "the.saree.studio.demo_5",
+     "caption": "Our new festive collection is here #festive #kurti",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-08T12:00:00+05:30",
+     "likes": 1251,
+     "comments": 74
+    },
+    {
+     "media_id": "the.saree.studio.demo_6",
+     "caption": "How our tailors finish a blouse #behindthescenes",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-29T20:00:00+05:30",
+     "likes": 392,
+     "comments": 39
+    },
+    {
+     "media_id": "the.saree.studio.demo_7",
+     "caption": "A day at the workshop #bts",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-06T12:00:00+05:30",
+     "likes": 238,
+     "comments": 61
+    },
+    {
+     "media_id": "the.saree.studio.demo_8",
+     "caption": "Styling a silk saree for the evening #saree #styling",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-14T19:00:00+05:30",
+     "likes": null,
+     "comments": 17
+    },
+    {
+     "media_id": "the.saree.studio.demo_9",
+     "caption": "Styling a silk saree for the evening #saree #styling",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-18T19:00:00+05:30",
+     "likes": 947,
+     "comments": 59
+    },
+    {
+     "media_id": "the.saree.studio.demo_10",
+     "caption": "A day at the workshop #bts",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-18T12:00:00+05:30",
+     "likes": 1955,
+     "comments": 60
+    },
+    {
+     "media_id": "the.saree.studio.demo_11",
+     "caption": "A day at the workshop #bts",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-21T19:00:00+05:30",
+     "likes": 2299,
+     "comments": 86
+    },
+    {
+     "media_id": "the.saree.studio.demo_12",
+     "caption": "A wedding season lehenga walkthrough #bridal",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-28T19:00:00+05:30",
+     "likes": 806,
+     "comments": 37
+    },
+    {
+     "media_id": "the.saree.studio.demo_13",
+     "caption": "How our tailors finish a blouse #behindthescenes",
+     "media_type": "VIDEO",
+     "posted_at": "2026-10-02T19:00:00+05:30",
+     "likes": 1606,
+     "comments": 41
+    }
+   ]
+  },
+  {
+   "username": "desi.drape.demo",
+   "niche": "ethnic fashion",
+   "description": "Fictional online ethnic wear brand.",
+   "reason": "Similar audience, strong carousel content",
+   "confidence": 0.66,
+   "public_posts": [
+    {
+     "media_id": "desi.drape.demo_0",
+     "caption": "Our new festive collection is here #festive #kurti",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-20T12:00:00+05:30",
+     "likes": 237,
+     "comments": null
+    },
+    {
+     "media_id": "desi.drape.demo_1",
+     "caption": "Styling a silk saree for the evening #saree #styling",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-08-16T20:00:00+05:30",
+     "likes": 1047,
+     "comments": 82
+    },
+    {
+     "media_id": "desi.drape.demo_2",
+     "caption": "How our tailors finish a blouse #behindthescenes",
+     "media_type": "IMAGE",
+     "posted_at": "2026-08-28T20:00:00+05:30",
+     "likes": 1519,
+     "comments": 22
+    },
+    {
+     "media_id": "desi.drape.demo_3",
+     "caption": "A wedding season lehenga walkthrough #bridal",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-02T20:00:00+05:30",
+     "likes": 1204,
+     "comments": 73
+    },
+    {
+     "media_id": "desi.drape.demo_4",
+     "caption": "A day at the workshop #bts",
+     "media_type": "IMAGE",
+     "posted_at": "2026-08-20T19:00:00+05:30",
+     "likes": 970,
+     "comments": null
+    },
+    {
+     "media_id": "desi.drape.demo_5",
+     "caption": "Fresh arrivals this week #newarrivals",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-02T20:00:00+05:30",
+     "likes": 631,
+     "comments": 30
+    },
+    {
+     "media_id": "desi.drape.demo_6",
+     "caption": "Festive kurti set for the season #festivewear #ethnicwear",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-08-31T20:00:00+05:30",
+     "likes": 1822,
+     "comments": 25
+    },
+    {
+     "media_id": "desi.drape.demo_7",
+     "caption": "Styling a silk saree for the evening #saree #styling",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-06T12:00:00+05:30",
+     "likes": 129,
+     "comments": 41
+    },
+    {
+     "media_id": "desi.drape.demo_8",
+     "caption": "New cotton kurtis just landed #newarrivals #kurti",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-11T19:00:00+05:30",
+     "likes": 365,
+     "comments": 26
+    },
+    {
+     "media_id": "desi.drape.demo_9",
+     "caption": "Styling a silk saree for the evening #saree #styling",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-13T19:00:00+05:30",
+     "likes": 665,
+     "comments": 18
+    },
+    {
+     "media_id": "desi.drape.demo_10",
+     "caption": "Styling a silk saree for the evening #saree #styling",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-23T20:00:00+05:30",
+     "likes": 734,
+     "comments": 49
+    },
+    {
+     "media_id": "desi.drape.demo_11",
+     "caption": "3 ways to style one dupatta #styling #ethnicwear",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-25T19:00:00+05:30",
+     "likes": 230,
+     "comments": 75
+    },
+    {
+     "media_id": "desi.drape.demo_12",
+     "caption": "Our new festive collection is here #festive #kurti",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-28T19:00:00+05:30",
+     "likes": 1825,
+     "comments": 32
+    },
+    {
+     "media_id": "desi.drape.demo_13",
+     "caption": "Styling a silk saree for the evening #saree #styling",
+     "media_type": "VIDEO",
+     "posted_at": "2026-10-02T20:00:00+05:30",
+     "likes": 2304,
+     "comments": 82
+    }
+   ]
+  }
+ ],
+ "prof_beauty_creator": [
+  {
+   "username": "glow.with.nisha.demo",
+   "niche": "beauty",
+   "description": "Fictional skincare creator.",
+   "reason": "Same niche and audience",
+   "confidence": 0.8,
+   "public_posts": [
+    {
+     "media_id": "glow.with.nisha.demo_0",
+     "caption": "Is this serum worth it? #review",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-13T20:00:00+05:30",
+     "likes": 161,
+     "comments": null
+    },
+    {
+     "media_id": "glow.with.nisha.demo_1",
+     "caption": "What I eat in a day #dayinmylife",
+     "media_type": "IMAGE",
+     "posted_at": "2026-08-18T20:00:00+05:30",
+     "likes": 663,
+     "comments": 66
+    },
+    {
+     "media_id": "glow.with.nisha.demo_2",
+     "caption": "Soft glam in 10 minutes #makeuptutorial #grwm",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-11T20:00:00+05:30",
+     "likes": 1278,
+     "comments": 64
+    },
+    {
+     "media_id": "glow.with.nisha.demo_3",
+     "caption": "Everyday makeup under 500 rupees #makeup",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-30T12:00:00+05:30",
+     "likes": 665,
+     "comments": 62
+    },
+    {
+     "media_id": "glow.with.nisha.demo_4",
+     "caption": "Sunday reset vlog #lifestyle",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-01T12:00:00+05:30",
+     "likes": 1126,
+     "comments": 41
+    },
+    {
+     "media_id": "glow.with.nisha.demo_5",
+     "caption": "Skincare myths I believed for years #skincare #myths",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-08-24T20:00:00+05:30",
+     "likes": 601,
+     "comments": 22
+    },
+    {
+     "media_id": "glow.with.nisha.demo_6",
+     "caption": "Honest review after one month #review #beauty",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-03T19:00:00+05:30",
+     "likes": null,
+     "comments": 51
+    },
+    {
+     "media_id": "glow.with.nisha.demo_7",
+     "caption": "5 ingredients worth your money #skincare",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-02T20:00:00+05:30",
+     "likes": 223,
+     "comments": null
+    },
+    {
+     "media_id": "glow.with.nisha.demo_8",
+     "caption": "Everyday makeup under 500 rupees #makeup",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-09T12:00:00+05:30",
+     "likes": null,
+     "comments": null
+    },
+    {
+     "media_id": "glow.with.nisha.demo_9",
+     "caption": "5 ingredients worth your money #skincare",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-15T12:00:00+05:30",
+     "likes": 141,
+     "comments": 26
+    },
+    {
+     "media_id": "glow.with.nisha.demo_10",
+     "caption": "Soft glam in 10 minutes #makeuptutorial #grwm",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-16T19:00:00+05:30",
+     "likes": 439,
+     "comments": 18
+    },
+    {
+     "media_id": "glow.with.nisha.demo_11",
+     "caption": "5 ingredients worth your money #skincare",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-25T20:00:00+05:30",
+     "likes": 1367,
+     "comments": 17
+    },
+    {
+     "media_id": "glow.with.nisha.demo_12",
+     "caption": "Stop doing this to your face #skincaretips",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-28T12:00:00+05:30",
+     "likes": 897,
+     "comments": 8
+    },
+    {
+     "media_id": "glow.with.nisha.demo_13",
+     "caption": "My budget skincare routine for oily skin #skincare #budgetbeauty",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-10-02T20:00:00+05:30",
+     "likes": 206,
+     "comments": 3
+    }
+   ]
+  },
+  {
+   "username": "budget.beauty.bae.demo",
+   "niche": "beauty",
+   "description": "Fictional budget makeup creator.",
+   "reason": "Overlaps on budget beauty",
+   "confidence": 0.72,
+   "public_posts": [
+    {
+     "media_id": "budget.beauty.bae.demo_0",
+     "caption": "Sunday reset vlog #lifestyle",
+     "media_type": "VIDEO",
+     "posted_at": "2026-07-28T19:00:00+05:30",
+     "likes": 1573,
+     "comments": 21
+    },
+    {
+     "media_id": "budget.beauty.bae.demo_1",
+     "caption": "My budget skincare routine for oily skin #skincare #budgetbeauty",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-26T20:00:00+05:30",
+     "likes": 1825,
+     "comments": 37
+    },
+    {
+     "media_id": "budget.beauty.bae.demo_2",
+     "caption": "5 ingredients worth your money #skincare",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-29T20:00:00+05:30",
+     "likes": null,
+     "comments": 8
+    },
+    {
+     "media_id": "budget.beauty.bae.demo_3",
+     "caption": "Honest review after one month #review #beauty",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-08-30T20:00:00+05:30",
+     "likes": 1953,
+     "comments": 50
+    },
+    {
+     "media_id": "budget.beauty.bae.demo_4",
+     "caption": "Everyday makeup under 500 rupees #makeup",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-17T12:00:00+05:30",
+     "likes": 1268,
+     "comments": 49
+    },
+    {
+     "media_id": "budget.beauty.bae.demo_5",
+     "caption": "Everyday makeup under 500 rupees #makeup",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-28T12:00:00+05:30",
+     "likes": 1123,
+     "comments": 46
+    },
+    {
+     "media_id": "budget.beauty.bae.demo_6",
+     "caption": "Stop doing this to your face #skincaretips",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-08-29T19:00:00+05:30",
+     "likes": 588,
+     "comments": 40
+    },
+    {
+     "media_id": "budget.beauty.bae.demo_7",
+     "caption": "Everyday makeup under 500 rupees #makeup",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-09T20:00:00+05:30",
+     "likes": 923,
+     "comments": 81
+    },
+    {
+     "media_id": "budget.beauty.bae.demo_8",
+     "caption": "Is this serum worth it? #review",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-13T19:00:00+05:30",
+     "likes": 109,
+     "comments": 40
+    },
+    {
+     "media_id": "budget.beauty.bae.demo_9",
+     "caption": "Skincare myths I believed for years #skincare #myths",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-16T20:00:00+05:30",
+     "likes": 2135,
+     "comments": 45
+    },
+    {
+     "media_id": "budget.beauty.bae.demo_10",
+     "caption": "5 ingredients worth your money #skincare",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-18T20:00:00+05:30",
+     "likes": 2064,
+     "comments": null
+    },
+    {
+     "media_id": "budget.beauty.bae.demo_11",
+     "caption": "Soft glam in 10 minutes #makeuptutorial #grwm",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-22T20:00:00+05:30",
+     "likes": 1459,
+     "comments": 81
+    },
+    {
+     "media_id": "budget.beauty.bae.demo_12",
+     "caption": "Skincare myths I believed for years #skincare #myths",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-26T12:00:00+05:30",
+     "likes": 1712,
+     "comments": 84
+    },
+    {
+     "media_id": "budget.beauty.bae.demo_13",
+     "caption": "What I eat in a day #dayinmylife",
+     "media_type": "IMAGE",
+     "posted_at": "2026-10-01T19:00:00+05:30",
+     "likes": 1597,
+     "comments": 76
+    }
+   ]
+  },
+  {
+   "username": "skin.school.india.demo",
+   "niche": "skincare education",
+   "description": "Fictional skincare education page.",
+   "reason": "Strong educational carousels",
+   "confidence": 0.64,
+   "public_posts": [
+    {
+     "media_id": "skin.school.india.demo_0",
+     "caption": "Everyday makeup under 500 rupees #makeup",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-04T20:00:00+05:30",
+     "likes": 658,
+     "comments": 39
+    },
+    {
+     "media_id": "skin.school.india.demo_1",
+     "caption": "Honest review after one month #review #beauty",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-03T12:00:00+05:30",
+     "likes": 2294,
+     "comments": 27
+    },
+    {
+     "media_id": "skin.school.india.demo_2",
+     "caption": "What I eat in a day #dayinmylife",
+     "media_type": "IMAGE",
+     "posted_at": "2026-08-15T12:00:00+05:30",
+     "likes": 1628,
+     "comments": 63
+    },
+    {
+     "media_id": "skin.school.india.demo_3",
+     "caption": "Everyday makeup under 500 rupees #makeup",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-21T20:00:00+05:30",
+     "likes": 278,
+     "comments": 74
+    },
+    {
+     "media_id": "skin.school.india.demo_4",
+     "caption": "Honest review after one month #review #beauty",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-25T19:00:00+05:30",
+     "likes": 2079,
+     "comments": 2
+    },
+    {
+     "media_id": "skin.school.india.demo_5",
+     "caption": "What I eat in a day #dayinmylife",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-05T19:00:00+05:30",
+     "likes": 1236,
+     "comments": 89
+    },
+    {
+     "media_id": "skin.school.india.demo_6",
+     "caption": "Sunday reset vlog #lifestyle",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-10T12:00:00+05:30",
+     "likes": 1957,
+     "comments": 10
+    },
+    {
+     "media_id": "skin.school.india.demo_7",
+     "caption": "Stop doing this to your face #skincaretips",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-03T12:00:00+05:30",
+     "likes": 680,
+     "comments": 84
+    },
+    {
+     "media_id": "skin.school.india.demo_8",
+     "caption": "Everyday makeup under 500 rupees #makeup",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-10T19:00:00+05:30",
+     "likes": 1725,
+     "comments": 69
+    },
+    {
+     "media_id": "skin.school.india.demo_9",
+     "caption": "Sunday reset vlog #lifestyle",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-14T19:00:00+05:30",
+     "likes": 181,
+     "comments": 17
+    },
+    {
+     "media_id": "skin.school.india.demo_10",
+     "caption": "Sunday reset vlog #lifestyle",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-18T19:00:00+05:30",
+     "likes": 1973,
+     "comments": 62
+    },
+    {
+     "media_id": "skin.school.india.demo_11",
+     "caption": "My budget skincare routine for oily skin #skincare #budgetbeauty",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-23T20:00:00+05:30",
+     "likes": 1043,
+     "comments": 80
+    },
+    {
+     "media_id": "skin.school.india.demo_12",
+     "caption": "5 ingredients worth your money #skincare",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-26T19:00:00+05:30",
+     "likes": 489,
+     "comments": 6
+    },
+    {
+     "media_id": "skin.school.india.demo_13",
+     "caption": "Soft glam in 10 minutes #makeuptutorial #grwm",
+     "media_type": "VIDEO",
+     "posted_at": "2026-10-02T12:00:00+05:30",
+     "likes": 579,
+     "comments": null
+    }
+   ]
+  }
+ ],
+ "prof_food_creator": [
+  {
+   "username": "pune.plate.demo",
+   "niche": "food",
+   "description": "Fictional Pune food page.",
+   "reason": "Same city and street food focus",
+   "confidence": 0.81,
+   "public_posts": [
+    {
+     "media_id": "pune.plate.demo_0",
+     "caption": "Misal pav the Kolhapuri way #regionalfood #misalpav",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-08-12T12:00:00+05:30",
+     "likes": 265,
+     "comments": 80
+    },
+    {
+     "media_id": "pune.plate.demo_1",
+     "caption": "Weeknight dal tadka #recipe #dal",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-10T12:00:00+05:30",
+     "likes": 1357,
+     "comments": 23
+    },
+    {
+     "media_id": "pune.plate.demo_2",
+     "caption": "Easy poha in 10 minutes #recipe #homecooking",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-21T12:00:00+05:30",
+     "likes": 432,
+     "comments": 21
+    },
+    {
+     "media_id": "pune.plate.demo_3",
+     "caption": "Kitchen hacks that save time #foodhacks",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-16T12:00:00+05:30",
+     "likes": 819,
+     "comments": 66
+    },
+    {
+     "media_id": "pune.plate.demo_4",
+     "caption": "Brunch spot worth the queue #cafe",
+     "media_type": "IMAGE",
+     "posted_at": "2026-08-19T20:00:00+05:30",
+     "likes": 1380,
+     "comments": 25
+    },
+    {
+     "media_id": "pune.plate.demo_5",
+     "caption": "Easy poha in 10 minutes #recipe #homecooking",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-06T20:00:00+05:30",
+     "likes": 2089,
+     "comments": 46
+    },
+    {
+     "media_id": "pune.plate.demo_6",
+     "caption": "Konkan fish thali #regionalfood",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-08-30T20:00:00+05:30",
+     "likes": 1648,
+     "comments": 46
+    },
+    {
+     "media_id": "pune.plate.demo_7",
+     "caption": "Kitchen hacks that save time #foodhacks",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-03T12:00:00+05:30",
+     "likes": 822,
+     "comments": 33
+    },
+    {
+     "media_id": "pune.plate.demo_8",
+     "caption": "Stop wasting coriander #kitchentips",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-07T12:00:00+05:30",
+     "likes": 2102,
+     "comments": 69
+    },
+    {
+     "media_id": "pune.plate.demo_9",
+     "caption": "New cafe in Koregaon Park #cafe #punefood",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-12T19:00:00+05:30",
+     "likes": 340,
+     "comments": 27
+    },
+    {
+     "media_id": "pune.plate.demo_10",
+     "caption": "Pune street food trail you must try #streetfood #punefood",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-23T20:00:00+05:30",
+     "likes": 324,
+     "comments": null
+    },
+    {
+     "media_id": "pune.plate.demo_11",
+     "caption": "Konkan fish thali #regionalfood",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-26T12:00:00+05:30",
+     "likes": null,
+     "comments": 25
+    },
+    {
+     "media_id": "pune.plate.demo_12",
+     "caption": "Misal pav the Kolhapuri way #regionalfood #misalpav",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-29T19:00:00+05:30",
+     "likes": null,
+     "comments": 64
+    },
+    {
+     "media_id": "pune.plate.demo_13",
+     "caption": "New cafe in Koregaon Park #cafe #punefood",
+     "media_type": "IMAGE",
+     "posted_at": "2026-10-02T12:00:00+05:30",
+     "likes": 1946,
+     "comments": 67
+    }
+   ]
+  },
+  {
+   "username": "ghar.ka.khana.demo",
+   "niche": "recipes",
+   "description": "Fictional home-recipes creator.",
+   "reason": "Overlaps on home recipes",
+   "confidence": 0.7,
+   "public_posts": [
+    {
+     "media_id": "ghar.ka.khana.demo_0",
+     "caption": "Brunch spot worth the queue #cafe",
+     "media_type": "VIDEO",
+     "posted_at": "2026-07-31T20:00:00+05:30",
+     "likes": 1036,
+     "comments": 79
+    },
+    {
+     "media_id": "ghar.ka.khana.demo_1",
+     "caption": "Pune street food trail you must try #streetfood #punefood",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-20T12:00:00+05:30",
+     "likes": 2012,
+     "comments": 70
+    },
+    {
+     "media_id": "ghar.ka.khana.demo_2",
+     "caption": "Konkan fish thali #regionalfood",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-08-18T12:00:00+05:30",
+     "likes": 649,
+     "comments": 45
+    },
+    {
+     "media_id": "ghar.ka.khana.demo_3",
+     "caption": "Stop wasting coriander #kitchentips",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-25T20:00:00+05:30",
+     "likes": 1089,
+     "comments": 87
+    },
+    {
+     "media_id": "ghar.ka.khana.demo_4",
+     "caption": "Brunch spot worth the queue #cafe",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-29T19:00:00+05:30",
+     "likes": 989,
+     "comments": 31
+    },
+    {
+     "media_id": "ghar.ka.khana.demo_5",
+     "caption": "Best vada pav under 30 rupees #streetfood",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-28T19:00:00+05:30",
+     "likes": 1563,
+     "comments": 61
+    },
+    {
+     "media_id": "ghar.ka.khana.demo_6",
+     "caption": "Brunch spot worth the queue #cafe",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-31T12:00:00+05:30",
+     "likes": 966,
+     "comments": 11
+    },
+    {
+     "media_id": "ghar.ka.khana.demo_7",
+     "caption": "Pune street food trail you must try #streetfood #punefood",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-14T12:00:00+05:30",
+     "likes": 708,
+     "comments": null
+    },
+    {
+     "media_id": "ghar.ka.khana.demo_8",
+     "caption": "Stop wasting coriander #kitchentips",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-12T20:00:00+05:30",
+     "likes": 2257,
+     "comments": null
+    },
+    {
+     "media_id": "ghar.ka.khana.demo_9",
+     "caption": "Pune street food trail you must try #streetfood #punefood",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-19T20:00:00+05:30",
+     "likes": 555,
+     "comments": 88
+    },
+    {
+     "media_id": "ghar.ka.khana.demo_10",
+     "caption": "Misal pav the Kolhapuri way #regionalfood #misalpav",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-19T19:00:00+05:30",
+     "likes": 929,
+     "comments": 59
+    },
+    {
+     "media_id": "ghar.ka.khana.demo_11",
+     "caption": "Brunch spot worth the queue #cafe",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-25T20:00:00+05:30",
+     "likes": 212,
+     "comments": 16
+    },
+    {
+     "media_id": "ghar.ka.khana.demo_12",
+     "caption": "Brunch spot worth the queue #cafe",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-26T20:00:00+05:30",
+     "likes": 1941,
+     "comments": null
+    },
+    {
+     "media_id": "ghar.ka.khana.demo_13",
+     "caption": "New cafe in Koregaon Park #cafe #punefood",
+     "media_type": "VIDEO",
+     "posted_at": "2026-10-02T12:00:00+05:30",
+     "likes": 1108,
+     "comments": 23
+    }
+   ]
+  },
+  {
+   "username": "tadka.trails.demo",
+   "niche": "regional food",
+   "description": "Fictional regional food explorer.",
+   "reason": "Regional dishes audience overlap",
+   "confidence": 0.63,
+   "public_posts": [
+    {
+     "media_id": "tadka.trails.demo_0",
+     "caption": "Easy poha in 10 minutes #recipe #homecooking",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-08-17T20:00:00+05:30",
+     "likes": 2342,
+     "comments": 86
+    },
+    {
+     "media_id": "tadka.trails.demo_1",
+     "caption": "Kitchen hacks that save time #foodhacks",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-27T19:00:00+05:30",
+     "likes": 1252,
+     "comments": 15
+    },
+    {
+     "media_id": "tadka.trails.demo_2",
+     "caption": "Stop wasting coriander #kitchentips",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-09T19:00:00+05:30",
+     "likes": null,
+     "comments": 67
+    },
+    {
+     "media_id": "tadka.trails.demo_3",
+     "caption": "Kitchen hacks that save time #foodhacks",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-17T12:00:00+05:30",
+     "likes": 1368,
+     "comments": 29
+    },
+    {
+     "media_id": "tadka.trails.demo_4",
+     "caption": "Kitchen hacks that save time #foodhacks",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-25T12:00:00+05:30",
+     "likes": 1723,
+     "comments": 49
+    },
+    {
+     "media_id": "tadka.trails.demo_5",
+     "caption": "New cafe in Koregaon Park #cafe #punefood",
+     "media_type": "IMAGE",
+     "posted_at": "2026-08-25T12:00:00+05:30",
+     "likes": 1649,
+     "comments": 12
+    },
+    {
+     "media_id": "tadka.trails.demo_6",
+     "caption": "Konkan fish thali #regionalfood",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-08-28T12:00:00+05:30",
+     "likes": 1939,
+     "comments": null
+    },
+    {
+     "media_id": "tadka.trails.demo_7",
+     "caption": "New cafe in Koregaon Park #cafe #punefood",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-06T19:00:00+05:30",
+     "likes": 1421,
+     "comments": 87
+    },
+    {
+     "media_id": "tadka.trails.demo_8",
+     "caption": "New cafe in Koregaon Park #cafe #punefood",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-10T20:00:00+05:30",
+     "likes": 1707,
+     "comments": null
+    },
+    {
+     "media_id": "tadka.trails.demo_9",
+     "caption": "Misal pav the Kolhapuri way #regionalfood #misalpav",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-17T12:00:00+05:30",
+     "likes": 2175,
+     "comments": 45
+    },
+    {
+     "media_id": "tadka.trails.demo_10",
+     "caption": "New cafe in Koregaon Park #cafe #punefood",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-16T12:00:00+05:30",
+     "likes": 1142,
+     "comments": 27
+    },
+    {
+     "media_id": "tadka.trails.demo_11",
+     "caption": "Weeknight dal tadka #recipe #dal",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-24T12:00:00+05:30",
+     "likes": 245,
+     "comments": 87
+    },
+    {
+     "media_id": "tadka.trails.demo_12",
+     "caption": "Weeknight dal tadka #recipe #dal",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-29T20:00:00+05:30",
+     "likes": 2267,
+     "comments": 45
+    },
+    {
+     "media_id": "tadka.trails.demo_13",
+     "caption": "Brunch spot worth the queue #cafe",
+     "media_type": "IMAGE",
+     "posted_at": "2026-10-01T20:00:00+05:30",
+     "likes": 1568,
+     "comments": 30
+    }
+   ]
+  }
+ ],
+ "prof_restaurant_bengaluru": [
+  {
+   "username": "thali.house.blr.demo",
+   "niche": "restaurant",
+   "description": "Fictional Bengaluru thali restaurant.",
+   "reason": "Same city and cuisine",
+   "confidence": 0.8,
+   "public_posts": [
+    {
+     "media_id": "thali.house.blr.demo_0",
+     "caption": "Our weekend thali is back #thali #bengalurufood",
+     "media_type": "VIDEO",
+     "posted_at": "2026-07-30T20:00:00+05:30",
+     "likes": 1530,
+     "comments": 16
+    },
+    {
+     "media_id": "thali.house.blr.demo_1",
+     "caption": "Lunch combo at a special price #lunch #offer",
+     "media_type": "IMAGE",
+     "posted_at": "2026-08-25T12:00:00+05:30",
+     "likes": 1966,
+     "comments": 81
+    },
+    {
+     "media_id": "thali.house.blr.demo_2",
+     "caption": "How we slow cook our biryani #behindthekitchen",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-17T12:00:00+05:30",
+     "likes": 903,
+     "comments": 51
+    },
+    {
+     "media_id": "thali.house.blr.demo_3",
+     "caption": "Biryani Friday special #biryani",
+     "media_type": "IMAGE",
+     "posted_at": "2026-08-13T12:00:00+05:30",
+     "likes": 2039,
+     "comments": 3
+    },
+    {
+     "media_id": "thali.house.blr.demo_4",
+     "caption": "Meet our head chef #chef",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-21T19:00:00+05:30",
+     "likes": 494,
+     "comments": 82
+    },
+    {
+     "media_id": "thali.house.blr.demo_5",
+     "caption": "A family birthday at Masala Mile #customerlove",
+     "media_type": "IMAGE",
+     "posted_at": "2026-08-23T12:00:00+05:30",
+     "likes": 2306,
+     "comments": 56
+    },
+    {
+     "media_id": "thali.house.blr.demo_6",
+     "caption": "Festive special menu is live #festivemenu #bengaluru",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-05T12:00:00+05:30",
+     "likes": 238,
+     "comments": 26
+    },
+    {
+     "media_id": "thali.house.blr.demo_7",
+     "caption": "Our weekend thali is back #thali #bengalurufood",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-06T20:00:00+05:30",
+     "likes": 1835,
+     "comments": null
+    },
+    {
+     "media_id": "thali.house.blr.demo_8",
+     "caption": "Office lunch group favourites #lunch",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-15T20:00:00+05:30",
+     "likes": 2191,
+     "comments": 64
+    },
+    {
+     "media_id": "thali.house.blr.demo_9",
+     "caption": "Lunch combo at a special price #lunch #offer",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-17T12:00:00+05:30",
+     "likes": 929,
+     "comments": 16
+    },
+    {
+     "media_id": "thali.house.blr.demo_10",
+     "caption": "Meet our head chef #chef",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-17T19:00:00+05:30",
+     "likes": 102,
+     "comments": 3
+    },
+    {
+     "media_id": "thali.house.blr.demo_11",
+     "caption": "Our weekend thali is back #thali #bengalurufood",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-24T12:00:00+05:30",
+     "likes": 801,
+     "comments": 31
+    },
+    {
+     "media_id": "thali.house.blr.demo_12",
+     "caption": "How we slow cook our biryani #behindthekitchen",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-27T12:00:00+05:30",
+     "likes": 1975,
+     "comments": 41
+    },
+    {
+     "media_id": "thali.house.blr.demo_13",
+     "caption": "Festive special menu is live #festivemenu #bengaluru",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-10-01T20:00:00+05:30",
+     "likes": 2253,
+     "comments": 29
+    }
+   ]
+  },
+  {
+   "username": "biryani.baithak.demo",
+   "niche": "restaurant",
+   "description": "Fictional biryani restaurant.",
+   "reason": "Overlaps on biryani",
+   "confidence": 0.71,
+   "public_posts": [
+    {
+     "media_id": "biryani.baithak.demo_0",
+     "caption": "Book your festive family table #festive",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-07-29T20:00:00+05:30",
+     "likes": null,
+     "comments": 83
+    },
+    {
+     "media_id": "biryani.baithak.demo_1",
+     "caption": "Our weekend thali is back #thali #bengalurufood",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-24T19:00:00+05:30",
+     "likes": 524,
+     "comments": 45
+    },
+    {
+     "media_id": "biryani.baithak.demo_2",
+     "caption": "Biryani Friday special #biryani",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-30T19:00:00+05:30",
+     "likes": 2391,
+     "comments": 20
+    },
+    {
+     "media_id": "biryani.baithak.demo_3",
+     "caption": "Office lunch group favourites #lunch",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-08-20T20:00:00+05:30",
+     "likes": 1504,
+     "comments": 50
+    },
+    {
+     "media_id": "biryani.baithak.demo_4",
+     "caption": "A family birthday at Masala Mile #customerlove",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-05T12:00:00+05:30",
+     "likes": 2071,
+     "comments": 77
+    },
+    {
+     "media_id": "biryani.baithak.demo_5",
+     "caption": "Lunch combo at a special price #lunch #offer",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-06T19:00:00+05:30",
+     "likes": 868,
+     "comments": 18
+    },
+    {
+     "media_id": "biryani.baithak.demo_6",
+     "caption": "Office lunch group favourites #lunch",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-08T19:00:00+05:30",
+     "likes": 1320,
+     "comments": 85
+    },
+    {
+     "media_id": "biryani.baithak.demo_7",
+     "caption": "Festive special menu is live #festivemenu #bengaluru",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-07T12:00:00+05:30",
+     "likes": null,
+     "comments": 72
+    },
+    {
+     "media_id": "biryani.baithak.demo_8",
+     "caption": "Office lunch group favourites #lunch",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-17T20:00:00+05:30",
+     "likes": 312,
+     "comments": 20
+    },
+    {
+     "media_id": "biryani.baithak.demo_9",
+     "caption": "Weekday thali deal #offer",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-15T12:00:00+05:30",
+     "likes": 2287,
+     "comments": 33
+    },
+    {
+     "media_id": "biryani.baithak.demo_10",
+     "caption": "Meet our head chef #chef",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-19T20:00:00+05:30",
+     "likes": 1217,
+     "comments": 11
+    },
+    {
+     "media_id": "biryani.baithak.demo_11",
+     "caption": "Our weekend thali is back #thali #bengalurufood",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-23T20:00:00+05:30",
+     "likes": 632,
+     "comments": null
+    },
+    {
+     "media_id": "biryani.baithak.demo_12",
+     "caption": "Weekday thali deal #offer",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-29T19:00:00+05:30",
+     "likes": 2164,
+     "comments": 25
+    },
+    {
+     "media_id": "biryani.baithak.demo_13",
+     "caption": "Lunch combo at a special price #lunch #offer",
+     "media_type": "IMAGE",
+     "posted_at": "2026-10-02T20:00:00+05:30",
+     "likes": 1423,
+     "comments": 27
+    }
+   ]
+  },
+  {
+   "username": "south.spice.kitchen.demo",
+   "niche": "restaurant",
+   "description": "Fictional regional restaurant.",
+   "reason": "Regional menus audience",
+   "confidence": 0.62,
+   "public_posts": [
+    {
+     "media_id": "south.spice.kitchen.demo_0",
+     "caption": "How we slow cook our biryani #behindthekitchen",
+     "media_type": "VIDEO",
+     "posted_at": "2026-07-29T12:00:00+05:30",
+     "likes": 1613,
+     "comments": 63
+    },
+    {
+     "media_id": "south.spice.kitchen.demo_1",
+     "caption": "A family birthday at Masala Mile #customerlove",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-08-05T12:00:00+05:30",
+     "likes": 2127,
+     "comments": 79
+    },
+    {
+     "media_id": "south.spice.kitchen.demo_2",
+     "caption": "Our weekend thali is back #thali #bengalurufood",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-23T20:00:00+05:30",
+     "likes": 2048,
+     "comments": 50
+    },
+    {
+     "media_id": "south.spice.kitchen.demo_3",
+     "caption": "Our weekend thali is back #thali #bengalurufood",
+     "media_type": "IMAGE",
+     "posted_at": "2026-08-17T12:00:00+05:30",
+     "likes": 506,
+     "comments": 2
+    },
+    {
+     "media_id": "south.spice.kitchen.demo_4",
+     "caption": "Book your festive family table #festive",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-08-25T12:00:00+05:30",
+     "likes": 1404,
+     "comments": 43
+    },
+    {
+     "media_id": "south.spice.kitchen.demo_5",
+     "caption": "Lunch combo at a special price #lunch #offer",
+     "media_type": "IMAGE",
+     "posted_at": "2026-08-23T19:00:00+05:30",
+     "likes": null,
+     "comments": null
+    },
+    {
+     "media_id": "south.spice.kitchen.demo_6",
+     "caption": "Book your festive family table #festive",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-08T20:00:00+05:30",
+     "likes": 1159,
+     "comments": null
+    },
+    {
+     "media_id": "south.spice.kitchen.demo_7",
+     "caption": "Book your festive family table #festive",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-01T19:00:00+05:30",
+     "likes": null,
+     "comments": 19
+    },
+    {
+     "media_id": "south.spice.kitchen.demo_8",
+     "caption": "Weekday thali deal #offer",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-06T20:00:00+05:30",
+     "likes": 708,
+     "comments": null
+    },
+    {
+     "media_id": "south.spice.kitchen.demo_9",
+     "caption": "A family birthday at Masala Mile #customerlove",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-17T19:00:00+05:30",
+     "likes": 2381,
+     "comments": 20
+    },
+    {
+     "media_id": "south.spice.kitchen.demo_10",
+     "caption": "Our weekend thali is back #thali #bengalurufood",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-17T19:00:00+05:30",
+     "likes": 890,
+     "comments": 17
+    },
+    {
+     "media_id": "south.spice.kitchen.demo_11",
+     "caption": "Book your festive family table #festive",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-24T20:00:00+05:30",
+     "likes": null,
+     "comments": 63
+    },
+    {
+     "media_id": "south.spice.kitchen.demo_12",
+     "caption": "Meet our head chef #chef",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-29T20:00:00+05:30",
+     "likes": 650,
+     "comments": 32
+    },
+    {
+     "media_id": "south.spice.kitchen.demo_13",
+     "caption": "A family birthday at Masala Mile #customerlove",
+     "media_type": "IMAGE",
+     "posted_at": "2026-10-02T12:00:00+05:30",
+     "likes": 127,
+     "comments": 11
+    }
+   ]
+  }
+ ],
+ "prof_travel_creator": [
+  {
+   "username": "pack.and.go.india.demo",
+   "niche": "travel",
+   "description": "Fictional budget travel creator.",
+   "reason": "Same niche, budget itineraries",
+   "confidence": 0.8,
+   "public_posts": [
+    {
+     "media_id": "pack.and.go.india.demo_0",
+     "caption": "Kerala backwaters in 4 days #itinerary",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-08-16T20:00:00+05:30",
+     "likes": 1390,
+     "comments": 15
+    },
+    {
+     "media_id": "pack.and.go.india.demo_1",
+     "caption": "An unknown village in Spiti #offbeat",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-08T12:00:00+05:30",
+     "likes": 1275,
+     "comments": 34
+    },
+    {
+     "media_id": "pack.and.go.india.demo_2",
+     "caption": "Packing mistakes to avoid #traveltips",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-14T20:00:00+05:30",
+     "likes": 1215,
+     "comments": 73
+    },
+    {
+     "media_id": "pack.and.go.india.demo_3",
+     "caption": "3 day Hampi itinerary #itinerary #hampi",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-02T19:00:00+05:30",
+     "likes": 2019,
+     "comments": 21
+    },
+    {
+     "media_id": "pack.and.go.india.demo_4",
+     "caption": "Hidden waterfalls near Mumbai #offbeat #travel",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-17T12:00:00+05:30",
+     "likes": 1184,
+     "comments": null
+    },
+    {
+     "media_id": "pack.and.go.india.demo_5",
+     "caption": "What solo travel taught me #solotravel",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-04T12:00:00+05:30",
+     "likes": 2007,
+     "comments": 7
+    },
+    {
+     "media_id": "pack.and.go.india.demo_6",
+     "caption": "3 day Hampi itinerary #itinerary #hampi",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-04T19:00:00+05:30",
+     "likes": 538,
+     "comments": 24
+    },
+    {
+     "media_id": "pack.and.go.india.demo_7",
+     "caption": "An unknown village in Spiti #offbeat",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-05T12:00:00+05:30",
+     "likes": 741,
+     "comments": null
+    },
+    {
+     "media_id": "pack.and.go.india.demo_8",
+     "caption": "Packing mistakes to avoid #traveltips",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-11T12:00:00+05:30",
+     "likes": null,
+     "comments": 38
+    },
+    {
+     "media_id": "pack.and.go.india.demo_9",
+     "caption": "Hidden waterfalls near Mumbai #offbeat #travel",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-18T19:00:00+05:30",
+     "likes": 156,
+     "comments": null
+    },
+    {
+     "media_id": "pack.and.go.india.demo_10",
+     "caption": "3 day Hampi itinerary #itinerary #hampi",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-20T20:00:00+05:30",
+     "likes": 1318,
+     "comments": 65
+    },
+    {
+     "media_id": "pack.and.go.india.demo_11",
+     "caption": "An unknown village in Spiti #offbeat",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-24T20:00:00+05:30",
+     "likes": 1087,
+     "comments": 10
+    },
+    {
+     "media_id": "pack.and.go.india.demo_12",
+     "caption": "How I find cheap flights #traveltips",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-26T19:00:00+05:30",
+     "likes": 358,
+     "comments": 5
+    },
+    {
+     "media_id": "pack.and.go.india.demo_13",
+     "caption": "Goa in 8000 rupees: full breakdown #budgettravel #goa",
+     "media_type": "VIDEO",
+     "posted_at": "2026-10-01T12:00:00+05:30",
+     "likes": 155,
+     "comments": 24
+    }
+   ]
+  },
+  {
+   "username": "offbeat.bharat.demo",
+   "niche": "travel",
+   "description": "Fictional offbeat destinations page.",
+   "reason": "Overlaps on offbeat places",
+   "confidence": 0.72,
+   "public_posts": [
+    {
+     "media_id": "offbeat.bharat.demo_0",
+     "caption": "Hidden waterfalls near Mumbai #offbeat #travel",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-04T19:00:00+05:30",
+     "likes": 1089,
+     "comments": 77
+    },
+    {
+     "media_id": "offbeat.bharat.demo_1",
+     "caption": "Hidden waterfalls near Mumbai #offbeat #travel",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-05T19:00:00+05:30",
+     "likes": 751,
+     "comments": 42
+    },
+    {
+     "media_id": "offbeat.bharat.demo_2",
+     "caption": "What solo travel taught me #solotravel",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-20T20:00:00+05:30",
+     "likes": 148,
+     "comments": 45
+    },
+    {
+     "media_id": "offbeat.bharat.demo_3",
+     "caption": "How I find cheap flights #traveltips",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-08-24T12:00:00+05:30",
+     "likes": 1662,
+     "comments": 58
+    },
+    {
+     "media_id": "offbeat.bharat.demo_4",
+     "caption": "My worst trip and what I learned #travelstory",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-19T20:00:00+05:30",
+     "likes": 759,
+     "comments": 67
+    },
+    {
+     "media_id": "offbeat.bharat.demo_5",
+     "caption": "Weekend getaway under 5000 #budgettravel",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-08-23T12:00:00+05:30",
+     "likes": 285,
+     "comments": null
+    },
+    {
+     "media_id": "offbeat.bharat.demo_6",
+     "caption": "My worst trip and what I learned #travelstory",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-08T19:00:00+05:30",
+     "likes": 195,
+     "comments": 7
+    },
+    {
+     "media_id": "offbeat.bharat.demo_7",
+     "caption": "Packing mistakes to avoid #traveltips",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-04T19:00:00+05:30",
+     "likes": 1201,
+     "comments": 41
+    },
+    {
+     "media_id": "offbeat.bharat.demo_8",
+     "caption": "Kerala backwaters in 4 days #itinerary",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-16T19:00:00+05:30",
+     "likes": 1836,
+     "comments": 18
+    },
+    {
+     "media_id": "offbeat.bharat.demo_9",
+     "caption": "Weekend getaway under 5000 #budgettravel",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-13T12:00:00+05:30",
+     "likes": 1422,
+     "comments": 85
+    },
+    {
+     "media_id": "offbeat.bharat.demo_10",
+     "caption": "Kerala backwaters in 4 days #itinerary",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-16T20:00:00+05:30",
+     "likes": 2378,
+     "comments": 76
+    },
+    {
+     "media_id": "offbeat.bharat.demo_11",
+     "caption": "Kerala backwaters in 4 days #itinerary",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-26T19:00:00+05:30",
+     "likes": 2071,
+     "comments": null
+    },
+    {
+     "media_id": "offbeat.bharat.demo_12",
+     "caption": "An unknown village in Spiti #offbeat",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-29T19:00:00+05:30",
+     "likes": 1051,
+     "comments": 63
+    },
+    {
+     "media_id": "offbeat.bharat.demo_13",
+     "caption": "How I find cheap flights #traveltips",
+     "media_type": "VIDEO",
+     "posted_at": "2026-10-01T12:00:00+05:30",
+     "likes": 380,
+     "comments": null
+    }
+   ]
+  },
+  {
+   "username": "weekend.escapes.demo",
+   "niche": "travel",
+   "description": "Fictional weekend trips page.",
+   "reason": "Short trips audience",
+   "confidence": 0.65,
+   "public_posts": [
+    {
+     "media_id": "weekend.escapes.demo_0",
+     "caption": "My worst trip and what I learned #travelstory",
+     "media_type": "IMAGE",
+     "posted_at": "2026-08-15T19:00:00+05:30",
+     "likes": null,
+     "comments": 40
+    },
+    {
+     "media_id": "weekend.escapes.demo_1",
+     "caption": "Kerala backwaters in 4 days #itinerary",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-08-23T12:00:00+05:30",
+     "likes": 1097,
+     "comments": null
+    },
+    {
+     "media_id": "weekend.escapes.demo_2",
+     "caption": "My worst trip and what I learned #travelstory",
+     "media_type": "IMAGE",
+     "posted_at": "2026-08-15T20:00:00+05:30",
+     "likes": 717,
+     "comments": 72
+    },
+    {
+     "media_id": "weekend.escapes.demo_3",
+     "caption": "Goa in 8000 rupees: full breakdown #budgettravel #goa",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-26T12:00:00+05:30",
+     "likes": 371,
+     "comments": null
+    },
+    {
+     "media_id": "weekend.escapes.demo_4",
+     "caption": "What solo travel taught me #solotravel",
+     "media_type": "IMAGE",
+     "posted_at": "2026-08-19T12:00:00+05:30",
+     "likes": 1720,
+     "comments": 22
+    },
+    {
+     "media_id": "weekend.escapes.demo_5",
+     "caption": "How I find cheap flights #traveltips",
+     "media_type": "VIDEO",
+     "posted_at": "2026-08-27T20:00:00+05:30",
+     "likes": 1616,
+     "comments": 31
+    },
+    {
+     "media_id": "weekend.escapes.demo_6",
+     "caption": "My worst trip and what I learned #travelstory",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-01T19:00:00+05:30",
+     "likes": 1225,
+     "comments": 77
+    },
+    {
+     "media_id": "weekend.escapes.demo_7",
+     "caption": "My worst trip and what I learned #travelstory",
+     "media_type": "IMAGE",
+     "posted_at": "2026-09-10T12:00:00+05:30",
+     "likes": 2014,
+     "comments": 60
+    },
+    {
+     "media_id": "weekend.escapes.demo_8",
+     "caption": "Hidden waterfalls near Mumbai #offbeat #travel",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-15T20:00:00+05:30",
+     "likes": 2219,
+     "comments": 90
+    },
+    {
+     "media_id": "weekend.escapes.demo_9",
+     "caption": "3 day Hampi itinerary #itinerary #hampi",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-16T20:00:00+05:30",
+     "likes": 2061,
+     "comments": 7
+    },
+    {
+     "media_id": "weekend.escapes.demo_10",
+     "caption": "My worst trip and what I learned #travelstory",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-21T20:00:00+05:30",
+     "likes": 1547,
+     "comments": 76
+    },
+    {
+     "media_id": "weekend.escapes.demo_11",
+     "caption": "Kerala backwaters in 4 days #itinerary",
+     "media_type": "CAROUSEL_ALBUM",
+     "posted_at": "2026-09-24T12:00:00+05:30",
+     "likes": 519,
+     "comments": 71
+    },
+    {
+     "media_id": "weekend.escapes.demo_12",
+     "caption": "Weekend getaway under 5000 #budgettravel",
+     "media_type": "VIDEO",
+     "posted_at": "2026-09-29T19:00:00+05:30",
+     "likes": null,
+     "comments": 62
+    },
+    {
+     "media_id": "weekend.escapes.demo_13",
+     "caption": "3 day Hampi itinerary #itinerary #hampi",
+     "media_type": "VIDEO",
+     "posted_at": "2026-10-02T19:00:00+05:30",
+     "likes": 1451,
+     "comments": null
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,162 @@
+{
+ "comments": [
+  {
+   "comment_id": "tra_c000",
+   "text": "What was the total budget?",
+   "posted_at": "2026-08-17T18:00:00+05:30",
+   "like_count": 2,
+   "post_media_id": "tra_018"
+  },
+  {
+   "comment_id": "tra_c001",
+   "text": "Please share the itinerary",
+   "posted_at": "2026-09-13T12:00:00+05:30",
+   "like_count": 0,
+   "post_media_id": "tra_000"
+  },
+  {
+   "comment_id": "tra_c002",
+   "text": "Which month is best to go?",
+   "posted_at": "2026-09-20T13:00:00+05:30",
+   "like_count": 1,
+   "post_media_id": "tra_028"
+  },
+  {
+   "comment_id": "tra_c003",
+   "text": "Where did you stay?",
+   "posted_at": "2026-08-14T15:00:00+05:30",
+   "like_count": 5,
+   "post_media_id": "tra_025"
+  },
+  {
+   "comment_id": "tra_c004",
+   "text": "Amazing views 😍",
+   "posted_at": "2026-08-08T13:00:00+05:30",
+   "like_count": null,
+   "post_media_id": "tra_008"
+  },
+  {
+   "comment_id": "tra_c005",
+   "text": "Is it safe for solo women?",
+   "posted_at": "2026-08-31T14:00:00+05:30",
+   "like_count": 5,
+   "post_media_id": "tra_001"
+  },
+  {
+   "comment_id": "tra_c006",
+   "text": "Can you make a packing list video?",
+   "posted_at": "2026-09-06T09:00:00+05:30",
+   "like_count": 5,
+   "post_media_id": "tra_017"
+  },
+  {
+   "comment_id": "tra_c007",
+   "text": "How did you reach there?",
+   "posted_at": "2026-08-11T13:00:00+05:30",
+   "like_count": null,
+   "post_media_id": "tra_018"
+  },
+  {
+   "comment_id": "tra_c008",
+   "text": "This trip plan saved me, thank you!",
+   "posted_at": "2026-08-09T10:00:00+05:30",
+   "like_count": 5,
+   "post_media_id": "tra_028"
+  },
+  {
+   "comment_id": "tra_c009",
+   "text": "Cost of the homestay?",
+   "posted_at": "2026-09-07T17:00:00+05:30",
+   "like_count": 0,
+   "post_media_id": "tra_017"
+  },
+  {
+   "comment_id": "tra_c010",
+   "text": "कितना खर्चा आया?",
+   "posted_at": "2026-08-20T08:00:00+05:30",
+   "like_count": 0,
+   "post_media_id": "tra_014"
+  },
+  {
+   "comment_id": "tra_c011",
+   "text": "कुठे राहिलात?",
+   "posted_at": "2026-08-18T19:00:00+05:30",
+   "like_count": 0,
+   "post_media_id": "tra_002"
+  },
+  {
+   "comment_id": "tra_c012",
+   "text": "Please make a video on Kashmir",
+   "posted_at": "2026-09-26T18:00:00+05:30",
+   "like_count": 5,
+   "post_media_id": "tra_013"
+  },
+  {
+   "comment_id": "tra_c013",
+   "text": "How many days are enough?",
+   "posted_at": "2026-09-20T19:00:00+05:30",
+   "like_count": 2,
+   "post_media_id": "tra_026"
+  },
+  {
+   "comment_id": "tra_c014",
+   "text": "Hotel name please",
+   "posted_at": "2026-08-07T14:00:00+05:30",
+   "like_count": 0,
+   "post_media_id": "tra_010"
+  },
+  {
+   "comment_id": "tra_c015",
+   "text": "It was crowded and overpriced when we went.",
+   "posted_at": "2026-08-16T18:00:00+05:30",
+   "like_count": null,
+   "post_media_id": "tra_023"
+  },
+  {
+   "comment_id": "tra_c016",
+   "text": "Beautiful!",
+   "posted_at": "2026-08-22T12:00:00+05:30",
+   "like_count": 2,
+   "post_media_id": "tra_026"
+  },
+  {
+   "comment_id": "tra_c017",
+   "text": "Train or flight?",
+   "posted_at": "2026-09-05T14:00:00+05:30",
+   "like_count": 5,
+   "post_media_id": "tra_022"
+  },
+  {
+   "comment_id": "tra_c018",
+   "text": "Share the route map",
+   "posted_at": "2026-08-06T17:00:00+05:30",
+   "like_count": 2,
+   "post_media_id": "tra_024"
+  },
+  {
+   "comment_id": "tra_c019",
+   "text": "Do you have a PDF of this itinerary?",
+   "posted_at": "2026-09-12T09:00:00+05:30",
+   "like_count": 1,
+   "post_media_id": "tra_022"
+  }
+ ],
+ "demographics": {
+  "top_locations": [
+   {
+    "name": "Mumbai",
+    "share": 0.46
+   },
+   {
+    "name": "Other Indian cities",
+    "share": 0.38
+   }
+  ],
+  "age_ranges": {
+   "18-24": 0.28,
+   "25-34": 0.44,
+   "35-44": 0.2,
+   "45+": 0.08
+  }
+ }
+}

@@ -227,19 +227,27 @@ export function CreatePage() {
         </Card>
         <Card>
           <h2 style={{ marginBottom: 14 }}>{t('post.create.photoTitle')}</h2>
-          <div className={`dropzone ${draft.photoUrl ? 'has-image' : ''}`}>
-            {draft.photoUrls.length > 0 ? (
+          {draft.photoUrls.length > 0 ? (
+            <div className="dropzone has-image">
               <PhotoViewer urls={draft.photoUrls} index={Math.min(active, draft.photoUrls.length - 1)} onIndex={setActive} />
-            ) : (
-              <div className="empty" style={{ padding: 0 }}>
-                <div className="empty-icon">
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="dropzone"
+              disabled={uploading}
+              aria-label={t('post.create.addPhoto')}
+              onClick={() => galleryInput.current?.click()}
+            >
+              <span className="empty" style={{ padding: 0 }}>
+                <span className="empty-icon">
                   <Icon name="camera" size={28} />
-                </div>
-                <h3>{t('post.create.addPhoto')}</h3>
-                <p>{t('post.create.formats')}</p>
-              </div>
-            )}
-          </div>
+                </span>
+                <strong style={{ display: 'block', marginBottom: 8 }}>{t('post.create.addPhoto')}</strong>
+                <span className="muted">{t('post.create.formats')}</span>
+              </span>
+            </button>
+          )}
           <div className="upload-actions">
             <Button variant="secondary" icon="camera" loading={uploading} onClick={() => cameraInput.current?.click()}>
               {t('post.create.camera')}
