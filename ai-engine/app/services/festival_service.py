@@ -1,6 +1,8 @@
 """Festivals and occasions from structured records. Dates are data, not code: update festivals_sample.json (or swap the loader)
 without touching any logic. The bundled file is a SAMPLE and its dates are approximate; see each record's `date_note`."""
 
+from __future__ import annotations
+
 import json
 from datetime import date, timedelta
 from pathlib import Path
@@ -35,7 +37,7 @@ class FestivalService:
         self._records: list[FestivalRecord] = self._merge()
 
     @classmethod
-    def from_settings(cls, settings) -> "FestivalService":
+    def from_settings(cls, settings) -> FestivalService:
         return cls(verified_file=settings.festival_data_file, include_sample=settings.festival_include_sample, rule_dates=True, bundled_verified=settings.festival_include_bundled_verified)
 
     def _merge(self) -> list[FestivalRecord]:

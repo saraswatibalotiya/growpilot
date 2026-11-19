@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from datetime import UTC, date, datetime
 
 from app.core.config import Settings

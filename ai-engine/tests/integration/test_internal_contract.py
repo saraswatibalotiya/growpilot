@@ -1,5 +1,8 @@
 """Internal engine contracts, persisted previews, authentication, and request tracing."""
 
+import importlib
+from typing import get_origin, get_type_hints
+
 import pytest
 from fastapi.testclient import TestClient
 from pydantic import ValidationError
@@ -7,6 +10,19 @@ from pydantic import ValidationError
 from app.core.config import Settings
 from app.main import create_app
 from tests.conftest import API, make_settings
+
+
+@pytest.mark.parametrize("module_name,class_name,method_name", [
+    ("app.repositories.memory", "InMemoryStore", "set_posts"),
+    ("app.services.competitor_service", "CompetitorService", "approved"),
+    ("app.services.festival_service", "FestivalService", "upcoming"),
+    ("app.services.trend_service", "TrendService", "upcoming"),
+])
+def test_list_method_does_not_eagerly_evaluate_collection_annotations(module_name, class_name, method_name):
+    module = importlib.import_module(module_name)
+    method = getattr(getattr(module, class_name), method_name)
+    assert isinstance(method.__annotations__["return"], str)
+    assert get_origin(get_type_hints(method)["return"]) is list
 
 
 def test_application_requires_postgres_and_memory_is_test_only():

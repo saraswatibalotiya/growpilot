@@ -1,5 +1,7 @@
 """In-memory repositories. Fast, dependency-free and deterministic for tests. Data is lost when the process stops."""
 
+from __future__ import annotations
+
 from collections import defaultdict
 from datetime import UTC, date, datetime
 from uuid import uuid4
