@@ -1,26 +1,19 @@
-# Welcome to Prisma ORM!
+# GrowPilot Prisma 8 Reference
 
 Prisma ORM lets you query your database in simple, easy-to-read TypeScript. Define what your data looks like, and Prisma ORM gives you a fully typed client — with autocomplete for every table, column, and relation.
 
-This project is set up for PostgreSQL. Prisma ORM also supports other databases.
+This project uses PostgreSQL 16, Prisma CLI `8.0.0-rc.33` and `@prisma/orm-postgres` `8.0.0-rc.23` as locked by the backend. This is not a legacy Prisma Client/migrate-dev setup. The configured database is `growpilot_db`; Prisma owns `public`, while Python/Alembic owns `ai_engine` in the same database. Do not initialize/reset the shared database indiscriminately.
 
 ## Requirements
 
 - **PostgreSQL 15 or newer.** Older servers are not supported. Run `SELECT version()` against your server to verify.
-- The CLI never connects to your database without explicit consent. Pass `--probe-db` to `npx prisma orm init` if you want `init` to verify the server version itself.
+- The ORM setup command can probe the server when invoked with `--probe-db`. Database inspection, initialization and migration commands connect to the configured target; do not treat CLI execution as inherently read-only.
 
 ## Your data contract
 
 Your data contract is the heart of your application. It lives at [`prisma/schema.prisma`](prisma/schema.prisma) and describes your models:
 
-```prisma
-model User {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
-  username String?
-  name     String?
-}
-```
+The actual `User` model has a string ID, email, name, password hash, status and timestamps. Do not copy generic `Int`/username/Post-relation examples into this application; consult the schema and generated types for the precise current fields and relations.
 
 Every model you define in your contract can be queried from your app. Your editor will autocomplete the query methods and show you what type each model field is:
 
@@ -31,18 +24,17 @@ const user = await db.orm.public.User
   .where({ email: 'alice@example.com' })
   .first();
 
-// Your editor will show the type of user as
-// { id: number; email: string; username: string | null; name: string | null; createdAt: Date; posts: Post[] } | null
+// The generated schema.d.ts supplies the actual User result type, or null.
 ```
 
 Your contract has two companion files in the same directory:
 
-- **`contract.json`** — this tells your application what models exist, just like `package-lock.json` tells your package manager what dependencies your project has
-- **`contract.d.ts`** — this powers autocomplete and type checking in your editor
+- **`schema.json`** — emitted model/storage contract consumed by the application
+- **`schema.d.ts`** — generated types for queries and results
 
 Commit both files to git. When you change your contract, run `npx prisma contract emit` to update them.
 
-If you use a framework like Next.js or Vite, the Prisma ORM plugin will do this for you automatically.
+Automatic emission requires a configured plugin; GrowPilot's backend build is `nest build`, with explicit `npm run contract:emit`. The separate Vite frontend is not a Prisma contract plugin.
 
 ## Configuration
 
@@ -63,10 +55,10 @@ export default definePrismaConfig({
 });
 ```
 
-Notice the `DATABASE_URL` above? It's defined in your [`.env`](./.env) file:
+`DATABASE_URL` comes from the process environment or the local dotenv loader. See the safe [.env.example](.env.example); never inspect or publish real environment values:
 
 ```env
-DATABASE_URL="postgresql://user:password@localhost:5432/mydb"
+DATABASE_URL="postgresql://<user>:<password>@localhost:5432/growpilot_db"
 ```
 
 You can customize how your environment variables are loaded by changing or removing the `import 'dotenv/config'` line.
@@ -76,9 +68,11 @@ You can customize how your environment variables are loaded by changing or remov
 ### Commands
 
 ```bash
-npx prisma contract emit       # Update contract.json and contract.d.ts
-npx prisma db init             # Create tables in the database
+npm run contract:emit          # Update schema.json and schema.d.ts
+npx prisma db init             # Bootstrap only a deliberately selected fresh database
 npx prisma migration status    # Show migration status
+npx prisma migration plan --name <slug>  # Author a migration plan; review it
+npx prisma db migrate --advance-ref db   # Apply reviewed migrations and advance db ref
 ```
 
 ### Files
@@ -88,16 +82,21 @@ npx prisma migration status    # Show migration status
 | [`prisma/schema.prisma`](prisma/schema.prisma) | Your data contract — define your models here |
 | [`prisma.config.ts`](prisma.config.ts) | CLI configuration |
 | [`prisma/db.ts`](prisma/db.ts) | Database client — `import { db } from './prisma/db'` |
-| `prisma/contract.json` | Compiled contract (generated) |
-| `prisma/contract.d.ts` | Contract types (generated) |
+| [prisma/schema.json](prisma/schema.json) | Compiled contract (generated) |
+| [prisma/schema.d.ts](prisma/schema.d.ts) | Contract types (generated) |
 
 ### Workflow
 
 1. Edit [`prisma/schema.prisma`](prisma/schema.prisma) to add or change models.
 2. Run `npx prisma contract emit` to regenerate the contract.
-3. Query your models — your IDE will autocomplete everything.
+3. Use `npx prisma migration plan --name <slug>`, inspect the generated migration, back up the target, then `npx prisma db migrate --advance-ref db` as appropriate for the selected database/ref.
+4. Query your models using the emitted types. Emitting a contract does not create database tables or apply migrations. Do not use legacy `prisma migrate dev`, reset, or db-push recipes.
 
-## Monorepo notes (pnpm workspaces)
+`db init` is bootstrap, not proof of replaying/stamping the checked-in migration chain. No production replay is certified by this documentation-only audit. Follow the installed RC command help and inspect refs/status before applying to existing data. The local ORM skill is installed at `node_modules/@prisma/orm-postgres/skills/prisma-8/SKILL.md`; agent-directory Composer/Platform skills are upstream reference material and do not mean this app deploys on Composer Cloud.
+
+## Upstream pnpm Background (Not GrowPilot's Setup)
+
+GrowPilot uses separate npm package/lockfile boundaries, not a pnpm workspace. The following scaffold notes are optional upstream context; their remote-package behavior was not verified in this audit.
 
 If this project lives inside a pnpm workspace, a few things are worth knowing:
 

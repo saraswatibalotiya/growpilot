@@ -18,20 +18,18 @@
   that contain a keyword can be misread.
 - **Small samples are noisy.** A topic needs at least 3 posts to be compared. With 3 to 5 posts, one lucky post can make a "winner".
   The engine says how many posts a claim rests on, but it does not test statistical significance.
-- **Single-source ideas score low.** Opportunity is a weighted mean over the available signals, so an idea backed by one strong
-  source (say, one proven topic) scores lower than an idea several weak sources agree on. The confidence score and evidence list
-  show which is which; do not read opportunity alone.
+- **Source count alone does not determine opportunity.** It is a weighted mean over available signals. Missing sources are excluded; available sources that do not support an idea can lower its score. One strong signal does not necessarily score below several weak ones. Read confidence and evidence separately.
 - **Ideas are templates**, filled with the profile's own words. They are specific to the business category but they are not
   creative copywriting. The optional AI step only polishes wording.
 - **No real trend feed.** Bundled trends are fictional samples; there is no live Google Trends or social connector. See [REAL_DATA_SOURCES.md](REAL_DATA_SOURCES.md): you supply licensed trend data in a file. Lunar festivals are verified only for India 2027 (bundled Government of India list) or from a calendar you supply; fixed-date occasions are computed.
-- **Festival logic is simple.** Relevance uses industry, region and distance in days. Dates are bundled sample data labelled
-  `SAMPLE_UNVERIFIED` and must be confirmed. A relevant festival within 30 days is guaranteed a place when 4 or more ideas are asked
-  for, which can push out a higher-scoring evergreen idea (the response says when it happens).
+- **Festival logic is simple.** Relevance uses industry, region and days. Inputs combine verified-source calendars, computed fixed dates and optional `SAMPLE_UNVERIFIED` records. An eligible, sufficiently relevant imminent festival can receive a reserved selection slot for 4+ requests, subject to candidate eligibility/deduplication; it can displace an ordinary higher-scoring idea. A reservation is not an unconditional guarantee.
 - **Competitor signals are not part of the five core demos.** They are exercised by a separate fictional restaurant scenario (`tests/quality/test_competitor_intelligence.py`). There is no real competitor discovery or fetching: data is supplied by the owner or comes from fictional samples. See [COMPETITOR_INTELLIGENCE.md](COMPETITOR_INTELLIGENCE.md).
 - **Learning** needs 3 or more reactions per dimension and is capped at +/-8 points.
-- **Dates.** `as_of` cuts off posts and comments dated later, so evaluating a past day does not use the future. Posts are filtered
+- **Dates.** `as_of` cuts off posts and comments dated later, but does not reconstruct a complete historical state. Owner hashtag reuse, current learning and some owner-side competitor comparisons can use current stored history. Posts are filtered
   by the default timezone (`DEFAULT_TIMEZONE`, Asia/Kolkata). Trends verified after `as_of` are ignored; trends older than 14 days
   are stale. Metrics are whatever was supplied: the engine does not backfill what Instagram had not yet reported on that day.
-- **Provider calls were verified live only for the invalid-key path.** The valid-key path for Gemini and Claude is covered by wire-format tests and an opt-in live test (`tests/live`) that needs your keys; run it before relying on a provider.
+- **Live provider evidence is historical.** Earlier notes recorded invalid-key checks; valid-key behavior is covered by mocked wire tests and opt-in `tests/live`. This audit did not establish current account/model availability.
 - **AI wording guard is lexical.** It rejects new digits, hashtags, links and words like "viral"/"trending"; it does not catch a new factual claim phrased in plain words or a spelled-out number.
-- **Storage is in memory by default.** Restarting loses everything, including feedback and the learning built from it.
+- **PostgreSQL is required.** Application runs never fall back to memory. If the shared database is unavailable, persistence requests fail safely instead of reporting unsaved recommendations as successful. Memory storage is restricted to automated tests.
+- **Demo CLI storage selection needs care.** Its runner builds test settings without explicitly selecting a store, so run demos with `STORAGE_BACKEND=memory` to avoid inherited application database settings. Normal application startup must still use PostgreSQL.
+- **Development Compose is not production hardening.** It does not force production auth and exposes infrastructure ports. Harden credentials, networking, service authentication, ingress and backups before public deployment.

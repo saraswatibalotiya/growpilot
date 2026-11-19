@@ -11,6 +11,30 @@ services:
       - "5432:5432"
     volumes:
       - growpilot_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U growpilot_user -d growpilot_db"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  ai-engine:
+    profiles: ["service"]
+    build: ./ai-engine
+    container_name: growpilot_ai_engine
+    restart: unless-stopped
+    command: ["sh", "-c", "alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8001"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - path: ./ai-engine/.env
+        required: false
+    environment:
+      STORAGE_BACKEND: postgres
+      DATABASE_URL: postgresql+asyncpg://growpilot_user:growpilot_password@postgres:5432/growpilot_db
+      LOAD_MOCK_DATA: "false"
+    ports:
+      - "127.0.0.1:8001:8001"
 
   adminer:
     image: adminer:latest

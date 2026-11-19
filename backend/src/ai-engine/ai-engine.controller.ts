@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nest
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { randomUUID } from 'node:crypto';
 import { type AuthenticatedRequest, JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { FeedbackDto, GenerateRecommendationsDto, OutcomeDto } from './ai-engine.dto';
+import { FeedbackDto, GenerateRecommendationsDto, MockFeedbackDto, MockPreviewDto, OutcomeDto } from './ai-engine.dto';
 import { AiEngineService } from './ai-engine.service';
 
 /** Correlation id shared with the engine: a safe id from the caller is kept, otherwise a new one is made. */
@@ -28,6 +28,18 @@ export class AiEngineController {
   @ApiOperation({ summary: 'Whether AI insights are turned on and reachable. Never fails.' })
   status(@Req() req: AuthenticatedRequest) {
     return this.insights.status(correlationId(req));
+  }
+
+  @Post('mock/overview')
+  @ApiOperation({ summary: 'Load or generate a saved mock business analysis' })
+  mockOverview(@Req() req: AuthenticatedRequest, @Body() dto: MockPreviewDto) {
+    return this.insights.mockOverview(req.userId, correlationId(req), dto);
+  }
+
+  @Post('mock/recommendations/:id/feedback')
+  @ApiOperation({ summary: 'Save feedback on a mock business recommendation' })
+  mockFeedback(@Req() req: AuthenticatedRequest, @Param('id') id: string, @Body() dto: MockFeedbackDto) {
+    return this.insights.mockFeedback(req.userId, correlationId(req), id, dto);
   }
 
   @Post('analysis')

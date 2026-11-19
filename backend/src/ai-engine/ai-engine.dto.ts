@@ -5,6 +5,18 @@ import { IsBoolean, IsIn, IsInt, IsISO8601, IsNotEmpty, IsObject, IsOptional, Is
 export const OBJECTIVES = ['REACH', 'ENGAGEMENT', 'SAVES', 'SHARES', 'PRODUCT_DISCOVERY', 'LEADS', 'SALES', 'COMMUNITY_BUILDING', 'AUDIENCE_EDUCATION', 'BRAND_AWARENESS'] as const;
 export const FEEDBACK_ACTIONS = ['SAVED', 'DISMISSED', 'LIKED', 'NOT_RELEVANT', 'ALREADY_POSTED', 'CREATED', 'PUBLISHED'] as const;
 export const OUTCOME_INTERVALS = ['INITIAL', 'H24', 'H72', 'D7'] as const;
+export const MOCK_INDUSTRIES = ['fashion', 'grooming', 'beauty', 'cafe'] as const;
+
+export class MockPreviewDto {
+  @ApiProperty({ enum: MOCK_INDUSTRIES })
+  @IsIn(MOCK_INDUSTRIES)
+  industry: (typeof MOCK_INDUSTRIES)[number];
+
+  @ApiPropertyOptional({ default: false })
+  @IsOptional()
+  @IsBoolean()
+  regenerate?: boolean;
+}
 
 /** There is deliberately no business or profile id in any of these: the owner is always the signed-in user. */
 export class GenerateRecommendationsDto {
@@ -36,6 +48,12 @@ export class FeedbackDto {
   @IsString()
   @MaxLength(500)
   comment?: string;
+}
+
+export class MockFeedbackDto extends FeedbackDto {
+  @ApiProperty({ enum: MOCK_INDUSTRIES })
+  @IsIn(MOCK_INDUSTRIES)
+  industry: (typeof MOCK_INDUSTRIES)[number];
 }
 
 export class OutcomeMetricsDto {

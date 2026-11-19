@@ -70,8 +70,7 @@ class Settings(BaseSettings):
     trend_max_age_days: int = Field(default=14, ge=1, alias="TREND_MAX_AGE_DAYS")
     min_learning_samples: int = Field(default=3, ge=2, alias="MIN_LEARNING_SAMPLES")
 
-    # Storage. `memory` (default) needs nothing and loses data on restart; `postgres` persists everything in the `ai_engine` schema.
-    storage_backend: Literal["memory", "postgres"] = Field(default="memory", alias="STORAGE_BACKEND")
+    storage_backend: Literal["memory", "postgres"] = Field(default="postgres", alias="STORAGE_BACKEND")
     database_url: SecretStr | None = Field(default=None, alias="DATABASE_URL", description="postgresql+asyncpg://user:password@host:port/database. Never logged or returned.")
     db_pool_size: int = Field(default=5, ge=1, le=50, alias="DB_POOL_SIZE")
     db_max_overflow: int = Field(default=5, ge=0, le=50, alias="DB_MAX_OVERFLOW")
@@ -100,6 +99,8 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def _postgres_needs_url(self) -> "Settings":
+        if self.storage_backend == "memory" and self.environment != "test":
+            raise ValueError("In-memory storage is only allowed in automated tests. Configure PostgreSQL for application data.")
         if self.storage_backend == "postgres":
             url = self.database_url.get_secret_value() if self.database_url else ""
             if not url.startswith("postgresql+asyncpg://"):

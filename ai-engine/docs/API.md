@@ -4,14 +4,15 @@ Base path `/api/v1`. Interactive docs: `/docs`. Development is open; with `SERVI
 route except `/health` needs `Authorization: Bearer <token>`.
 
 Success: `{"data": ..., "meta": {"request_id": "..."}}`. Error: `{"error": {"code": "...", "message": "...", "details": ...}, "meta": {...}}`.
-Lists use `{"items", "page", "page_size", "total"}` (`page_size` max 100).
+Paginated endpoints use `{"items", "page", "page_size", "total"}` (`page_size` max 100). Other lists, including feedback/outcomes and several reference-data endpoints, return arrays in `data`. Successful competitor deletion is HTTP 204 with no envelope/body.
 
 | Method | Path | Purpose |
 |---|---|---|
-| GET | `/health` | Liveness (open) |
+| GET | `/health` | Full URL `/api/v1/health`; open storage-dependent health/readiness, can return 503 |
 | POST | `/profiles` | Create a BUSINESS or CREATOR profile |
 | PUT | `/profiles/{id}` | Create or replace a profile under an id you choose (idempotent; 201 first time, 200 after). Used by NestJS (`biz_<businessId>`) |
 | GET / PATCH | `/profiles/{id}` | Read / partially update |
+| POST | `/profiles/{id}/preview` | Load or generate saved fictional overview; `mock_` IDs only |
 | POST | `/analytics/analyze` | Store posts and analyse (`replace` true/false) |
 | GET | `/analytics/overview?profile_id=` | Baseline, insights, warnings, methodology |
 | GET | `/analytics/top-content?profile_id=&which=top\|lowest` | Format-adjusted best/weakest posts |
@@ -42,6 +43,12 @@ Lists use `{"items", "page", "page_size", "total"}` (`page_size` max 100).
 | POST / GET | `/recommendations/{id}/outcomes` | Record / list INITIAL, H24, H72, D7 metrics |
 
 `POST /recommendations/generate` body: `{"profile_id", "count": 3-5, "goal": Objective?, "as_of": date?, "use_ai": bool}`.
+
+## Saved Mock Preview
+
+`POST /api/v1/profiles/{id}/preview` accepts `{ "industry": "fashion", "regenerate": false }`. Industries: `fashion`, `grooming`, `beauty`, `cafe`. The ID must match `mock_` plus 1-59 letters, digits, underscores or hyphens; NestJS derives `mock_<businessId>_<industry>` from its authenticated owner. Do not expose this service as a public browser API.
+
+The response's `data` contains `analysis`, `audience`, `trends`, `recommendations` (up to four), and `acted` (recommendation ID to saved feedback action). Missing sample inputs are initialized server-side. Existing recommendations reload; `regenerate=true` generates/appends a new batch, preserving old rows. Feedback uses the existing nested recommendation endpoint with the same mock profile ID. Actual persistence depends on the configured PostgreSQL store; application settings reject memory outside tests. Failed persistence is not replaced with local results. No publishing is performed.
 
 | Status | Meaning |
 |---|---|

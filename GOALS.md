@@ -9,15 +9,15 @@ Help a small business grow on Instagram **organically**: see how its presence is
 
 ## Non-negotiable rules
 (from `backend/AGENTS.md` and the agreed plan)
-- Publishing is **off by default**. Nothing publishes without: campaign `approved`, an explicit "Approve and publish" click, `ENABLE_LIVE_INSTAGRAM_PUBLISH=true`, the account allowlisted server-side, and the approval event recorded first.
+- Publishing is **off by default**. Require post `USER_APPROVED` or reel `APPROVED`, explicit confirmation, `ENABLE_LIVE_INSTAGRAM_PUBLISH=true`, and a real connected live account allowlisted server-side. There is no campaign model. Dedicated content-hash approval records remain a planned strengthening, not a current guarantee.
 - Mock data, preview JSON, and `isMock` metadata never authorize a live publish.
 - Live actions need explicit human confirmation. Don't call live publishing endpoints without it.
-- Tokens are encrypted only. No secrets in JSON columns, logs, or embeddings.
+- Stored Instagram OAuth tokens are encrypted; refresh sessions store hashes. Browser access/refresh tokens currently use localStorage, not HttpOnly cookies. Never put secrets in business JSON, logs, prompts, or embeddings.
 - Never reset the database. Destructive schema changes need explicit approval. Schema changes go through Prisma 8: contract emit, then migration plan, then db migrate, reviewed before applying.
 - Mock fixtures must stay realistic and cover edge cases.
 
 ## Growth playbook (what recommendations are built from)
-Every recommendation must come from one of these three pillars, be tied to evidence from the account's own data, and be an organic action.
+These are product/editorial goals, not verified claims about Instagram's proprietary ranking algorithm or proof every rule is implemented. Recommendations must disclose available evidence and unknowns. The current Python engine uses historical performance, audience, approved competitors, contextual trends/festivals and goals, with separate opportunity/confidence scores; general fallback ideas must not imply account-specific evidence.
 
 ### 1. Search and discovery (Instagram SEO)
 Instagram reads text and visuals to categorise a post.
@@ -56,7 +56,8 @@ The algorithm pushes posts that hold attention and spark conversation.
 
 Missing or withheld data is unknown (null). A rule must say "can't tell yet" rather than treat unknown as zero.
 
-## Onboarding: what we ask the business owner
+## Onboarding: Current Inputs And Proposed Extensions
+Current business storage has name, category, description, city/area, audience, language and primary goal. The following richer niche/formats/frequency/collaboration questions are proposed extensions, not a claim that every field is in the current form or database.
 The API can't tell us the niche or what the owner is trying to post, so we ask at onboarding (and let them edit later). These answers feed the rules, retrieval filters and LLM prompts.
 - **Niche** and **who the target audience is** (the words they'd search for).
 - **Main location**: city, neighbourhood or venue, and whether the business is local.
@@ -73,10 +74,12 @@ Planned storage: new fields on `businesses` (below). The posts themselves still 
 - **Idempotent upserts** on natural keys, such as `(social_account_id, platform_media_id)`, so retries are safe.
 - **Enums for every status column**, with allowed transitions enforced in services.
 - **Index for real queries:** latest posts per account, and latest snapshot per post.
-- **Minimise data.** Store derived image features, not image copies. Disconnect deletes tokens. Implement Meta's data-deletion callback, which cascades deletes. Set retention periods for snapshots and assets.
-- **Approval is evidence:** a publish needs an approval row whose `content_hash` matches the current draft.
+- **Minimise data.** Disconnect wipes stored connection tokens. Actual media originals and approved variants are stored in Cloudinary with database metadata. A complete Meta data-deletion callback and retention policy remain future work; do not describe them as implemented.
+- **Approval is evidence (target):** a dedicated approval row bound to `content_hash` is proposed. Current code persists post/reel approval state and reel approval time, not this proposed table.
 
-## Schema plan
+## Historical Schema Proposal (Not The Current Contract)
+
+Retained for design context. Some concepts were implemented under different names; others remain unimplemented or were removed. The actual contract is [backend/prisma/schema.prisma](backend/prisma/schema.prisma): 17 `public` models, including generated posts/reels, not `content_drafts`, campaigns, leads, or presence assessments. Python owns the separate `ai_engine` schema in the same `growpilot_db`. The proposed tables/columns below must never be treated as existing migration instructions.
 
 ### Modify existing tables
 | Table | Change | Why |
@@ -109,7 +112,9 @@ Planned storage: new fields on `businesses` (below). The posts themselves still 
 - `publish_approvals`: `draft_id`, `user_id`, `content_hash`, `approved_at`, `ip`, `user_agent`, `revoked_at`. Audit record of the explicit "Approve and publish" click.
 - `publish_attempts`: `draft_id`, `attempt_no`, `container_id`, `status`, `meta_error_code`, `meta_error_message`, `started_at`, `finished_at`. Every call to Meta is logged.
 
-## Steps and done-when
+## Original Roadmap Acceptance Criteria
+
+These are historical targets, not a current completion checklist. The implemented recommendation endpoint is `/ai-insights/recommendations/generate`, not the proposed `/businesses/:id/recommendations`. Publishing currently runs synchronously/in-process, not as the proposed delayed BullMQ publisher.
 
 | Step | Database work | Feature work | Done when |
 |---|---|---|---|
@@ -125,23 +130,26 @@ Planned storage: new fields on `businesses` (below). The posts themselves still 
 | 10 | Deletion cascades, retention jobs | Disconnect cleanup, Meta data-deletion callback | Disconnecting removes tokens; deletion requests are honoured |
 
 ## Current status
+- **Central architecture documentation:** all maintained system/repository/service/database/integration/workflow/deployment diagrams and their explanations live in [docs/diagram/](docs/diagram/README.md). Root/service READMEs and [TESTING.md](TESTING.md) remain operational entry guides. Duplicate architecture overviews were removed only after replacement; API/domain/safety and historical evaluation documents are retained.
+- **One persistent application database (2026-11-19).** NestJS and the AI engine share `growpilot_db`: Prisma owns `public`, Alembic owns `ai_engine`. PostgreSQL is mandatory outside automated tests; no application memory fallback. Dashboard mock inputs and recommendations now live server-side with separate owner/industry profiles, saved feedback, and append-only recommendation generation history. Root Compose and `npm run start:ai` use the shared database; the separate AI database service was removed. Existing legacy volumes are not deleted.
 - **Optional Gemini fallback (2026-11-19).** Reel creation and editing fall back to `FULL_PHOTO` when Gemini is not configured. If scene enhancement fails (including quota, timeout, or quality rejection), rendering continues with all original photos; the fallback is logged and stored without a user-facing job error. Poster enhancement already has an original-photo fallback. Rendering, storage, and publishing errors are still reported.
-- **Running:** `npm run start:all` from `backend/` starts Docker, Postgres, Redis, the backend and the frontend (see `backend/AGENTS.md`).
+- **Startup:** `npm run start:all` builds/starts root Compose's `service` profile, including Python, then frontend/backend watch with the bridge enabled. It first kills listeners on 4000/3000; `stop:all` does not stop containers. `npm run start:ai` is the alternative host-engine command; do not run both engines on 8001.
 - **Modules in the backend:** Auth (signup, login, rotating refresh tokens), Business, Instagram (OAuth, test-mode token connect, media sync), Media (Cloudinary uploads), Products, Conversations, Posts (draft state machine, duplicate-photo check), AI (content generation only, never publishes; see `backend/src/ai/README.md`), Publishing (the only path to Instagram, gated). Frontend: React + Vite in `frontend/`, voice or text "Create a post" flow, publishing behind `VITE_FEATURE_PUBLISHING`.
 - **Tone per post, UI text in JSON (2026-11-16).** The owner picks a writing tone (12 options, `TONES` in `backend/src/common/constants.ts`) for every post and every reel; it is sent with the request and is part of the AI cache key. The `business_preferences` table, the `/business/preferences` routes, `businesses.brand_tone`, and the unused `leads` and `presence_assessments` tables were dropped (the owner also picks caption length and hashtag count per post or reel, `medium` pre-selected; the tone has no default). All frontend text now lives in `frontend/src/i18n/locales/<en|hi|mr>/*.json`, read with `useT()` / `translate()`; `npm run check:i18n` checks that the three languages have the same keys. Backend error messages are still English.
 - **Publishing timeout fixed (2026-11-15).** Publish calls to Meta now allow 60 s (reads keep 10 s), because Meta downloads the photo during the container call. Each prepared Cloudinary URL is fetched once first, so the transformed JPEG already exists when Meta asks; if a photo can't be fetched, publishing stops before anything reaches Instagram and the post is not marked PUBLISHING. Covered by tests.
-- **Step 1, media sync verified on the real account.**
+- **Media sync implemented; historical 2026-11-14 verification notes (not rerun by this documentation audit).**
   - Applied migration `20261114T1648_instagram_posts_sync`: `instagram_posts`, `post_metric_snapshots`, `sync_runs`, and `social_accounts.token_source` / `last_media_sync_at` / `live_publish_allowed` (default false).
   - `POST /integrations/instagram/accounts/:id/sync-media` (owner-only, throttled, live mode only) queues a BullMQ job; `GET .../sync-runs` shows the runs. Posts upsert on `(social_account_id, platform_media_id)`; each run appends one snapshot per post; unknown metrics are null.
   - **Real data:** after posting on `saras_vastras`, two live syncs gave 1 post (a carousel with no caption) and 2 snapshots: no duplicate posts. The metrics are real zeros (brand-new post) except `saves`, which Instagram did not return, stored as null.
   - Also verified on real Postgres with a stubbed Graph: re-runs and concurrent runs create no duplicate posts.
-- **Known gap:** `social_accounts.follower_count` and `post_count` still show 0. Media sync doesn't update them; only `POST .../sync` (profile) does, and it isn't scheduled yet.
+- **Known gap:** media sync does not update profile follower/post totals; `POST .../sync` does. Current live values cannot be inferred from old zero-count observations. No periodic profile job is implemented.
 - **Not started in Step 1:** the profile and metrics sync kinds as jobs (only `media` exists), `deleted_at` marking, and `leads` attribution.
-- **Not started:** onboarding questions and the `businesses` fields, the playbook feature calculator, and the rules.
-- **Follow-up, Meta dashboard:** the login configuration still lists `ads_management` and `ads_read`. We don't use them (organic only), so remove them to ask for the least access.
-- **Photo Studio (done, verified live on the sandal photos):** `POST /media/analyze|enhance|ai-edit`, `GET /media/:id/preview`, `POST /media/:id/approve` (code in `backend/src/media/studio/`). Enhancement is built-in Sharp, with no AI cost. Claude (Sonnet) only describes a photo, once per photo, and is cached. Processed photos are new `media_assets` rows (`variant`, `sourceAssetId`), cached by hash plus settings, and a post accepts one only after the owner approves it. AI editing needs an external editor that is not configured, so `/media/ai-edit` returns 503. Known limit: Professional Background can leave a faint light fringe around the product.
+- **Implemented versus deferred:** basic onboarding and Python deterministic analytics/ranking are implemented. The richer onboarding fields and original bottleneck/RAG/lead-attribution roadmap are not fully implemented.
+- **External Meta configuration:** the source requests Instagram scopes, not advertising permissions. Historical dashboard notes mentioned ads permissions; current external dashboard state must be checked by the operator.
+- **Photo Studio:** `/media/analyze|enhance|ai-edit`, preview and approval are implemented. Sharp handles local enhancement; Claude handles cached analysis; Gemini is an optional configured image editor with usage budgets. Without it direct AI editing returns unavailable, while poster/reel enhancement can fall back to original photos. Originals and variants have separate media rows; live image quality was not reverified during this audit.
 - **Duplicate check and resync:** before refusing a photo as already published, `PostsService` now runs a fresh media sync (`InstagramSyncService.syncBusinessNow`) so an archived or deleted post stops counting. Publishing sends the approved poster (`posterImageUrl`) as the cover slide. The AI never asks the owner for the product name; the photo supplies it.
-- **AI Reel Creator (backend done, 2026-11-16; frontend not started):** `POST/GET /reels`, `GET /reels/:id[/status]`, `PATCH /reels/:id`, `POST /reels/:id/regenerate|cancel|approve|publish` (code in `backend/src/reels/`, migration `20261115T1855_migration`, table `reels`). A 10 s 1080x1920 MP4 is made in-process from a product photo: Claude writes the script, Google Cloud TTS (`GOOGLE_TTS_API_KEY`) speaks it in hi/mr/en, ffmpeg renders one of 4 templates. Without the key a job fails with "Voiceover is not configured on the server". Publishing reuses `PublishingService` (same flag, allowlist, approval and no-auto-retry rules); jobs stuck by a restart are moved to FAILED / PUBLISH_FAILED on boot.
-- **AI engine connection (2026-11-17, additive, off by default).** `backend/src/ai-engine/` adds `/ai-insights/*` (status, analysis, audience, competitors, trends, recommendations generate/list/feedback/outcomes, learning) that call the internal Python engine in `ai-engine/` with a service token. Enabled only by `AI_ENGINE_ENABLED=true`; no existing module, table, migration or response changed, and with the engine off or down only these routes return 503. The business comes from the JWT user; the engine profile id is `biz_<businessId>` (new engine route `PUT /profiles/{id}`). Verified against a locally running engine (generate, feedback, trends, learning, wrong token, engine down). Design: `ai-engine/docs/NESTJS_INTEGRATION.md`. Not done: frontend UI, sending comments, competitor feed, enabling it in production. Engine side: Gemini/Claude wire-format tests and an opt-in live test (`ai-engine/tests/live`; valid-key calls not yet run), AI wording guard, rate limit, bundled official India 2027 festival calendar. Trends are still fictional samples.
-- **AI Overview screen (2026-11-17, frontend; off unless the backend enables AI insights).** `/ai-insights` page (`frontend/src/pages/AiOverviewPage.tsx`) shows account health, best-performing content, audience insights, current trends and the latest ideas with Save / Not for me, from `/ai-insights/*` only. The sidebar link shows only when `GET /ai-insights/status` says enabled. Blocks load independently; thin data shows a calm message. No made-up score: health is a list of signs with their numbers; opportunity and confidence are shown separately. Sample trends are badged. en/hi/mr text added (`aiInsights.json`; Hindi/Marathi need native review). Logic tests: `npm run test:unit` (12 pass); `build`, `check:i18n` pass. Not done: not yet viewed in a browser against the full stack (backend + engine + login), recommendations history page, competitor and learning screens.
+- **AI Reel Creator:** frontend setup/library/progress/edit/preview/publish screens and `/reels` lifecycle APIs are implemented. Claude writes the script; image scenes, FFmpeg and Cloudinary produce/store the video. The current pipeline has no TTS/voiceover stage, despite legacy voice-related contract fields. Optional Gemini failures fall back to original photos. Interrupted generation/publishing is recovered as FAILED/PUBLISH_FAILED, not transparently resumed.
+- **AI engine connection:** authenticated `/ai-insights/*` bridges live analysis, audience/competitors/trends, generation/history/feedback/outcomes/learning and saved mocks. Default bridge configuration is off; `start:all` explicitly enables it. Status returns availability rather than throwing when disabled/down. Live profile IDs are `biz_<businessId>` and mock IDs include owner/industry. Python persists in shared PostgreSQL. Live comments and competitor-dashboard ingestion remain gaps. Provider wire tests do not establish live model entitlement; sample trends remain labelled fictional. See [integration guide](ai-engine/docs/NESTJS_INTEGRATION.md).
+- **AI Overview:** the sidebar is always visible, with live/mock source and industry selectors. Live blocks load independently; saved mock blocks load together. Health uses evidence-backed indicators, not a fabricated aggregate score. Recommendations/feedback persist; regeneration retains prior records. Full history, competitor and learning screens are not implemented. Hindi/Marathi interface copy needs native review. Historical test/browser results are not a fresh verification claim.
+- **Documentation audit (2026-11-19):** documentation-only corrections distinguish implementation, historical results and proposed work. Remaining source gaps include the unmatched OAuth callback SPA route, stale Swagger summary and legacy voice fields. No runtime configuration, migrations, dependencies or business logic were changed for this audit.
 - **Test guide:** see [TESTING.md](TESTING.md).

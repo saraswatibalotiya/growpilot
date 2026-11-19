@@ -1,28 +1,32 @@
 # PostgreSQL persistence
 
-The engine can store everything in PostgreSQL, so recommendations, feedback, outcomes and learning adjustments survive restarts.
-The default is still the in-memory store (nothing to install). Choose PostgreSQL with `STORAGE_BACKEND=postgres`.
+The engine stores application data in PostgreSQL, so live and mock recommendations, feedback, outcomes and learning adjustments survive restarts.
+PostgreSQL is the default and is required outside automated tests. There is no application fallback to memory.
 
-The database belongs to the engine alone: its own database (or at least its own `ai_engine` schema). **Never point it at the
-existing GrowPilot database.** The Docker Compose file in this folder starts a separate PostgreSQL for development.
+Both services use `growpilot_db` on the root PostgreSQL service. Prisma owns the backend's `public` tables; Alembic manages only
+the `ai_engine` schema. Never run engine downgrades against the application database, or let Prisma manage the AI schema.
 
 ## Quick start (development)
 
 ```bash
 cd ai-engine
-docker compose up -d                       # PostgreSQL 16 on localhost:5433, databases growpilot_ai and growpilot_ai_test
+docker compose -f ../docker-compose.yml up -d postgres
 source .venv/bin/activate
 pip install -r requirements.txt
 
-export DATABASE_URL='postgresql+asyncpg://growpilot_ai:growpilot_ai_dev_only@localhost:5433/growpilot_ai'
+export DATABASE_URL='postgresql+asyncpg://growpilot_user:growpilot_password@localhost:5432/growpilot_db'
 alembic upgrade head                       # create the ai_engine schema and tables
 
 export STORAGE_BACKEND=postgres
 uvicorn app.main:app --port 8001
 ```
 
-The password above is a development placeholder from `docker-compose.yml`. Change it with `AI_ENGINE_DB_PASSWORD=... docker compose up -d`
-before the first start (and use the same value in `DATABASE_URL`).
+The URL above uses local development credentials from the root Compose file. Production must supply its own credentials.
+Alternatively run `npm --prefix ../backend run start:ai`: it selects PostgreSQL, applies migrations, and starts the engine.
+`docker compose -f ../docker-compose.yml --profile service up -d --build` runs the engine in Docker against the same database.
+
+Dashboard mocks are seeded per owner and industry under `mock_<businessId>_<industry>`, separate from `biz_<businessId>` live profiles.
+The preview API reloads saved recommendations and feedback; regeneration appends history. Mock data is never a publishing authorization.
 
 Bundled **fictional** demo profiles are NOT loaded into a PostgreSQL database unless you set `LOAD_MOCK_DATA=true` yourself.
 
@@ -30,7 +34,7 @@ Bundled **fictional** demo profiles are NOT loaded into a PostgreSQL database un
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `STORAGE_BACKEND` | `memory` | `memory` or `postgres` |
+| `STORAGE_BACKEND` | `postgres` | Required for application use; memory is allowed only with explicit test settings |
 | `DATABASE_URL` | none | `postgresql+asyncpg://user:password@host:port/database`. Required for `postgres`. Treated as a secret: never logged, printed or returned |
 | `DB_POOL_SIZE` / `DB_MAX_OVERFLOW` | 5 / 5 | Connection pool |
 | `DB_CONNECT_TIMEOUT_SECONDS` | 5 | Time to open a connection |
@@ -47,13 +51,12 @@ alembic upgrade head                               # apply all new migrations (a
 alembic history                                    # list revisions
 ```
 
-* `upgrade` is additive. It creates the `ai_engine` schema if missing and then creates tables. It never drops, truncates or alters
-  existing data, and it fails instead of overwriting if a table already exists. It touches nothing outside `ai_engine`.
+* Existing upgrades preserve records while adding schema and, where needed, backfilling metadata. Revision `0001` creates tables; `0002` adds competitor provenance/freshness columns and backfills suggested competitors. These migrations do not drop/truncate application tables and target only `ai_engine`. Review future revisions rather than assuming every upgrade will always be nondestructive.
 * Without `DATABASE_URL` Alembic refuses to run. It never guesses a database.
-* **Downgrade deletes all engine data** and is blocked unless you set both variables, the second naming the exact database:
+* **Downgrade to base deletes all engine data**. Individual downgrades can drop their added columns/metadata. Downgrades are blocked unless both variables are set, the second naming the exact database:
 
   ```bash
-  AI_ENGINE_ALLOW_DESTRUCTIVE_MIGRATION=yes AI_ENGINE_CONFIRM_DATABASE=growpilot_ai_test alembic downgrade base
+  AI_ENGINE_ALLOW_DESTRUCTIVE_MIGRATION=yes AI_ENGINE_CONFIRM_DATABASE=growpilot_test alembic downgrade base
   ```
 
   If the name does not match the database actually connected to, it refuses. Use this on throwaway databases only. Take a backup
@@ -65,18 +68,7 @@ alembic history                                    # list revisions
 
 ## Tables (schema `ai_engine`)
 
-```
-ai_profiles ─┬─ instagram_posts ── post_analytics
-             ├─ audience_comments
-             ├─ audience_insights
-             ├─ competitors ── competitor_posts
-             ├─ trend_snapshots
-             ├─ recommendations ─┬─ recommendation_evidence
-             │                   ├─ recommendation_feedback
-             │                   └─ recommendation_outcomes
-             └─ learning_adjustments
-festival_events   (shared reference data, not profile-owned)
-```
+The complete [schema ownership and relationship diagrams](../../docs/diagram/06-database-architecture.md) live in the central diagram set. This document retains the operational table meanings, transaction/failure contract and migration safety details.
 
 | Table | Holds |
 |---|---|
@@ -87,12 +79,12 @@ festival_events   (shared reference data, not profile-owned)
 | `audience_insights` | Audience analyses over time (JSONB document, latest 20 kept) |
 | `competitors`, `competitor_posts` | Competitors with their approval status and public posts only |
 | `trend_snapshots` | The trends (with freshness) each recommendation run relied on, per profile and evaluation day (latest 100 kept) |
-| `festival_events` | Festival reference data (bundled SAMPLE data, `verification_status` says so), synced at start-up |
+| `festival_events` | Verified-source, computed fixed-date and optional sample reference records, each with provenance/status; synced at startup |
 | `recommendations` | The idea and its scores. `id` is the API's `recommendation_id`. Nested documents (reasoning, score breakdown, sources) are JSONB |
 | `recommendation_evidence` | One row per supporting statement, in order |
 | `recommendation_feedback` | What the owner did (saved, dismissed, published, ...) |
 | `recommendation_outcomes` | Measured results at INITIAL/H24/H72/D7, unique per recommendation and interval |
-| `learning_adjustments` | History of the rule-based adjustments. Exactly one row per (profile, dimension, value) is `is_current` |
+| `learning_adjustments` | Rule-based history; a partial unique index permits at most one `is_current` row per (profile, dimension, value) |
 
 Account-level analytics reports are not stored: they are derived from the stored posts, so they can not go stale.
 `GET /api/v1/learning/history?profile_id=` returns the stored adjustments.
@@ -103,7 +95,7 @@ Account-level analytics reports are not stored: they are derived from the stored
 2. **The schema enforces ownership.** Child rows point at their parent through a composite key `(parent_id, profile_id)`. Filing
    feedback, an outcome or evidence for profile A's recommendation under profile B is rejected by PostgreSQL itself, even for
    hand-written SQL. Tests try exactly that.
-3. Also enforced by the database: unique ids per profile, allowed values for status/action/interval, score ranges 0-100, non-negative metrics.
+3. Database constraints also enforce profile-scoped uniqueness, selected status/action/interval enums, score ranges and some nonnegative counts. Request validation rejects negative input metrics, but not every metric/JSON field has a corresponding SQL check; do not assume arbitrary SQL writes receive full API validation.
 
 ## Transactions
 
@@ -117,26 +109,29 @@ Every store method is one transaction. Multi-table operations are all-or-nothing
 
 * A database that is down or slow becomes **503 `database_unavailable`**. A constraint conflict becomes **409**. Anything else is **500 `database_error`**.
   None of these messages contain the URL, host, user, password or SQL. Only the error *type* is logged.
-* `/api/v1/health` checks the database and returns 503 when it is unreachable. The service still starts if the database is down at boot.
+* `/api/v1/health` checks the database and returns 503 when it is unreachable. Direct FastAPI startup can remain up with unavailable storage. `start.sh` and Compose run migrations first and can fail before Uvicorn starts; they do not silently select memory.
 * Log lines are scrubbed of `scheme://user:password@host` and `password=` patterns, and `DATABASE_URL` is a `SecretStr`.
 
 ## Design note and known limitation
 
 The services are synchronous, so the PostgreSQL store runs SQLAlchemy's async engine (asyncpg) on one dedicated background event-loop
 thread and each call waits for its result. That kept all business logic untouched, but each request blocks its worker while the
-database answers. For this service's load that is fine; the clean long-term step is async services and an async repository interface.
+database answers. Capacity/latency suitability has not been established by a production load test; async services/repository calls would be a separate architectural change.
 Other limits: there is no row-level security (isolation is by foreign keys plus scoped queries), concurrent feedback from two
-requests can compute adjustments from slightly stale data (the database still keeps exactly one current row per key), and raw comment
+requests can compute adjustments from slightly stale data (the database enforces at most one current row per key), and raw comment
 text is stored, which may contain personal details: apply your own retention policy.
 
 ## Tests
 
 ```bash
-docker compose up -d
-export TEST_DATABASE_URL='postgresql+asyncpg://growpilot_ai:growpilot_ai_dev_only@localhost:5433/growpilot_ai_test'
+docker compose -f ../docker-compose.yml up -d postgres
+# Use a separately provisioned disposable test database, never growpilot_db.
+export TEST_DATABASE_URL='postgresql+asyncpg://growpilot_user:growpilot_password@localhost:5432/growpilot_ai_test'
 pytest                      # everything; persistence tests are skipped if TEST_DATABASE_URL is not set
 pytest tests/persistence    # only the PostgreSQL tests
 ```
 
 The persistence tests never read `DATABASE_URL`, refuse a database whose name does not contain `test`, run the real migration, and
 truncate the engine's tables between tests.
+
+The full suite currently includes a downgrade-guard assertion hard-coded to `growpilot_ai_test`; another otherwise valid test database name can fail that case. Root Compose does not create a test database automatically. Provision disposable test storage explicitly; this test limitation is not a reason to run against application data.

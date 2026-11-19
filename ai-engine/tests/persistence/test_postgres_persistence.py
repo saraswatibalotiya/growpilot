@@ -77,6 +77,35 @@ def test_bundled_demo_profiles_are_not_loaded_into_a_database_by_default(clean_d
 
 # ---------------------------------------------------------------- the user-visible milestone
 
+@pytest.mark.parametrize("industry", ["fashion", "grooming", "beauty", "cafe"])
+def test_mock_preview_recommendations_and_feedback_survive_restart(clean_db, industry):
+    store = make_pg_store(clean_db)
+    api = app_client(store)
+    profile_id = f"mock_owner_{industry}"
+    path = f"{API}/profiles/{profile_id}/preview"
+    response = api.post(path, json={"industry": industry})
+    assert response.status_code == 200, response.text
+    first = response.json()["data"]
+    ids = {rec["recommendation_id"] for rec in first["recommendations"]}
+    selected = first["recommendations"][0]["recommendation_id"]
+    assert len(ids) == 4
+    assert api.post(f"{API}/recommendations/{selected}/feedback", json={"profile_id": profile_id, "action": "SAVED"}).status_code == 201
+    store = restart(clean_db, store)
+    try:
+        api = app_client(store)
+        loaded = api.post(path, json={"industry": industry}).json()["data"]
+        assert {rec["recommendation_id"] for rec in loaded["recommendations"]} == ids
+        assert loaded["acted"][selected] == "SAVED"
+        assert len(store.get_posts(profile_id)) == first["analysis"]["posts_analyzed"]
+        assert len(store.get_comments(profile_id)) == 60
+        assert store.list_recommendations("biz_owner") == []
+        assert api.post(f"{API}/recommendations/{selected}/feedback", json={"profile_id": "mock_other_owner", "action": "SAVED"}).status_code == 404
+        assert api.post(path, json={"industry": industry, "regenerate": True}).status_code == 200
+        assert len(store.list_recommendations(profile_id)) == 8
+    finally:
+        store.close()
+
+
 def test_create_generate_restart_fetch_feedback_restart_fetch(clean_db):
     store = make_pg_store(clean_db)
     c = TestClient(create_app(make_settings(load_mock_data=False), build_container(make_settings(load_mock_data=False), store)))

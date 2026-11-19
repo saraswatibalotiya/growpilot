@@ -9,7 +9,8 @@ It never publishes. A poster is only attached to a draft post.
 |---|---|---|
 | Look at the photo, propose a design | Sonnet (`poster-design`) | Template, background, photo treatment, text positions, colours. Validated JSON. |
 | Turn "make it look premium" into a change | Haiku (`poster-edit`) | Returns only the fields to change. It has no text or price fields, so it cannot write either. |
-| Draw the poster | Sharp (`poster-renderer.ts`) | Deterministic. Free. No AI. |
+| Optional photo enhancement | Configured Gemini image editor | Cached separate photo copy; skipped when disabled or unavailable; original-photo fallback on failure. |
+| Draw the poster | Sharp (`poster-renderer.ts`) | Deterministic local rendering; no model call for drawing itself. |
 
 Claude describes a design. It never claims to have edited pixels, and the prompts say so.
 
@@ -17,7 +18,7 @@ Claude describes a design. It never claims to have edited pixels, and the prompt
 
 - `GET /options` templates and choices for the editor.
 - `POST /generate` Sonnet designs, then the poster is drawn.
-- `POST /render` the owner changed a selector: the poster is redrawn, **no AI call**.
+- `POST /render` redraws an owner-selected design without a design-model call. Shared context may still perform the optional cached Gemini enhancement unless `enhance=false`.
 - `POST /edit` a short instruction: Haiku patches the design, then the poster is redrawn.
 - `POST /:id/save` attaches the poster to a draft post as `posterImageUrl` (refused after approval).
 
@@ -25,7 +26,7 @@ The photo is given as `mediaId` or `imageUrl`; either must belong to the caller'
 
 ## Templates
 
-`minimal_studio` (cream, centred), `premium_editorial` (taupe, serif), `product_spotlight` (larger product),
+`cover_card`, `minimal_studio` (cream, centred), `premium_editorial` (taupe, serif), `product_spotlight` (larger product),
 `offer_poster` (**only** when the owner typed an offer). A default is chosen from the photo and category.
 
 ## Price and offer rules (enforced in code, not only in prompts)
@@ -37,20 +38,20 @@ The photo is given as `mediaId` or `imageUrl`; either must belong to the caller'
 - An offer is the owner's own words, shown exactly. The Offer Poster is refused without one.
 - Text colour is repaired for contrast (WCAG 4.5:1). Colours must be real hex values.
 
-## Photo is preserved
+## Photo Preservation And Enhancement
 
-The photo is fitted inside its frame (never cropped or stretched), gets a gentle tone adjustment only if chosen
-(`brighter`, `vivid`, `soft`: a few percent), and rounded corners. Text, badge and ribbon are placed in the space around
-the frame and never overlap it (tested for every template). The original upload is never modified: the poster is a new
+`enhance` defaults to enabled. If Gemini is configured, the shared request context can make/reuse a portrait enhancement before design/render/edit. The original upload remains untouched. Already AI-edited assets are not enhanced again. Missing Gemini, quota failures, timeouts and rejected output do not block poster creation: the original is used; failed enhancement adds a note. Direct studio editing has a separate error contract.
+
+Framed templates fit the photo without cropping/stretching, apply a gentle selected tone treatment, and place text around the frame. **`cover_card` is different:** it uses an attention-positioned 4:5 cover crop, full-canvas photo and top/bottom fades with text overlaid. Do not promise that this template preserves the complete source composition or that overlays can never obscure a product. Review the rendered result. The original upload is never modified: the poster is a new
 `media_assets` row with `variant = 'poster'` and `source_asset_id` pointing at the original. The design is stored in that
 row's `processing_json`. The same photo and design is served from storage with no redraw.
 
 ## Limits
 
-- Portrait only (1080x1350). No background removal: the real background stays inside the frame.
+- Portrait only (1080x1350). Sharp rendering itself does not remove/replace the background; the optional Gemini enhancement is a separate preprocessing step. A framed original keeps its real background, while cover-card rendering can crop its edges.
 - Text is drawn with the server's fonts. Hindi/Marathi need a Devanagari font on the host (macOS has one; on Linux install
   `fonts-noto` or similar). Without it Devanagari text will not render correctly.
-- Publishing still posts the post's photos. The poster is saved as the post's poster image and shown as its cover in the preview.
+- Publishing uses the approved poster as the first slide, followed by the real photos, capped at ten slides. The separate publisher owns approval and live-account gates; this module never publishes.
 
 ## Tests
 

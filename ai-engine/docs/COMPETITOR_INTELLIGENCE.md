@@ -13,7 +13,7 @@ permissions, app review, the account type and the endpoint, and it changes. So d
 | Source | Status | What it is |
 |---|---|---|
 | `user_supplied` | **works** | The owner enters or imports public information about a competitor: `POST /competitors/{id}/posts` |
-| `official_instagram` | **not implemented** | Placeholder for official API access where Meta permits it. Calling it returns 501. It needs the owner's authorised token, which belongs to the application that owns the Instagram connection (NestJS), not this engine. Check Meta's current documentation and permissions before building it |
+| `official_instagram` | **not implemented** | Calling the placeholder provider method raises unsupported/501 behavior; there is no exposed automatic-fetch endpoint. Future permitted access would need an authorized integration managed by NestJS. Check current Meta permissions before building it |
 | `sample` | works (demo only) | The bundled **fictional** competitors. Never real |
 
 Every competitor records `data_source` (where its posts came from) separately from `source` (how it was found: `MANUAL` or
@@ -53,14 +53,14 @@ all of them together.
 Honest rules:
 
 * A topic counts as a **gap** only when a competitor covers it in at least 20% of its posts (and at least twice) while you cover it in under 10% of yours, **and you have at least 5 posts** so your own coverage can be judged.
-* Competitors silent for over 60 days are listed but left out of topic and gap analysis.
-* Posts dated after the evaluation date (`as_of`) are ignored, so evaluating a past day does not use the future.
+* Competitors silent for over 60 days are excluded from aggregate landscape/recommendation topic-gap signals; individual insights can still describe their historical topics.
+* Competitor posts after `as_of` are filtered, but owner-side comparisons and current learning are not fully snapshotted. This is not a guarantee of future-free historical backtesting.
 * Fewer than 5 competitor posts, or fewer than 3 competitors, are called tentative in the caveats.
 
 ## Layer C: competitive recommendations
 
 Approved, active competitors feed the `competitor` signal. A topic several of them cover that you barely do becomes an idea. Example
-from the fictional demo:
+from a recorded fictional demo (not regenerated during the documentation audit):
 
 > **Start a weekly behind the scenes series** (opportunity 11, confidence 66)
 > Evidence: *3 of 3 approved competitors repeatedly post about 'behind the scenes' (13 public posts). You have 1 of your 24 posts on it.*
@@ -68,13 +68,13 @@ from the fictional demo:
 * One competitor gives a single-account "cover this topic" idea with lower confidence; two or more give a "weekly series" idea.
 * Confidence rises with the number of competitors that agree and with how many posts each rests on.
 * The ideas say "Do not mention other accounts" in their caption direction, and carry a caveat if the data is fictional sample data.
-* **Scores stay honest.** The competitor signal is one of six (default weight 0.10), so such an idea scores modestly. Because it is easy to miss, when 4 or more ideas are requested one cross-competitor gap (2+ competitors, strength 0.6 or more) is guaranteed a place, and a note says so. It never displaces your own proven winners.
+* **Scores stay separate from selection.** The competitor signal is one of six (default weight 0.10). For 4+ requests an eligible cross-competitor gap (2+ competitors, strength at least 0.6) can be prioritized for a reserved slot. Topic deduplication still applies, and no rule guarantees preservation of all higher-ranked own-account winners.
 * Dismissed, "not relevant" or already-posted ideas are not offered again, and `excluded_topics` are respected.
 
 ## Try it (fictional data)
 
 ```bash
-python -m app.demos --demo restaurant --with-competitors --count 5
+STORAGE_BACKEND=memory python -m app.demos --demo restaurant --with-competitors --count 5
 pytest tests/quality/test_competitor_intelligence.py
 ```
 

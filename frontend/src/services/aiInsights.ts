@@ -1,4 +1,5 @@
 import { request } from '../lib/api'
+import type { AiMockIndustry } from '../mocks/aiInsights'
 
 // Calls the GrowPilot backend (/ai-insights/*), which authenticates the owner and talks to the Python AI engine.
 // The browser never contacts the engine, never sees its address or token, and never sends a business or profile id:
@@ -116,6 +117,20 @@ export interface GeneratedRecommendations {
 }
 
 export type FeedbackAction = 'SAVED' | 'DISMISSED' | 'LIKED' | 'NOT_RELEVANT' | 'ALREADY_POSTED' | 'CREATED' | 'PUBLISHED'
+
+export interface MockOverviewResponse {
+  analysis: AnalyticsReport
+  audience: AudienceInsights
+  trends: TrendAnalysis
+  recommendations: Recommendation[]
+  acted: Record<string, FeedbackAction>
+}
+
+export const getMockOverview = (industry: AiMockIndustry, regenerate = false, signal?: AbortSignal) =>
+  request<MockOverviewResponse>('/ai-insights/mock/overview', { method: 'POST', body: { industry, regenerate }, signal })
+
+export const sendMockFeedback = (industry: AiMockIndustry, id: string, action: FeedbackAction) =>
+  request<unknown>(`/ai-insights/mock/recommendations/${encodeURIComponent(id)}/feedback`, { method: 'POST', body: { industry, action } })
 
 let cachedStatus: { at: number; value: Promise<AiStatus> } | null = null
 

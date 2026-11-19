@@ -1,48 +1,35 @@
 # GrowPilot frontend
 
-Voice-first web app for small businesses. React 19, TypeScript, Vite. No UI library: the design system is plain CSS variables in `src/styles/tokens.css`.
+Owner-facing React 19 / TypeScript / Vite application for products, photo posts, reels, Instagram connections, and AI insights. Shared UI components and CSS implement the design system; there is no component-library dependency. Reviewed against source on 2026-11-19.
 
 ## Run it
 
 ```bash
 cd frontend
-npm install
+npm ci
 npm run dev        # http://localhost:3000
 ```
 
-The backend must be running on port 4000 (`docker compose up -d`, then start the API). The dev server proxies `/api` to it, so there is no CORS setup. Port 3000 is the origin the backend allows.
+The Vite server defaults to port 3000 and proxies `/api` to `http://localhost:4000`, stripping `/api`. `VITE_API_PROXY_TARGET` changes the development proxy target; `VITE_API_BASE` changes the browser API base. Different frontend origins must be allowed by backend CORS. Docker infrastructure alone does not start NestJS; see the [root setup guide](../README.md).
 
 ```bash
 npm run build      # type-check and production build
 npm run lint
+npm run check:i18n  # en/hi/mr key and placeholder parity
+npm run test:unit   # Node built-in test runner
 ```
 
-## Layout
+## Architecture Reference
 
-| Folder | What lives there |
-|---|---|
-| `src/pages` | One file per screen (Welcome, Signup, Setup, Home, Create, Generating, Preview, Publish, Done, Posts, Products, Settings, Help) |
-| `src/components` | Shared UI: app shell, buttons, poster preview, icons, illustrations |
-| `src/services` | All backend calls. Pages never call `fetch` directly |
-| `src/lib` | API client (token refresh), types, feature flags, storage |
-| `src/state` | Auth session and the post being made |
-| `src/hooks` | Browser speech recognition and playback |
-| `src/mocks` | **Demo-only** stand-ins for backend features that don't exist yet |
-| `src/dev` | **Development-only** helpers (sample sessions and drafts). Not in the production build |
+The [repository map](../docs/diagram/02-repository-architecture.md), [frontend architecture](../docs/diagram/03-frontend-architecture.md) and [workflow sequences](../docs/diagram/08-workflow-sequences.md) are the single maintained source for layout, route/state diagrams and request sequences. This README retains service commands, usage details and feature/security caveats.
 
-## What is real and what is demo
+## Implemented Workflows
 
-Real, calling the backend: signup, login, token refresh, business profile, products, photo upload, conversations, posts, Instagram connection status.
+Signup/login, token refresh, business profiles, products, uploads, conversations, posts, Instagram status, caption generation, posters, and reels call NestJS. Credentials and external AI requests stay server-side.
 
-Not available on the backend yet, so the frontend handles them honestly:
+The post flow uploads up to ten photos, records or accepts text, requires a selected tone, creates a draft, calls `/ai/generate-content`, and opens a reviewable preview. Editing uses `/ai/edit-content`. The large empty photo area, Upload, and Camera controls open their respective file inputs. Poster composition uses `/posters/*`.
 
-| Feature | Backend endpoint needed | What the UI does until then |
-|---|---|---|
-| AI caption and poster text | `POST /content/generate`, `POST /content/revise` | Shows sample text labelled "Demo content" |
-| Post becomes a reviewable preview | A server step that moves a post to `PREVIEW_READY` | Approval is refused by the backend (409) and the UI says so |
-| Publishing | `POST /posts/:id/publish` | Publish Now explains that nothing was posted. It never shows success |
-
-When the backend ships an endpoint, set the matching flag in `.env` (see `.env.example`): `VITE_FEATURE_AI=true`, `VITE_FEATURE_PUBLISHING=true`.
+`VITE_FEATURE_PUBLISHING=true` exposes the frontend publishing capability. It does not authorize publication: backend approval, live-mode checks, server flag, and allowlist remain authoritative. There are no current `VITE_FEATURE_AI` or `VITE_FEATURE_REELS` switches. The standalone `/recommendations` page uses local idea templates; it is distinct from the persisted AI Overview recommendations.
 
 ## AI Overview (`/ai-insights`)
 
@@ -50,11 +37,12 @@ A screen that shows what the Python AI engine found: account health, best-perfor
 content ideas (with Save / Not for me). It calls only the backend's `/ai-insights/*` routes with the owner's normal access token. The
 browser never contacts the engine, never sees its address or token, and never sends a business id.
 
-- **Off unless the backend turns it on.** `GET /ai-insights/status` decides: the sidebar link and the page appear only when the backend reports `enabled`. With it off or the engine down the rest of the app is unchanged.
-- **Each block loads on its own.** One that fails or has no data yet (for example no comments, or too few posts) shows a plain message and never blanks the others.
+- **Live availability.** The sidebar link is always present. `GET /ai-insights/status` controls the live view's loading, disabled, and unavailable states; other features remain usable.
+- **Saved mock previews.** Two selectors choose live/mock mode and fashion, grooming, beauty, or cafe. Mock requests use authenticated `POST /ai-insights/mock/overview`; feedback uses `/ai-insights/mock/recommendations/:id/feedback`. Mock mode also requires a working, enabled backend bridge and PostgreSQL. There is no local-result fallback. Inputs, generated recommendations, and feedback persist in `growpilot_db.ai_engine`, separated from live profiles by owner/industry. Generating again appends history.
+- **Loading.** Live sections load independently after the initial analysis request. Mock sections load together from the saved overview endpoint. Missing data and unavailable services have explicit states.
 - **No invented numbers.** "Account health" is a list of signs, each with the engine's numbers behind it, not a score. Opportunity (ranking) and Confidence (evidence) are shown separately, and the screen says opportunity is not a prediction. Sample trends carry a "Sample" badge, and a demo Instagram account shows a "demo data" banner.
 - **Files:** `pages/AiOverviewPage.tsx`, `components/AiInsightCards.tsx`, `hooks/useAiOverview.ts`, `services/aiInsights.ts`, `lib/aiOverview.ts` (pure logic), `styles/ai-insights.css`, `i18n/locales/*/aiInsights.json`.
-- **Limits:** the engine's own sentences (the evidence lines) are English only; the Hindi and Marathi interface text should be reviewed by a native speaker; the backend does not yet send comments, so the audience block says "not enough data" until it does.
+- **Limits:** Hindi and Marathi UI text needs native review. Live Instagram comments are not imported by the bridge, so live audience analysis may be empty; the mock profiles have explicit fictional comments. Existing sourced trends can be stale and correctly excluded.
 
 `npm run test:unit` runs the logic tests (Node's built-in runner, `frontend/tests`).
 
@@ -66,11 +54,6 @@ browser never contacts the engine, never sees its address or token, and never se
 
 ## Reel Creator
 
-Screens: `/reels` (choose a photo, plus Your Reels), `/reels/setup`, `/reels/:id/generating`, `/reels/:id` (preview and edit), `/reels/:id/publish`.
-All calls live in `src/services/reels.ts` and follow the routes `POST /reels/generate`, `GET /reels`, `GET /reels/:id`,
-`GET /reels/:id/status`, `PATCH /reels/:id`, `POST /reels/:id/regenerate-storyboard`, `POST /reels/:id/approve`,
-`POST /reels/:id/publish` (body `{ "confirm": true }`) and `POST /reels/:id/cancel`. The shapes are the `Reel` types in that file.
+Screens are `/reels`, `/reels/library`, `/reels/:id/generating`, `/reels/:id`, `/reels/:id/edit`, `/reels/:id/publish`, and `/reels/:id/published`. `/reels/new` redirects to `/reels`; there is no `/reels/setup` route.
 
-`VITE_FEATURE_REELS=true` uses the real backend. While it is off (the default), an isolated demo adapter
-(`src/mocks/reelsDemo.ts`) runs instead: a silent 10-second clip is made in the browser from the owner's photo, every screen
-shows a "Demo mode" notice, Reels are forgotten on reload, and publishing always ends in a clear "nothing was posted" result.
+[src/services/reels.ts](src/services/reels.ts) uses `POST /reels`, `GET /reels`, `GET /reels/:id`, `GET /reels/:id/status`, `PATCH /reels/:id`, and `POST /reels/:id/regenerate|cancel|approve|publish`. Publication sends `{ "confirm": true }`; regeneration sends a `part` and optional script options. There is no browser reel demo adapter. Optional Gemini enhancement falls back to original photos; real rendering/upload failures remain visible. Legacy voice-related type fields do not mean the current pipeline generates voiceover.

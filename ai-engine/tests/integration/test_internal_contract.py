@@ -1,10 +1,58 @@
-"""What the NestJS backend relies on: idempotent profile sync, service auth, correlation ids and the rate limit."""
+"""Internal engine contracts, persisted previews, authentication, and request tracing."""
 
 import pytest
 from fastapi.testclient import TestClient
+from pydantic import ValidationError
 
+from app.core.config import Settings
 from app.main import create_app
 from tests.conftest import API, make_settings
+
+
+def test_application_requires_postgres_and_memory_is_test_only():
+    settings = Settings(_env_file=None, environment="development", STORAGE_BACKEND="postgres", DATABASE_URL="postgresql+asyncpg://test:test@localhost/growpilot_db")
+    assert settings.storage_backend == "postgres"
+    with pytest.raises(ValidationError, match="In-memory storage"):
+        Settings(_env_file=None, environment="development", STORAGE_BACKEND="memory")
+    with pytest.raises(ValidationError, match="DATABASE_URL"):
+        Settings(_env_file=None, environment="development", STORAGE_BACKEND="postgres", DATABASE_URL=None)
+
+
+def test_mock_previews_save_recommendations_and_reload_feedback(empty_client):
+    for industry in ("fashion", "grooming", "beauty", "cafe"):
+        profile_id = f"mock_owner_{industry}"
+        path = f"/api/v1/profiles/{profile_id}/preview"
+        response = empty_client.post(path, json={"industry": industry})
+        assert response.status_code == 200, response.text
+        first = response.json()["data"]
+        assert first["analysis"]["posts_analyzed"] >= 18
+        assert first["audience"]["comments_analyzed"] == 60
+        assert len(first["recommendations"]) == 4
+        ids = [rec["recommendation_id"] for rec in first["recommendations"]]
+        assert all("sample" in rec["tags"] for rec in first["recommendations"])
+        feedback = empty_client.post(f"/api/v1/recommendations/{ids[0]}/feedback", json={"profile_id": profile_id, "action": "SAVED"})
+        assert feedback.status_code == 201
+        loaded = empty_client.post(path, json={"industry": industry}).json()["data"]
+        assert {rec["recommendation_id"] for rec in loaded["recommendations"]} == set(ids)
+        assert loaded["acted"][ids[0]] == "SAVED"
+        regenerated = empty_client.post(path, json={"industry": industry, "regenerate": True})
+        assert regenerated.status_code == 200, regenerated.text
+        history = empty_client.get("/api/v1/recommendations", params={"profile_id": profile_id}).json()["data"]
+        assert history["total"] == 8
+
+
+def test_mock_preview_rejects_live_profiles_and_unknown_industries(empty_client):
+    assert empty_client.post("/api/v1/profiles/biz_owner/preview", json={"industry": "fashion"}).status_code == 422
+    assert empty_client.post("/api/v1/profiles/mock_owner/preview", json={"industry": "unknown"}).status_code == 422
+
+def test_mock_preview_recovers_a_partially_initialized_profile(empty_client):
+    profile_id = "mock_partial_fashion"
+    created = empty_client.put(f"{API}/profiles/{profile_id}", json={"profile_type": "BUSINESS", "name": "Fashion sample", "niche": "fashion", "products": ["linen shirts"], "goals": ["ENGAGEMENT"]})
+    assert created.status_code == 201
+    preview = empty_client.post(f"{API}/profiles/{profile_id}/preview", json={"industry": "fashion"})
+    assert preview.status_code == 200, preview.text
+    assert preview.json()["data"]["analysis"]["posts_analyzed"] == 48
+    assert len(preview.json()["data"]["recommendations"]) == 4
 
 BIZ = "biz_3f2c9a54-77a1-4d0e-9a52-1b6f0c1d2e3f"
 BODY = {"profile_type": "BUSINESS", "name": "Rang Boutique", "category": "fashion", "city": "Mumbai", "goals": ["SALES"], "products": ["sarees"]}

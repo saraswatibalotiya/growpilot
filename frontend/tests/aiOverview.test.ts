@@ -3,35 +3,10 @@ import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { accountHealth, bestFormat, meterWidth, percent, sectionKindFor, sortTrends } from '../src/lib/aiOverview.ts'
 import type { AnalyticsReport, EngineInsight } from '../src/services/aiInsights.ts'
-import { AI_MOCK_INDUSTRIES, createAiMockDataset } from '../src/mocks/aiInsights.ts'
+import { AI_MOCK_INDUSTRIES } from '../src/mocks/aiInsights.ts'
 
-test('all four mock businesses provide complete, distinct overview data', () => {
-  const now = new Date('2026-11-19T12:00:00Z')
-  const titles = new Set<string>()
-  for (const industry of AI_MOCK_INDUSTRIES) {
-    const data = createAiMockDataset(industry, now)
-    assert.equal(accountHealth(data.analysis).length, 4)
-    assert.ok(bestFormat(data.analysis))
-    assert.equal(data.analysis.top_posts.length, 3)
-    assert.ok(data.analysis.top_posts.every((post) => post.permalink === null && post.posted_at < now.toISOString()))
-    assert.equal(data.audience.frequent_questions.length, 3)
-    assert.ok(data.trends.current.every(({ trend }) => trend.is_sample && trend.source_url === null && trend.verified_date === null))
-    assert.equal(data.recommendations.length, 4)
-    for (const rec of data.recommendations) titles.add(rec.title)
-  }
-  assert.equal(titles.size, 16)
-  assert.equal(accountHealth(createAiMockDataset('grooming', now).analysis).find((item) => item.key === 'trend')?.tone, 'watch')
-  assert.equal(accountHealth(createAiMockDataset('fashion', now).analysis).find((item) => item.key === 'trend')?.tone, 'good')
-})
-
-test('mock datasets are fresh copies and dates follow the preview date', () => {
-  const now = new Date('2026-11-19T12:00:00Z')
-  const first = createAiMockDataset('beauty', now)
-  first.recommendations.pop()
-  const second = createAiMockDataset('beauty', now)
-  assert.equal(second.recommendations.length, 4)
-  assert.equal(second.trends.as_of, now.toISOString())
-  assert.equal(second.analysis.top_posts[0].posted_at, '2026-11-18T12:00:00.000Z')
+test('mock selector contains the four server-backed industries', () => {
+  assert.deepEqual(AI_MOCK_INDUSTRIES, ['fashion', 'grooming', 'beauty', 'cafe'])
 })
 
 const insight = (key: string, metrics: Record<string, number | string | null>, finding = `finding for ${key}`): EngineInsight => ({ key, finding, supporting_metrics: metrics, confidence: 0.7, confidence_label: 'high' })

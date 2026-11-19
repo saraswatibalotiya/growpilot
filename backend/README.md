@@ -1,42 +1,25 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# GrowPilot Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+NestJS 12 / TypeScript API for authentication, businesses, Instagram, products, owned media, content generation, posters, reels and approval-gated publishing. PostgreSQL uses Prisma 8 RC (`@prisma/orm-postgres`), not `@prisma/client`. See the [root setup guide](../README.md), [backend architecture](../docs/diagram/04-backend-architecture.md) and [workflow sequences](../docs/diagram/08-workflow-sequences.md). This service guide retains commands, fixture behavior and safety requirements.
 
 ## Project setup
 
 ```bash
-$ npm install
+npm ci
 ```
 
-## GrowPilot QA fixtures
+Use Node 24.11+ to satisfy the locked Prisma CLI engine range. Configure the names in [.env.example](.env.example), start root Compose for PostgreSQL/Redis/Adminer, and initialize/review the schema before first use. Never commit credentials. Swagger is `/docs` outside production; the API defaults to 4000 with no global `/api` prefix.
+
+`npm run start:ai` applies additive AI migrations and starts a host Python engine on 8001 with PostgreSQL storage. `npm run start:all` kills listeners on 4000/3000, builds/starts root Compose's `service` profile including Python, then starts frontend and backend watch with `AI_ENGINE_ENABLED=true`. Do not run a host engine on 8001 simultaneously. `stop:all` only frees 4000/3000 and does not stop Docker services.
+
+## Database And QA Fixtures
+
+Both services use `growpilot_db`: Prisma owns `public`, Alembic owns `ai_engine`. The 17 backend models are defined in [prisma/schema.prisma](prisma/schema.prisma), with the emitted contract in [prisma/schema.json](prisma/schema.json) and client in [prisma/db.ts](prisma/db.ts). `public.recommendations` is separate from Python's `ai_engine.recommendations`. Do not let either migration tool reset the other's schema. There are no current presence-assessment, lead, business-preferences, campaign or content-hash approval tables.
 
 From the workspace root, seed the local database with:
 
 ```bash
-npm --prefix ./backend run seed
+NODE_ENV=development ENABLE_TEST_MODE=true ENABLE_LIVE_INSTAGRAM_PUBLISH=false npm --prefix ./backend run seed
 ```
 
 From this backend directory, use `npm run seed` instead. Keep
@@ -50,147 +33,48 @@ The original ten documents and their expected recommendations/behaviors are in
 
 - One disabled QA owner (`qa-fixtures@growpilot.test`) with no usable shared password.
 - Ten businesses, from Sunday Staples through Collective Test Store.
-- Nine mock social accounts and nine presence assessments. Aroma Beans Cafe
-  intentionally has no social account or assessment.
-- Three explicitly synthetic customer leads for Glow Room Salon, FitFuel Meals
-  and Clay & Co. These sample customers do not represent the aggregate enquiry counts.
+- Connected-case mock social accounts with no usable Instagram tokens.
+- Up to six synthetic Instagram posts per account, with two nullable metric snapshots each. Unknown metrics remain null; TC009 has unavailable metrics and TC001 keeps zero posts.
 
-The current database scope is exactly six application tables: `users`,
-`businesses`, `social_accounts`, `presence_assessments`, `recommendations`, and
-`leads`. The `focus_core_entities` migration removes the deferred campaign,
-asset, metric, order, audio, hashtag, publishing-log and refresh-token tables
-and their stored data. It does not drop or reset the database.
+[prisma/seed.ts](prisma/seed.ts) does not create leads, presence assessments, campaigns or generated recommendations. Expected outputs remain fixture assertions, not actual AI results. The disabled fixture owner has an unknown random password; use signup for an interactive login. No live Instagram API is called by the seed.
 
-`presence_assessments` has nullable `like_count`, `comment_count` and `view_count`
-fields for engagement snapshots. Unknown counts are NULL, not zero. TC002's
-sample average likes/comments are mapped to these fields with `aggregated=true`
-in `findings_json`; they are averages, not a total across all posts. The source
-metrics (including reach, clicks, enquiries and historical context) remain in
-`presence_assessments.findings_json.rawMetrics` and `campaignHistory`.
-The supplied fixtures have no view measurements, so `view_count` remains NULL.
+Entity relationships are maintained only in the [central database diagrams](../docs/diagram/06-database-architecture.md), covering all backend and AI application tables.
 
-TC001 retains zero posts. TC009 keeps unknown reach and clicks as JSON null in
-assessment findings. All social IDs start with `mock:` and have no access
-tokens. Leads store individual customer enquiries, their source, contact and
-status; engagement counts are not stored per customer lead.
+Publishing and the Python recommendation engine are implemented. The publisher requires:
 
-TC010's publishing expectations remain in the original JSON file for later
-work; only its business/profile/assessment are currently seeded. There are no
-campaign records or publishing integrations. No live Instagram API is called.
-
-```mermaid
-erDiagram
-    User ||--o{ Business : owns
-    Business ||--o{ SocialAccount : connects
-    Business ||--o{ PresenceAssessment : assesses
-    SocialAccount ||--o{ PresenceAssessment : measures
-    Business ||--o{ Recommendation : receives
-    Business ||--o{ Lead : receives
-```
-
-Expected recommendations remain QA assertions in the JSON file, not generated
-rows in `recommendations`. There is no recommendation engine or publishing gate
-implemented yet. When adding the publisher, require all of the following:
-
-1. `campaign.status === 'approved'`.
+1. A post in `USER_APPROVED`, or a reel in `APPROVED`, with current reviewable assets.
 2. An explicit user "Approve and publish" action.
 3. `ENABLE_LIVE_INSTAGRAM_PUBLISH=true` in the backend environment.
 4. A server-verified allowlist marking the account as allowed for live testing.
-5. A recorded approval event in backend logs before publishing.
+5. Persisted approval state before publishing; dedicated content-hash approval rows are not implemented. A separate durable approval audit remains a desired strengthening, not a current guarantee.
 
-TC010 additionally specifies `CONFIRM_LIVE_PUBLISH=true`. Fixture metadata is
-not an authorization mechanism. On publishing failure, preserve the draft.
+TC010's `CONFIRM_LIVE_PUBLISH` is a historical fixture expectation, not a runtime environment gate. Publish DTOs require `confirm=true`; mock/test metadata never authorizes publication. Preserve drafts on failure. Current approval state/timestamps/logs are not a separate campaign or hashed-approval table.
+
+## Modules And Runtime Boundaries
+
+- [AI content](src/ai/README.md): Claude intent, verified-fact generation, edits and conversation context; never publishes.
+- [Posters](src/poster/README.md): validated design, Sharp rendering, optional Gemini enhancement and original-photo fallback.
+- [AI bridge](src/ai-engine/README.md): authenticated live and persisted mock intelligence; owner-derived profile IDs.
+- Instagram media synchronization uses BullMQ/Redis and durable `sync_runs`. Reel generation is in-process, without a current TTS stage or durable reel queue: Claude script, images, FFmpeg and Cloudinary. Interrupted jobs are marked failed on startup.
+- Optional Gemini poster/reel image work falls back to original photos. Direct `/media/ai-edit`, required Claude generation, rendering, uploads and publishing still report their own failures.
+- Root Compose is development configuration, not a hardened public VPS deployment. `npm run deploy` has no verified configured production target.
 
 ## Compile and run the project
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run build
+npm run start:dev   # development watch; keep publishing disabled
+npm run start:prod  # compiled output; provision production configuration explicitly
 ```
 
-## Run tests
+## Checks And Operations
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm test -- --runInBand
+npm run lint
+npm run test:cov
 ```
 
-## Deployment
+Use the [testing guide](../TESTING.md) to choose mocked/focused tests before database-writing or E2E suites. `format` writes source files. Root Compose and `start:all` are development tools, not a complete VPS deployment; see the [actual/proposed deployment diagrams](../docs/diagram/09-deployment-architecture.md).
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Observability
-
-In production applications, observability is essential for understanding how your system behaves, detecting issues early, and maintaining reliable performance.
-
-[NestJS Observe](https://observe.nestjs.com) automatically instruments your NestJS application, giving you deep visibility into your system with minimal setup:
-
-- **Distributed tracing:** Follow requests across services and understand how they flow through your system.
-- **Waterfall analysis:** Visualize request execution and identify slow operations, bottlenecks, and unexpected delays.
-- **Performance analysis:** Analyze application performance in real time and quickly pinpoint areas that need optimization.
-- **Metrics:** Track key application and infrastructure metrics to understand system health and performance trends.
-- **Logging:** Centralize and correlate logs with traces and other telemetry to make debugging easier.
-- **Error tracking:** Detect errors quickly and investigate their root causes with the surrounding context.
-- **SLA monitoring:** Track service-level objectives and identify when your application is approaching or exceeding defined thresholds.
-- **Alarms and alerts:** Set up alerts for critical errors, performance degradation, SLA violations, and other anomalies so your team can react quickly.
-
-This project is already instrumented. To connect it, run this and approve the code it prints at [observe.nestjs.com/link](https://observe.nestjs.com/link) - signing up for free if you have no account:
-
-```bash
-$ npx @nestjs/observe link
-```
-
-It writes the app key and secret into `.env` and makes every `nest start` script (`start`, `start:dev`, `start:debug`) load it. In production, set `OBSERVE_APP_KEY` and `OBSERVE_APP_SECRET` in the environment instead.
-
-Or do it by hand: create an application and an API key at [observe.nestjs.com](https://observe.nestjs.com), and set the pair as `OBSERVE_APP_KEY` and `OBSERVE_APP_SECRET` in the environment the app runs in.
-
-The free plan needs no payment details and covers 300,000 events a month. You can also browse the [live demo](https://www.observe-demo.nestjs.com/dashboard) first - the whole dashboard over a busy service's data, with nothing to install.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Auto-instrument your application with [NestJS Observe](https://observe.nestjs.com). Distributed tracing, metrics, and logging made easy. Error tracking and performance monitoring for your NestJS applications.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Logs use NestJS Logger and local structured events; there is no configured Observe module. Paid AI/model access, Meta permissions, Cloudinary and production monitoring need operator verification. The backend manifest is private and declares `UNLICENSED`; the framework's upstream license is not a license grant for GrowPilot.

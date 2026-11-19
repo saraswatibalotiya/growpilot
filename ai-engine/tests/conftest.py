@@ -1,5 +1,10 @@
+import os
+
 import pytest
 from fastapi.testclient import TestClient
+
+os.environ["ENVIRONMENT"] = "test"
+os.environ["STORAGE_BACKEND"] = "memory"
 
 from app.core.config import Settings
 from app.main import create_app

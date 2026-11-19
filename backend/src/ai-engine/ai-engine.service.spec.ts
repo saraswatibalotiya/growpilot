@@ -32,6 +32,25 @@ function build(opts: { enabled?: boolean; business?: BusinessFacts | null; posts
 }
 
 describe('AiEngineService', () => {
+  it('loads mock data under an owner-derived industry profile without touching the live profile', async () => {
+    const { service, calls, source } = build();
+    await service.mockOverview(OWNER, 'req-12345678', { industry: 'fashion' });
+    expect(calls).toHaveLength(1);
+    expect(calls[0]).toMatchObject({ method: 'POST', path: `/profiles/mock_${BIZ.id}_fashion/preview`, body: { industry: 'fashion', regenerate: false } });
+    expect(source.findInstagramAccount).not.toHaveBeenCalled();
+    await service.mockFeedback(OWNER, 'req-12345678', 'rec_abc123', { industry: 'beauty', action: 'SAVED' });
+    expect(calls[1].body).toMatchObject({ profile_id: `mock_${BIZ.id}_beauty`, action: 'SAVED' });
+  });
+
+  it('rejects mock calls without an owned business or when the engine is disabled', async () => {
+    const missing = build({ business: null });
+    await expect(missing.service.mockOverview(OWNER, 'req-12345678', { industry: 'cafe' })).rejects.toBeInstanceOf(NotFoundException);
+    expect(missing.engine.call).not.toHaveBeenCalled();
+    const disabled = build({ enabled: false });
+    await expect(disabled.service.mockOverview(OWNER, 'req-12345678', { industry: 'grooming' })).rejects.toBeInstanceOf(ServiceUnavailableException);
+    expect(disabled.engine.call).not.toHaveBeenCalled();
+  });
+
   it('is a 503 with a clear code when the feature is off, and touches nothing', async () => {
     const { service, engine, source } = build({ enabled: false });
     await expect(service.generate(OWNER, 'req-12345678', {})).rejects.toBeInstanceOf(ServiceUnavailableException);

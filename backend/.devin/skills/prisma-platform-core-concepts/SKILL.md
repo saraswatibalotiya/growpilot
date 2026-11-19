@@ -17,12 +17,13 @@ description: >-
 
 # Prisma Platform core concepts
 
+> GrowPilot scope (source-audited 2026-11-19): this vendor-synced document describes upstream platform concepts, not this application's deployment. GrowPilot config declares ORM only and uses NestJS/root Docker Compose; no Composer Cloud deployment is configured. Upstream remote-service guarantees, pricing and behavior were not operationally verified. Prefer installed CLI/types for local contracts. `prisma skills sync` can overwrite these corrections; keep all agent mirrors synchronized.
+
 > **Isolated infrastructure for every branch.**
 
 The Prisma Platform moves fast, and your training data about it is very
 likely outdated. This skill ships inside the installed `prisma` package, so
-it describes the exact version this project has: treat it as the source of
-truth over anything you remember about Prisma hosting. If
+its version metadata identifies the intended upstream release, not proof every statement matches current implementation. Check the installed CLI/types and verified upstream documentation. If
 `metadata.library_version` in this file's frontmatter does not match the
 project's installed `prisma` package, run `prisma skills sync` and re-read.
 Fuller documentation for everything here lives at prisma.io/docs; consult it
@@ -34,7 +35,7 @@ needs them. To learn a command surface, run `prisma --help`, or
 `prisma <group> --help` for any group named below; pass `--json` for
 machine-readable output. Without it, a piped command prints plain data lines,
 not JSON. The data contract, migrations, and
-queries belong to the `prisma-orm-core-concepts` skill; declaring services
+queries belong to the installed `prisma-8` ORM skill; declaring services
 and modules in code belongs to `prisma-composer-core-concepts`.
 
 ## The stack
@@ -43,7 +44,7 @@ One CLI, `prisma`, fronts a set of products designed to be used together:
 
 | Product | What it is | Concepts live in |
 | --- | --- | --- |
-| Prisma ORM (Prisma 8) | Data contract, typed queries, migrations | `prisma-orm-core-concepts` |
+| Prisma ORM (Prisma 8) | Data contract, typed queries, migrations | Installed `prisma-8` skill; GrowPilot's `backend/prisma-8.md` |
 | Prisma Composer | The app declaration: services, databases, buckets, wiring | `prisma-composer-core-concepts` |
 | Prisma Compute | Hosting: runs your services next to your data | this skill |
 | Prisma Postgres | Managed PostgreSQL | this skill |
@@ -74,7 +75,7 @@ npm install prisma @prisma/composer @prisma/composer-prisma-cloud
 `@prisma/composer-prisma-cloud` is the Prisma Cloud target and brings
 `@prisma/orm-postgres` with it. The sibling skills travel inside these
 packages (`prisma-composer-core-concepts` in `@prisma/composer`,
-`prisma-orm-core-concepts` in `@prisma/orm-postgres`), so they appear after
+`prisma-8` in `@prisma/orm-postgres`), so they appear after
 this install plus `prisma skills sync`, not before.
 
 One config file, `prisma.config.ts`, configures the CLI and every product
@@ -257,11 +258,7 @@ failed on missing DNS is retried after the record exists.
 Services run on Bun, next to their Prisma Postgres database. There is no
 container image to author and no platform emulator to install locally.
 
-The runtime has no global `Temporal` (stock Node 24 lacks one too). Code
-that reads an ORM `DateTime` column compiles and deploys, then throws on
-the first read. Either add the `temporal-polyfill` dependency and
-`import 'temporal-polyfill/full/global'` at the service entry, or use the
-`*String` column types such as `TimestamptzString`.
+Temporal availability matters only for types explicitly mapped to Temporal. The installed ORM defaults ordinary `DateTime` to JavaScript `Date`, and GrowPilot's emitted contract uses `pg/timestamptz-date@1`. Do not add a Temporal polyfill solely for those reads. Explicit Temporal mappings need a compatible runtime/polyfill; string mappings are another supported choice.
 
 An idle service **sleeps**: the platform snapshots its memory after a short
 period of inactivity and resumes it from the snapshot on the next request.
@@ -360,9 +357,8 @@ own work:
    the services, and prints a local URL. It watches built output and
    restarts a service when its build changes.
 2. Exercise the running app directly (for example with
-   `curl "$(prisma dev url gateway)"`, with your service's name in place of
-   `gateway`) instead of reasoning about what the
-   code would do. `prisma dev url <node>` prints one node's local URL: a
+   `curl "$(prisma dev url shop.gateway)"`, replacing `shop.gateway` with the full app/service address) instead of reasoning about what the
+   code would do. `prisma dev url <app.node>` prints one node's local URL: a
    service's HTTP URL, a database's connection string, or a bucket's S3
    address. Use `prisma dev --detach` to start the app and get your shell
    back.
@@ -407,9 +403,7 @@ Windows is not supported for the local stack yet.
    `compute({ name })`) allow `[A-Za-z0-9]` only. A hyphenated id passes
    authoring and typecheck, then fails here. Module and project names do
    accept hyphens, so never derive a resource id from them.
-10. **A deployed service errors on its first timestamp read
-    (`RUNTIME.TEMPORAL_UNAVAILABLE`).** The runtime has no global
-    `Temporal`; see the Compute runtime section for the polyfill.
+10. **An explicitly Temporal-mapped column errors with `RUNTIME.TEMPORAL_UNAVAILABLE`.** Verify runtime/polyfill support for that selected representation. Ordinary JavaScript-Date `DateTime` mappings do not require Temporal; see the Compute runtime section.
 11. **The repository is connected, but a push built nothing.** The platform
     does not build on push; the repository's own workflow does. Make sure
     `.github/workflows/prisma-deploy.yml` exists on the pushed branch and
@@ -442,9 +436,7 @@ rather than guessing.
 
 ## Related skills
 
-Everything inside the app is owned by the siblings: the data contract,
-queries, and migrations by `prisma-orm-core-concepts` (and
-`prisma-orm-migrations`), and the declaration of services, modules, wiring,
-and testing seams by `prisma-composer-core-concepts`. The skills install
+For GrowPilot's data contract, queries and migrations, consult the installed `prisma-8` skill at `node_modules/@prisma/orm-postgres/skills/prisma-8/SKILL.md` and the repository's `backend/prisma-8.md`. The previously named `prisma-orm-core-concepts`/`prisma-orm-migrations` siblings are not installed here. Service declarations, modules, wiring
+and testing seams are covered by `prisma-composer-core-concepts`. The skills install
 together via `prisma skills sync`; when a task crosses from platform
 resources into app code, switch skills instead of guessing.

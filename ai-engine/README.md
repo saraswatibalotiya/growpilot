@@ -4,17 +4,19 @@ A standalone Python service that looks at an Instagram business or creator profi
 content recommendations**. It analyses past performance, audience comments, approved competitors, current trends and upcoming
 Indian festivals, and explains every suggestion.
 
-It is **completely independent** of the NestJS backend and React frontend in this repository. It shares no code, no database and no
-credentials with them, and it runs with **no paid API key** (mock AI provider and bundled fictional sample data).
+It runs as a separate service from NestJS and React, using the same `growpilot_db` PostgreSQL database. AI data lives in the
+`ai_engine` schema, separate from Prisma's `public` tables. The mock AI provider needs no paid API key; both live and mock results persist.
 
 ## Run it
+
+Start the shared PostgreSQL service first (`docker compose up -d postgres` from repository root). `start.sh` requires an existing virtual environment, applies AI-schema migrations and uses local root-Compose database defaults unless `DATABASE_URL` is exported. Configure production credentials explicitly; do not use development defaults on a public server.
 
 ```bash
 cd ai-engine
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8001
+sh start.sh
 ```
 
 Open http://localhost:8001/docs for the interactive API.
@@ -25,10 +27,11 @@ pytest                                # all tests
 ruff check .                          # lint
 ```
 
-Try it (the sample data reads as current on **2026-10-05**, so pass `as_of` to get repeatable output):
+The recommended startup defaults `LOAD_MOCK_DATA=false`; the fixture IDs below do not exist automatically. To use these older bundled fixtures, explicitly export `LOAD_MOCK_DATA=true` before startup in a local demo database, or create a profile through the API. Their reference date is **2026-10-05**; `as_of` controls relevant date filters, not a complete historical database snapshot. Include service authorization when configured:
 
 ```bash
 curl -s localhost:8001/api/v1/recommendations/generate \
+  -H "Authorization: Bearer $SERVICE_TOKEN" \
   -H 'content-type: application/json' \
   -d '{"profile_id":"prof_boutique_mumbai","as_of":"2026-10-05","count":4}' | python3 -m json.tool
 ```
@@ -42,11 +45,13 @@ Five **fictional** profiles (restaurant, fashion creator, travel creator, beauty
 data) with sample posts, comments and trends, built to check recommendation quality. The evaluation date is **2026-11-17**.
 They are not real Instagram data and not benchmarks.
 
+The current CLI runner constructs test settings but does not explicitly choose a store. **Export `STORAGE_BACKEND=memory` for these test-only demos** so they cannot inherit an application PostgreSQL connection. This is not application runtime storage. `--report` and dataset `--write` modify files; do not run them as read-only checks. Report generation uses its fixed evaluation date/count, not the CLI's `--as-of`/`--count` options.
+
 ```bash
-python -m app.demos --all                          # print recommendations for all five
-python -m app.demos --demo restaurant              # one of: restaurant fashion_creator travel_creator beauty_creator new_business
-python -m app.demos --demo travel_creator --as-of 2026-12-20 --count 5   # another day, 3-5 ideas
-python -m app.demos --report                       # rewrite docs/RECOMMENDATION_QUALITY.md (expected vs actual)
+STORAGE_BACKEND=memory python -m app.demos --all
+STORAGE_BACKEND=memory python -m app.demos --demo restaurant
+STORAGE_BACKEND=memory python -m app.demos --demo travel_creator --as-of 2026-12-20 --count 5
+STORAGE_BACKEND=memory python -m app.demos --report  # writes the fixed-date quality report
 python -m app.demos.datasets --write               # regenerate app/demos/data/*.json
 pytest tests/quality                               # the quality tests
 ```
@@ -61,27 +66,27 @@ placeholder). The engine reports who is active, what they post, which formats an
 you do not, and turns cross-competitor gaps into recommendations. See [docs/COMPETITOR_INTELLIGENCE.md](docs/COMPETITOR_INTELLIGENCE.md).
 
 ```bash
-python -m app.demos --demo restaurant --with-competitors --count 5    # FICTIONAL competitors
+STORAGE_BACKEND=memory python -m app.demos --demo restaurant --with-competitors --count 5
 ```
 
 ## Persistent storage (PostgreSQL)
 
 ```bash
-docker compose up -d                                   # separate dev database on localhost:5433
-export DATABASE_URL='postgresql+asyncpg://growpilot_ai:growpilot_ai_dev_only@localhost:5433/growpilot_ai'
+docker compose -f ../docker-compose.yml up -d postgres  # shared database on localhost:5432
+export DATABASE_URL='postgresql+asyncpg://growpilot_user:growpilot_password@localhost:5432/growpilot_db'
 alembic upgrade head                                   # create the tables (additive, never destructive)
 STORAGE_BACKEND=postgres uvicorn app.main:app --port 8001
 ```
 
 Recommendations, feedback, outcomes and learning adjustments then survive restarts. Details, the downgrade safety rules and the
 table layout are in [docs/POSTGRES_PERSISTENCE.md](docs/POSTGRES_PERSISTENCE.md). To run the database tests set
-`TEST_DATABASE_URL=postgresql+asyncpg://growpilot_ai:growpilot_ai_dev_only@localhost:5433/growpilot_ai_test`.
+`TEST_DATABASE_URL` to a separately provisioned disposable test database. Never run persistence tests against `growpilot_db`.
 
 ## Configuration
 
-Everything is optional. See [.env.example](.env.example). Highlights: `AI_PROVIDER=mock|gemini|claude`, `GEMINI_API_KEY`,
+Application PostgreSQL storage and a valid database URL are required. See [.env.example](.env.example). Highlights: `AI_PROVIDER=mock|gemini|claude`, `GEMINI_API_KEY`,
 `ANTHROPIC_API_KEY`, `SERVICE_TOKEN` (mandatory when `ENVIRONMENT=production`), `WEIGHT_*` score weights. Keys are read from the
-environment only and are never logged or returned.
+process environment or the configured dotenv file and must never be logged or returned. Provider model defaults are not evidence of account entitlement or live availability.
 
 ## What it does
 
@@ -89,6 +94,7 @@ environment only and are never logged or returned.
 |---|---|
 | Health | `/health` |
 | Profiles (business / creator) | `/profiles` |
+| Saved dashboard mock previews | `POST /profiles/{id}/preview` (`mock_` profile IDs only) |
 | Performance analytics | `/analytics` |
 | Audience and comment intelligence | `/audience` |
 | Competitors (suggested = PENDING until approved, or added manually) | `/competitors` |
@@ -104,14 +110,15 @@ Responses use `{ "data": ..., "meta": {"request_id": ...} }`; errors use `{ "err
 - **Opportunity score is a ranking signal, not a forecast** of views, reach or sales. Confidence is scored separately.
 - The learning is a transparent, bounded rule (at most +/-8 points, only after 3+ reactions). It is **not a trained model**.
 - Audience analysis is keyword-rule based (English, Hinglish, Devanagari). Comments are a self-selected sample, and the output says so.
-- Trends are **bundled fictional samples** unless you supply a sourced dataset; moving-festival dates are approximate samples (`SAMPLE_UNVERIFIED`) unless you supply a verified calendar. Fixed-date occasions are computed and confirmed. See [docs/REAL_DATA_SOURCES.md](docs/REAL_DATA_SOURCES.md).
-- Storage is in memory by default (data is lost on restart). Set `STORAGE_BACKEND=postgres` to persist everything: see [docs/POSTGRES_PERSISTENCE.md](docs/POSTGRES_PERSISTENCE.md).
+- Trends are **bundled fictional samples** unless you supply a sourced dataset. Festival inputs include approximate samples, computed fixed dates and 31 bundled verified-source India 2027 calendar records, plus optional operator files. Source status and regional/moon-sighting caveats remain important. See [docs/REAL_DATA_SOURCES.md](docs/REAL_DATA_SOURCES.md).
+- PostgreSQL storage is mandatory outside automated tests. Live and mock recommendations, feedback and outcomes persist in `growpilot_db.ai_engine`: see [docs/POSTGRES_PERSISTENCE.md](docs/POSTGRES_PERSISTENCE.md).
 - The AI provider only polishes wording (`use_ai: true`). Scores, evidence and dates stay rule-based. Failures are returned as errors, never hidden.
 - No Instagram login, scraping or publishing. Competitor analysis uses only public data supplied to it.
 
 ## Docs
 
-- [Architecture](docs/ARCHITECTURE.md)
+- [Architecture diagrams and reading order](../docs/diagram/README.md)
+- [AI engine architecture](../docs/diagram/05-ai-engine-architecture.md)
 - [PostgreSQL persistence](docs/POSTGRES_PERSISTENCE.md)
 - [Competitor intelligence](docs/COMPETITOR_INTELLIGENCE.md)
 - [Trends and festivals: sources and verification](docs/REAL_DATA_SOURCES.md)
@@ -125,6 +132,5 @@ Responses use `{ "data": ..., "meta": {"request_id": ...} }`; errors use `{ "err
 ## Docker
 
 ```bash
-docker build -t growpilot-ai-engine .
-docker run -p 8001:8001 growpilot-ai-engine
+docker compose -f ../docker-compose.yml --profile service up -d --build
 ```

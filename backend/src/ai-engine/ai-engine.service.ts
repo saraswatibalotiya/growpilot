@@ -1,6 +1,6 @@
 import { BadGatewayException, BadRequestException, ConflictException, Injectable, Logger, NotFoundException, ServiceUnavailableException } from '@nestjs/common';
 import { AiEngineClient, AiEngineError } from './ai-engine.client';
-import type { FeedbackDto, GenerateRecommendationsDto, OutcomeDto } from './ai-engine.dto';
+import { MOCK_INDUSTRIES, type FeedbackDto, type GenerateRecommendationsDto, type MockFeedbackDto, type MockPreviewDto, type OutcomeDto } from './ai-engine.dto';
 import { engineProfileId, toEnginePosts, toEngineProfile } from './ai-engine.mapper';
 import { AiEngineSourceRepository } from './ai-engine-source.repository';
 import type { DataContext, EngineSourceData } from './ai-engine.types';
@@ -25,6 +25,32 @@ export class AiEngineService {
   async status(requestId: string) {
     if (!this.engine.enabled) return { enabled: false, available: false };
     return { enabled: true, available: await this.engine.isHealthy(requestId) };
+  }
+
+  async mockOverview(userId: string, requestId: string, dto: MockPreviewDto) {
+    const profileId = await this.mockProfileId(userId, dto.industry);
+    return this.run(() => this.engine.call({
+      method: 'POST', path: `/profiles/${profileId}/preview`,
+      body: { industry: dto.industry, regenerate: dto.regenerate ?? false }, requestId,
+      timeoutMs: this.engine.config.generateTimeoutMs,
+    }));
+  }
+
+  async mockFeedback(userId: string, requestId: string, id: string, dto: MockFeedbackDto) {
+    this.assertId(id);
+    const profileId = await this.mockProfileId(userId, dto.industry);
+    return this.run(() => this.engine.call({
+      method: 'POST', path: `/recommendations/${id}/feedback`,
+      body: { profile_id: profileId, action: dto.action, comment: dto.comment }, requestId,
+    }));
+  }
+
+  private async mockProfileId(userId: string, industry: MockPreviewDto['industry']): Promise<string> {
+    if (!MOCK_INDUSTRIES.includes(industry)) throw new BadRequestException('Unknown mock business.');
+    if (!this.engine.enabled) throw new ServiceUnavailableException('AI insights are not turned on.');
+    const business = await this.source.findBusinessForUser(userId);
+    if (!business) throw new NotFoundException('Create your business profile first.');
+    return `mock_${business.id}_${industry}`;
   }
 
   async analysis(userId: string, requestId: string) {

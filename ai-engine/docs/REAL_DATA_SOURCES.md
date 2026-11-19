@@ -1,7 +1,6 @@
 # Trends and festivals: sources and verification
 
-The bundled trends and festival dates are **fictional or approximate samples**. This document explains how real data gets in, and
-how the engine avoids ever presenting sample data as real.
+Bundled trends are **fictional samples**. Festivals combine approximate samples, computed fixed dates and 31 bundled verified-source India 2027 calendar records, plus optional operator data. This document explains provenance labels and the limits of source validation; labels do not independently authenticate external truth.
 
 ## Trends
 
@@ -16,7 +15,7 @@ Each trend carries: `topic`, `category`, `region` (geography), `source_name`, `s
 | `none` | No trend source. The engine says no current trend was found and never claims one |
 
 **The engine does not fetch trends from the internet.** Real sources have licences, quotas and terms that belong to whoever runs the
-service: Google Trends has no official public API (do not scrape it), and social-platform data needs permitted access. Export what you
+service. No live Google Trends/social connector is implemented here; obtain data only through permitted access and licences. Export what you
 are licensed to use into the JSON format and point `TREND_DATA_FILE` at it.
 
 A record in the file is **rejected, with the reason**, if it is marked as sample data, has no source name, has no `http(s)` source
@@ -32,18 +31,17 @@ and one observed after the evaluation date is unknown at that time. A trend is o
 | Status | Meaning | May be called confirmed? |
 |---|---|---|
 | `RULE_FIXED_DATE` | Fixed by definition (Republic Day 26 Jan, Independence Day 15 Aug, Christmas 25 Dec, Women's Day, Valentine's Day, ...). **Computed for any year** | yes |
-| `VERIFIED_SOURCE` | From a calendar you supply in `FESTIVAL_DATA_FILE`, naming its source | yes |
+| `VERIFIED_SOURCE` | Operator calendar or bundled curated official-source records, naming the source | source-backed, with jurisdiction and date caveats |
 | `SAMPLE_UNVERIFIED` | The bundled approximate dates | **never** |
 
 Lunar-calendar festivals (Diwali, Holi, Eid, Navratri, ...) have no fixed date and are **not computed or guessed**. They appear only from a
 verified file, the bundled official 2027 list, or the bundled sample.
 
 **Bundled official calendar (2027).** `app/data/festivals/festivals_verified_2027.json` holds 31 festivals taken from the Government of India
-holiday list for 2027 (DoPT O.M. F.No.12/2/2023-JCA, July 2026, Annexures I and II; the source URL is in each record). Dates were cross-checked
-against the weekdays printed in the source. Region, industry and theme tags are GrowPilot annotations, not part of the source. The list is for
+holiday list for 2027 (DoPT O.M. F.No.12/2/2023-JCA, July 2026, Annexures I and II; each record includes its source URL). Earlier curation notes record weekday cross-checks; this audit did not repeat external PDF verification. Region, industry and theme tags are GrowPilot annotations, not part of the source. The list is for
 Central Government offices in Delhi: observance can differ by state, and the Ministry may move Id-ul-Fitr, Id-ul-Zuha, Muharram and Id-e-Milad
 after moon sighting (those records say so and recommendations add the caveat). `FESTIVAL_INCLUDE_BUNDLED_VERIFIED=false` removes it; your
-`FESTIVAL_DATA_FILE` wins over it for the same festival and year. Other years still need a calendar you supply. For any other year they are simply absent, and `GET /api/v1/festivals/coverage?year=` says so, so a missing
+`FESTIVAL_DATA_FILE` wins over it for the same festival and year. Verified moving-festival coverage for other years needs supplied data; fixed-date rules and optional approximate samples can still exist. `GET /api/v1/festivals/coverage?year=` distinguishes those cases, so a missing
 festival is never mistaken for "no festival".
 
 A verified file is a JSON list of `FestivalRecord` objects (`app/schemas/trend.py`) with `verification_status: "VERIFIED_SOURCE"`. A record is

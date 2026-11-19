@@ -8,8 +8,8 @@
     "grooming": "Grooming studio",
     "beauty": "Beauty salon",
     "cafe": "Café & bakery",
-    "notice": "Mock data: {industry}. All metrics and ideas are synthetic, not your Instagram results. Saved choices last only in this preview.",
-    "reset": "Reset sample ideas"
+    "notice": "Mock data: {industry}. All metrics and ideas are synthetic, not your Instagram results. Recommendations and feedback are saved to your database.",
+    "reset": "Generate sample ideas"
   },
   "title": "AI Overview",
   "subtitle": "What your Instagram results, your audience and the market say about what to post next.",

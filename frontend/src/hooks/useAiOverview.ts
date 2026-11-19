@@ -1,21 +1,24 @@
 import { useCallback, useEffect, useState } from 'react'
 import { ApiError, errorMessage } from '../lib/api'
 import { sectionKindFor, type SectionKind } from '../lib/aiOverview'
-import { createAiMockDataset, type AiMockIndustry } from '../mocks/aiInsights'
+import type { AiMockIndustry } from '../mocks/aiInsights'
 import {
   generateRecommendations,
   getAiStatus,
   getAudience,
+  getMockOverview,
   getTrends,
   listRecommendations,
   runAnalysis,
   sendFeedback,
+  sendMockFeedback,
   type AiContext,
   type AiStatus,
   type AnalyticsReport,
   type AudienceInsights,
   type FeedbackAction,
   type Recommendation,
+  type MockOverviewResponse,
   type TrendAnalysis,
 } from '../services/aiInsights'
 
@@ -57,24 +60,60 @@ export interface AiOverview {
 }
 
 export function useMockAiOverview(industry: AiMockIndustry): AiOverview {
-  const [data, setData] = useState(() => createAiMockDataset(industry))
+  const [data, setData] = useState<MockOverviewResponse | null>(null)
+  const [loadError, setLoadError] = useState<unknown>(null)
+  const [generating, setGenerating] = useState(false)
+  const [generateError, setGenerateError] = useState<string | null>(null)
   const [acted, setActed] = useState<Record<string, FeedbackAction>>({})
-  const reset = () => {
-    setData(createAiMockDataset(industry))
-    setActed({})
+  const [tick, setTick] = useState(0)
+  useEffect(() => {
+    const controller = new AbortController()
+    setLoadError(null)
+    void getMockOverview(industry, false, controller.signal).then((result) => {
+      if (controller.signal.aborted) return
+      setData(result)
+      setActed(result.acted)
+    }).catch((error: unknown) => {
+      if (!controller.signal.aborted) setLoadError(error)
+    })
+    return () => controller.abort()
+  }, [industry, tick])
+  const section = <T,>(value: T | undefined): Section<T> => {
+    if (loadError) return failed<T>(loadError)
+    return value === undefined ? loading : { kind: 'ready', data: value }
   }
   return {
-    analysis: { kind: 'ready', data: data.analysis },
-    audience: { kind: 'ready', data: data.audience },
-    trends: { kind: 'ready', data: data.trends },
-    recommendations: { kind: 'ready', data: data.recommendations },
+    analysis: section(data?.analysis),
+    audience: section(data?.audience),
+    trends: section(data?.trends),
+    recommendations: section(data?.recommendations),
     context: null,
-    generating: false,
-    generateError: null,
+    generating,
+    generateError,
     acted,
-    reload: reset,
-    generate: async () => reset(),
-    feedback: async (id, action) => setActed((previous) => ({ ...previous, [id]: action })),
+    reload: () => setTick((value) => value + 1),
+    generate: async () => {
+      setGenerating(true)
+      setGenerateError(null)
+      try {
+        const result = await getMockOverview(industry, true)
+        setData(result)
+        setActed(result.acted)
+      } catch (error) {
+        setGenerateError(errorMessage(error))
+      } finally {
+        setGenerating(false)
+      }
+    },
+    feedback: async (id, action) => {
+      setGenerateError(null)
+      try {
+        await sendMockFeedback(industry, id, action)
+        setActed((previous) => ({ ...previous, [id]: action }))
+      } catch (error) {
+        setGenerateError(errorMessage(error))
+      }
+    },
   }
 }
 

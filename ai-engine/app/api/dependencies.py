@@ -50,7 +50,7 @@ class Container:
 
 
 def create_store(settings: Settings) -> Store:
-    """The configured storage. Memory unless STORAGE_BACKEND=postgres. The database URL is read here and nowhere else."""
+    """PostgreSQL application storage; memory is available only in explicitly configured automated tests."""
     if settings.storage_backend == "postgres":
         from app.repositories.postgres import PostgresStore
 

@@ -15,11 +15,14 @@ description: >-
 
 # Prisma Composer core concepts
 
+> GrowPilot scope (source-audited 2026-11-19): this is a vendor-synced upstream reference, not the application's architecture. GrowPilot's Prisma config declares ORM only; NestJS runs through its package scripts and root Docker Compose, not a Composer app graph. Upstream `examples/` and `docs/design/` paths below belong to prisma/composer, not this repository. Remote/cloud guarantees require independent verification. `prisma skills sync` can overwrite these local corrections; all agent mirrors must stay synchronized.
+
 A **Prisma App** is a tree of typed declarations composed in TypeScript and
 handed to the `prisma` CLI, whose two main Composer commands are `prisma deploy`
 and `prisma dev`. Removing a whole app is `prisma project delete`. Removing
-one environment and reading logs are not commands; they are the `destroy` and `log`
+one environment and merged local Composer logs use the `destroy` and `log`
 operations of `@prisma/composer/control`, called from a script.
+Hosted service logs separately have `prisma service logs`; do not infer a blanket CLI-logs prohibition.
 This file covers structures, hierarchies, relationships, and workflows: the
 concepts you cannot observe from the code or the CLI's help output. It is not
 a CLI reference; discover each command's flags with `prisma <command> --help`
@@ -314,7 +317,7 @@ export default definePrismaConfig({
 
 The commands find `prisma.config.ts` from the directory they run in, walking up
 to the repository root; the nearest file that declares `composer` wins, and its
-section is used whole, never merged key by key. Only `entry`, `extensions` and `state`
+section is used whole, never merged key by key. Supported fields include `entry`, `extensions`, `state`, `config` and `secrets`
 are allowed; any other key is an error. App code never imports the file.
 
 A separate `prisma-composer.config.ts` is no longer read, and the old setup is
@@ -431,7 +434,7 @@ those extra fields vary, so don't parse them as a stable format. The
 **Environments.** An environment is a named place the app runs, chosen with
 `--environment` at deploy time, never written in the topology. The identical
 graph deploys everywhere. `prisma deploy` without the flag deploys
-`production`; `prisma dev` runs as `dev` and takes no flag. On the Prisma Cloud
+`production`; `prisma dev` defaults to `dev`, with `--environment <name>` selecting another isolated local environment. On the Prisma Cloud
 target, a Prisma App is one Project and an environment is a Branch of it, with
 its own running services, its own empty database, its own configuration:
 `production` is the Project's default Branch, any other name is the Branch
@@ -756,11 +759,7 @@ today the blocks above plus your own Modules are the whole set, so verify a
    given an explicit `id`.
 8. **`MIGRATION_PATH_NOT_FOUND`**: see Databases above; author the missing
    migration, don't skip the plan step.
-9. **Date/time columns hand back `Temporal.*` values on read.** Bun and
-   stock Node ship no global `Temporal`, so a service with `DateTime`
-   contract columns compiles and deploys, then fails on the first timestamp
-   read. Provide the global at the server entry
-   (`import 'temporal-polyfill/global'`) or use string column types.
+9. **Temporal-selected column types need Temporal support.** The installed ORM defaults `DateTime` to JavaScript `Date`; GrowPilot's contract uses `pg/timestamptz-date@1`. Do not require a polyfill for ordinary DateTime reads. If a column explicitly selects a Temporal representation, verify the runtime and install a compatible polyfill or choose another supported representation.
 10. **The auth module's `/api/auth/*` returns `403 MISSING_OR_NULL_ORIGIN`
     to a Node script.** It is the browser surface: Better Auth origin-checks
     any request carrying a cookie, an `Origin`/`Referer`, or a `Sec-Fetch-*`
@@ -776,7 +775,7 @@ today the blocks above plus your own Modules are the whole set, so verify a
 
 Name the gap instead of inventing an API:
 
-1. **No `prisma` command for removing one environment, or for logs.** Remove a whole
+1. **No CLI teardown for one Composer environment; merged local logs use control operations.** Hosted service logs have `prisma service logs`. Remove a whole
    app with `prisma project delete <id> --confirm <id>`. For one environment and for
    logs, use the `destroy` and `log` operations of `@prisma/composer/control`
    from a script. A destroy script

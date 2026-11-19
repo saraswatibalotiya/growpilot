@@ -1,4 +1,4 @@
-"""GrowPilot AI Engine: a standalone FastAPI service. It shares nothing with the NestJS application."""
+"""GrowPilot AI Engine: a FastAPI service using the shared database's ai_engine schema."""
 
 import re
 import uuid

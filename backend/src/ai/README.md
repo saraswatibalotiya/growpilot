@@ -18,40 +18,30 @@ Model IDs live only in the environment (`ai.config.ts` holds the defaults used w
 model, edit `.env` and restart:
 
 ```env
-CLAUDE_SONNET_MODEL=claude-sonnet-5-5
-CLAUDE_HAIKU_MODEL=claude-haiku-5-5
+CLAUDE_SONNET_MODEL=<model-enabled-for-your-account>
+CLAUDE_HAIKU_MODEL=<small-model-enabled-for-your-account>
 ```
 
-The code sends no `temperature`, `thinking`, `effort` or forced `tool_choice`, so it works with any current model
-(newer ones reject some of those). Structured output uses `output_config.format` with Zod schemas.
+Defaults are `claude-sonnet-5` and `claude-haiku-4-5-20251001`, configuration strings rather than verified model entitlements. The adapter sends no `temperature`, `thinking`, `effort` or forced `tool_choice`; structured output uses `output_config.format` with Zod schemas. Compatibility still depends on the selected model and SDK.
 
 ## Setup
 
-1. `npm install` (adds `@anthropic-ai/sdk` and `zod`).
+1. `npm ci` in `backend/` installs the locked dependencies, including `@anthropic-ai/sdk` and `zod`.
 2. Put a real key in `backend/.env`: `ANTHROPIC_API_KEY=sk-ant-...`. Never expose it to the frontend.
 3. Optional: set the model IDs and timeouts from `.env.example`.
 4. Restart the API. Swagger at `/docs` lists the three `AI` endpoints.
 
 Without a key the API still starts. AI endpoints answer `503 The AI service is not configured`.
 
-## Architecture
+## Request Context
 
-```
-POST /ai/*  ->  AiController (HTTP only)
-                  -> AiOrchestratorService   sequences one request, saves the draft, records the conversation
-                       -> BusinessContextService      trusted facts from the existing database, owner-scoped
-                       -> IntentClassificationService Haiku: intent, product, price, offer, tone, language
-                       -> ImageAnalysisService        validates the URL, then Sonnet vision
-                       -> ContentGenerationService    Sonnet + checks in code
-                       -> ContentEditingService       Haiku plan, Sonnet edit + checks in code
-                       -> ConversationSummaryService  Haiku summary stored as a system message
-                  all model calls -> ClaudeProviderService (the only class that talks to Anthropic)
-                                     ModelRouterService (task -> model), PromptBuilderService (versioned prompts)
-```
+See the centralized [content AI module diagram](../../../docs/diagram/04-backend-architecture.md#content-ai-module) and [post creation sequence](../../../docs/diagram/08-workflow-sequences.md#2-create-and-review-a-photo-post). This guide retains request fields, verified-fact rules, model selection and errors.
 
-Context comes from the existing tables: `businesses`, `business_preferences`, `products`, the last 5 approved or
+Context comes from the existing tables: `businesses`, `products`, the last 5 approved or
 published `generated_posts`, and the conversation (a stored summary plus the last 6 messages). No RAG, embeddings or
 vector search. Missing facts are passed as `null` and as a "not provided" list. They are never guessed.
+
+Tone is selected per request, not loaded from a `business_preferences` table. There is no current preferences table. Generation accepts required `tone` plus optional `captionLength` and `hashtagLevel`; responses may reuse cached content for matching inputs.
 
 ## Accuracy: how invented facts are blocked
 
@@ -72,7 +62,7 @@ achievements. A prompt is not a guarantee, so the same rules are enforced in cod
 
 Claude fetches the image itself, so before any request the URL must be `https`, on a trusted host
 (`AI_TRUSTED_IMAGE_HOSTS`, default `res.cloudinary.com`), under our Cloudinary cloud path, **and** be a photo this
-shop uploaded through `/media/upload` (type and size were validated at upload). JPEG, PNG and WEBP up to 5 MB.
+shop uploaded through `/media/upload` (type and size were validated at upload). Uploads accept JPEG, PNG, WEBP and HEIC/HEIF up to 10 MB; the AI input validator independently limits fetched image bytes to 5 MB and checks supported image content. An accepted upload is not automatically an accepted AI input.
 If Claude can't read an accepted photo, content is still generated and `warnings` says so. Claude describes the photo;
 it does not edit pixels. Poster rendering stays separate.
 
@@ -94,7 +84,7 @@ All require the normal login token. All are rate limited. All validate UUIDs and
 ### `POST /ai/generate-content` (Haiku, then Sonnet)
 ```json
 { "conversationId": "uuid", "postId": "uuid", "productId": "uuid", "imageUrl": "https://res.cloudinary.com/...",
-  "transcript": "New cotton kurtis aaye hain. Ek attractive post banao.", "language": "hi" }
+  "transcript": "New cotton kurtis aaye hain. Ek attractive post banao.", "language": "hi", "tone": "elegant" }
 ```
 `postId`, `productId`, `imageUrl` and `language` are optional. Language order: request, shop preference, transcript.
 Response: `language`, `productUnderstanding {name, category, price}`, `headline`, `caption`, `callToAction`,
